@@ -6,20 +6,22 @@ import Navbar from './components/NavBar/NavBar';
 import Home from './views/Home/Home';
 import CreateProduct from './views/CreateProduct/CreateProduct';
 import Footer from './components/Footer/Footer';
+import LandingPage from './views/LandingPage/LandingPage';
 
 function App() {
     return (
         <>
             <Router>
-                <Navbar/>
+                <Navbar />
                 <ToastContainer />
                 <Routes>
-                    <Route path="/home" element={<Home/>}/>
-                    <Route path="/createproduct" element={<CreateProduct/>}/>
+                    <Route exact path="/" element={<LandingPage />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/createproduct" element={<CreateProduct />} />
                 </Routes>
-                <Footer/>
+                <Footer />
             </Router>
-            
+
         </>
     );
 }
