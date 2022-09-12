@@ -5,7 +5,7 @@ import App from './App';
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
 import { Auth0Provider } from '@auth0/auth0-react'
-import "bootswatch/dist/quartz/bootstrap.min.css";
+import "bootswatch/dist/superhero/bootstrap.min.css";
 import axios from 'axios';
 import {
     REACT_APP_AUTH0_DOMAIN,

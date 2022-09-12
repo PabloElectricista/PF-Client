@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Navbar from './components/NavBar/NavBar';
 import Home from './views/Home/Home';
+import CreateProduct from './views/CreateProduct/CreateProduct';
 import Footer from './components/Footer/Footer';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
                 <ToastContainer />
                 <Routes>
                     <Route path="/home" element={<Home/>}/>
+                    <Route path="/createproduct" element={<CreateProduct/>}/>
                 </Routes>
                 <Footer/>
             </Router>
