@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 // import Carrousel from '../Carousel/Carousel';
 // import AboutUs from '../AboutUs/AboutUs';
-// import './LandingPage.css';
+import './LandingPage.css';
 
 export default function LandingPage(){
 
