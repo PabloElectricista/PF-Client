@@ -1,9 +1,11 @@
 import Cards from '../../components/Card/Cards'
+import Pagination from '../../components/Pagination/Pagination';
 
 function Home() {
 
-    return <div>
+    return <div className="container">
         <Cards />
+        <Pagination />
     </div>
 }
 
