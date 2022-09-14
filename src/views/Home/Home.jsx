@@ -6,12 +6,16 @@ import Ordercomponent from '../../components/Order/Ordercomponent';
 function Home() {
 
     return <div className="container">
-            <Ordercomponent />
-        <div className="d-flex justify-content-between m-3">
+        <div className="row">
             <Filterscomponent />
+            <Ordercomponent />
+        </div>
+        <div className="row">
             <Cards />
         </div>
-        <Pagination />
+        <div className="row">
+            <Pagination />
+        </div>
     </div>
 }
 

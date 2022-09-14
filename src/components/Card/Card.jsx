@@ -1,13 +1,18 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { NavLink } from "react-router-dom";
 import React from "react";
-function Card() {
+// import './Card.css'
 
-    return <div>
-        <div className="card" style={{width: "5rem;"}}>
-            <img src="https://via.placeholder.com/50/92c952" className="card-img-top" alt="product"/>
+function Card({image, name, _id, price, brand}) {
+
+    return <div className="card-container">
+        <div className="card" style={{width: "5rem;"}} key={_id}>
+            <img src="https://via.placeholder.com/40/2299ff" className="card-img-top p-2" alt="product"/>
                 <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className="btn btn-primary">See details</a>
+                    <h5 className="card-title">{name}</h5>
+                    <p className="card-text">${brand}</p>
+                    <p className="card-text">${price}</p>
+                    <NavLink to={`productsdetails/${_id}`} className="btn btn-primary">See details</NavLink>
                 </div>
         </div>
     </div>

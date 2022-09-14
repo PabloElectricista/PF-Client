@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getAllProducts, getProductById } from "../slices/productsSlices"
 
-export const getProds = () => {
+export const getProds = (page) => {
     return function (dispatch) {
-        axios("/products")
+        axios("/products?start="+page)
             .then(res => dispatch(getAllProducts(res.data)))
             .catch(err => console.error(err))
     }
