@@ -17,7 +17,7 @@ function Cards() {
         })
     }, [])
 
-    return <div className="container align-items-end">
+    return <div className="container align-items-end mt-5">
         <div className="d-flex flex-row mb-1">
             <div className="p-2"><Card/></div>
             <div className="p-2"><Card/></div>
