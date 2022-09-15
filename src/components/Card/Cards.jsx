@@ -38,6 +38,28 @@ function Cards() {
             ) :
             <span>Loading ...</span>
         }
+    return <div className="container align-items-end mt-5">
+        <div className="d-flex flex-row mb-1">
+            <div className="p-2"><Card/></div>
+            <div className="p-2"><Card/></div>
+            <div className="p-2"><Card/></div>
+        </div>
+        <div className="d-flex flex-row mb-1">
+            <div className="p-2"><Card/></div>
+            <div className="p-2"><Card/></div>
+            <div className="p-2"><Card/></div>
+        </div>
+        <div className="d-flex flex-row mb-1">
+            <div className="p-2"><Card/></div>
+            <div className="p-2"><Card/></div>
+            <div className="p-2"><Card/></div>
+        </div>
+        {/* {products && products.length ? products.map(product => <>
+        <p>Name: {product.name}</p>
+        <p>Price: {product.price}</p>
+        <p>Categories: </p>
+        {product.category.map(cat => <p>{cat}</p>)}
+        </>) : "products"} */}
     </div>
 }
 
