@@ -3,28 +3,26 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Rating from "../Rating/Rating";
 
-function Product(props) {
-  const { product } = props;
+function Product({ _id, name, images, rating, numReviews, price }) {
 
-
-  return (
+  return <div className="my-3">
     <Card>
-      <Link to={`product/${product.slug}`}>
-        <img src={product.image} alt={product.name} className="card-img-top" />
+      <Link to={`product/${_id}`}>
+        <img src={images[0]} alt={name} className="card-img-top" style={{ height: 200 }} />
       </Link>
       <Card.Body>
-        <Link to={`product/${product.slug}`}>
-          <Card.Title>{product.name}</Card.Title>
+        <Link to={`product/${_id}`}>
+          <Card.Title>{name}</Card.Title>
         </Link>
       </Card.Body>
       <Rating
-        rating={product.rating}
-        numReviews={product.numReviews}
+        rating={rating}
+        numReviews={numReviews}
       />
-      <Card.Text className="px-3">$ {product.price}</Card.Text>
+      <Card.Text className="px-3">$ {price}</Card.Text>
       <Button>Add to cart</Button>
     </Card>
-  );
+  </div>
 }
 
 export default Product;

@@ -7,15 +7,10 @@ import Card from "./Card";
 function Cards() {
 
     const { products } = useSelector(state => state.products)
-    const [row1, setRow1] = useState([])
-    const [row2, setRow2] = useState([])
-    const [row3, setRow3] = useState([])
-
+   
     useEffect(() => {
         if (products && products.length > 0) {
-            setRow1(products.slice(0, 3))
-            setRow2(products.slice(3, 6))
-            setRow3(products.slice(6, 9))
+            
         }
     }, [products])
 
