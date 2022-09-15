@@ -38,10 +38,16 @@ function Filterscomponent() {
                 <details><summary id="brand">by price</summary>
                     <div className="card card-body" style={{ width: "200px;" }}>
                         <input type="number" name="price" id="p" placeholder="0"/>
+                        <label htmlFor="customRange1" className="form-label">min</label>
+                        <input type="range" className="form-range" min="0" max="100000" id="customRange1"></input>
+                        <label htmlFor="customRange2" className="form-label">max</label>
+                        <input type="range" className="form-range" min="0" max="100000" id="customRange2"></input>
+
                         <label for="customRange1" class="form-label">min</label>
                         <input type="range" class="form-range" min="0" max="100000" id="customRange1"></input>
                         <label for="customRange2" class="form-label">max</label>
                         <input type="range" class="form-range" min="0" max="100000" id="customRange2"></input>
+
                     </div>
                 </details>
                 <details><summary id="brand">by condition</summary>
