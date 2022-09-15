@@ -2,7 +2,7 @@
 // import { Row, Col } from "react-bootstrap";
 import Products from "../../components/Products/Products";
 import Pagination from "../../components/Pagination/Pagination";
-import Cards from '../../components/Card/Cards'
+// import Cards from '../../components/Card/Cards'
 // import Filterscomponent from '../../components/Filters/Filterscomponent'
 // import Ordercomponent from '../../components/Order/Ordercomponent';
 
