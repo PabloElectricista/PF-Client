@@ -5,6 +5,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import Filters from '../../components/Filters/Filters'
 import Carousel from "../Carousel/Carousel"
 import Ordercomponent from '../../components/Order/Ordercomponent';
+import Carousel from "../../components/Carousel/Carousel"
 // import Cards from '../../components/Card/Cards'
 
 function Home() {
