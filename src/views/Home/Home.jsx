@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import Products from "../../components/Products/Products";
 import Pagination from "../../components/Pagination/Pagination";
 import Filters from '../../components/Filters/Filters'
-import Carousel from "../Carousel/Carousel"
+import Carousel from "../../components/Carousel/Carousel"
 // import Cards from '../../components/Card/Cards'
 // import Ordercomponent from '../../components/Order/Ordercomponent';
 
