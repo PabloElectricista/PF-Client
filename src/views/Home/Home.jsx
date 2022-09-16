@@ -11,7 +11,6 @@ function Home() {
     return (
         <>
             <Carousel />
-
             <Row className="d-flex justify-content-start">
                 <Col  xs={3}>
                     <Filters />
