@@ -5,7 +5,7 @@ import Rating from "../Rating/Rating";
 
 function Product({ _id, name, images, rating, numReviews, price }) {
 
-  return <div className="my-3">
+  return <div className="m-3" style={{width:250}}>
     <Card>
       <Link to={`product/${_id}`}>
         <img src={images[0]} alt={name} className="card-img-top" style={{ height: 200 }} />
