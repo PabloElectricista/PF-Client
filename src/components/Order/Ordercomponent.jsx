@@ -38,9 +38,9 @@ function Ordercomponent() {
                 onChange={handleSelect}
             >
                 <option>price</option>
-                {/* <option value="rating/asc">top rated</option> */}
-                <option value="price/asc">expensive first</option>
-                <option value="price/desc">cheaper first</option>
+                {/* <option value="rating/desc">top rated</option> */}
+                <option value="price/desc">expensive first</option>
+                <option value="price/asc">cheaper first</option>
             </Form.Select>
         </Form.Group>
     </Card>
