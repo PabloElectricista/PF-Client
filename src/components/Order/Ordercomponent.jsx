@@ -23,6 +23,7 @@ function Ordercomponent() {
 
     const handleSelect = e => {
         e.preventDefault();
+        if(e.target.name === (e.target.value).toLowerCase()) return;
         setQuery({
             order: e.target.value
         });
@@ -33,12 +34,13 @@ function Ordercomponent() {
         <Form.Group>
             <Form.Select 
                 size="sm"
+                name="price"
                 onChange={handleSelect}
             >
-                {/* <option value="ratings">good ratings</option> */}
-                <option>by price</option>
-                <option value="asc">expensive first</option>
-                <option value="desc">cheaper first</option>
+                <option>price</option>
+                {/* <option value="rating/desc">top rated</option> */}
+                <option value="price/desc">expensive first</option>
+                <option value="price/asc">cheaper first</option>
             </Form.Select>
         </Form.Group>
     </Card>
