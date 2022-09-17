@@ -6,9 +6,9 @@ import Rating from "../../components/Rating/Rating";
 import data from "../../data";
 
 function ProductDetail() {
-  const { slug } = useParams();
+  const { _id } = useParams();
 
-  const product = data.products.find((x) => x.slug === slug);
+  const product = data.products.find((x) => x._id === _id);
 
   const addToCartHandler = async () => { }
 
