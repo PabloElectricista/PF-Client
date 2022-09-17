@@ -9,9 +9,9 @@ import AdminRoute from "./components/Administrator/AdminRoute";
 import Dashboard from "./components/Administrator/Dashboard";
 import ProductListScreen from "./views/Home/ProductListScreen";
 import ProductEditScreen from "./views/ProductEdit/ProductEditScreen";
-import Signin from "./views/Signin";
+// import Signin from "./views/Signin";
 
-import CreateProduct from "./views/CreateProduct/CreateProduct";
+// import CreateProduct from "./views/CreateProduct/CreateProduct";
 
 function App() {
   return (
@@ -51,7 +51,7 @@ function App() {
             <Container>
               <Routes>
                 <Route path="/product/:_id" element={<ProductDetail />} />
-                <Route path="/signin" element={<Signin />} />
+                {/* <Route path="/signin" element={<Signin />} /> */}
                 <Route path="/" element={<Home />} />
                 {/* <Route path="/search" element={<SearchScreen />} /> */}
 
@@ -80,14 +80,14 @@ function App() {
                     </AdminRoute>
                   }
                 ></Route>
-                <Route
+                {/* <Route
                   path="/admin/product/createProduct"
                   element={
                     <AdminRoute>
                       <CreateProduct />
                     </AdminRoute>
                   }
-                ></Route>
+                ></Route> */}
               </Routes>
             </Container>
           </main>
