@@ -9,13 +9,25 @@ function Pagination() {
 
     const dispatch = useDispatch()
     const { count } = useSelector(state => state.products)
+    const { filter } = useSelector(state => state.filter)
     const [pages, setPages] = useState([])
-    const [current, setCurrent] = useState(2)
+    const [current, setCurrent] = useState(1)
     const [max, setMax] = useState(1)
+    const [query, setQuery] = useState("");
+    
+    useEffect(() => {
+        dispatch(getProds(current - 1 + query))
+    }, [current, query])
 
     useEffect(() => {
-        dispatch(getProds(current - 1))
-    }, [current])
+        if (filter) {
+            const keys = Object.keys(filter)
+            let text = ""
+            for (const key of keys) {
+                text += `&${key}=${filter[key]}`
+            }
+            setQuery(text);}
+    }, [filter])
 
     useEffect(() => {
         if (count) {
@@ -35,8 +47,8 @@ function Pagination() {
                 <li className={current === 1 ? "page-item disabled" : "page-item"}>
                     <a className="page-link" href="#" onClick={() => setCurrent(current - 1)}>Previous</a>
                 </li>
-                {pages && pages.length > 0 ? pages.map(page => {
-                    return <li className={current === page ? "page-item active" : "page-item"}
+                {pages && pages.length > 0 ? pages.map((page, idx) => {
+                    return <li key={idx} className={current === page ? "page-item active" : "page-item"}
                         aria-current={current === page ? "page" : ""}
                     >
                         <a className="page-link" href="#" onClick={() => setCurrent(page)}>{page}

@@ -12,7 +12,7 @@ function Products() {
                 {products && products.length > 0 ?
                     <Col sm={6} md={4} lg={3} className="mx-3">
                         {products.map((product, idx) => {
-                            if (idx < 3) return <Product {...product} />
+                            if (idx < 3) return <Product key={idx} {...product} />
                         })}
                     </Col> :
                     <Col>
@@ -21,14 +21,14 @@ function Products() {
                 {products && products.length > 0 ?
                     <Col sm={6} md={4} lg={3} className="mx-3">{
                         products.map((product, idx) => {
-                            if (2 < idx && idx < 6) return <Product {...product} />
+                            if (2 < idx && idx < 6) return <Product key={idx} {...product} />
                         })
                     }</Col> :
                     null}
                 {products && products.length > 0 ?
                     <Col sm={6} md={4} lg={3} className="mx-3">
                         {products.map((product, idx) => {
-                            if (idx > 5) return <Product {...product} />
+                            if (idx > 5) return <Product key={idx} {...product} />
                         })}
                     </Col> :
                     null}
