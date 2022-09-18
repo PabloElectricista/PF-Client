@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { useParams } from "react-router-dom";
 import { Row, Col, ListGroup, Card, Button, Badge } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
-import data from "../../data";
 
 function ProductDetail() {
-  const { slug } = useParams();
+  let { _id } = useParams();
 
-  const product = data.products.find((x) => x.slug === slug);
+  const products = useSelector((state) => state.products.products);
+  const product = products.find((x) => x._id === _id);
 
   const addToCartHandler = async () => { }
 
@@ -20,7 +21,7 @@ function ProductDetail() {
         <Col md={6}>
           <img
             className="img-large"
-            src={product.image}
+            src={product.images}
             alt={product.name}
           ></img>
         </Col>
@@ -32,13 +33,13 @@ function ProductDetail() {
               {/* </Helmet> */}
               <h1>{product.name}</h1>
             </ListGroup.Item>
-            <ListGroup.Item>
+            {/* <ListGroup.Item>
               <Rating
                 rating={product.rating}
                 numReviews={product.numReviews}
               ></Rating>
-            </ListGroup.Item>
-            <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
+            </ListGroup.Item> */}
+            <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
             <ListGroup.Item>
               <Row xs={1} md={2} className="g-2">
                 {/* {[product.image, ...product.images].map((x) => (
@@ -73,7 +74,43 @@ function ProductDetail() {
                     <Col>${product.price}</Col>
                   </Row>
                 </ListGroup.Item>
+
                 <ListGroup.Item>
+                  <Row>
+                    <Col>Category:</Col>
+                    <Col>${product.category}</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Stock:</Col>
+                    <Col>${product.stock}</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Brand:</Col>
+                    <Col>${product.brand}</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Summary:</Col>
+                    <Col>${product.summary}</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Colors:</Col>
+                    <Col>${product.colors}</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                {/* <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
                     <Col>
@@ -84,9 +121,9 @@ function ProductDetail() {
                       )}
                     </Col>
                   </Row>
-                </ListGroup.Item>
+                </ListGroup.Item> */}
 
-                {product.countInStock > 0 && (
+                {/* {product.countInStock > 0 && ( */}
                   <ListGroup.Item>
                     <div className="d-grid">
                       <Button onClick={addToCartHandler} variant="primary">
@@ -94,7 +131,7 @@ function ProductDetail() {
                       </Button>
                     </div>
                   </ListGroup.Item>
-                )}
+                {/* )} */}
               </ListGroup>
             </Card.Body>
           </Card>

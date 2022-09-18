@@ -64,4 +64,10 @@ body.Dark .filtersContainer, body.Dark .filterPrice, body.Dark .MuiSlider-root{
     color: white !important;
     font-family: serif !important;
 }
-
+.warning {
+    border: 3px solid red !important;
+}
+.error {
+    font-weight: bold !important;
+    color: red !important;
+}
