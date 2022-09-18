@@ -177,7 +177,7 @@ export default function CreateProduct() {
                         type="text"
                         value={input.summary}
                         name='summary'
-                        placeholder="Descripción:          (*)"
+                        placeholder="Summary:          (*)"
                         onChange={(e) => handleChange(e)}
                     />
                     {errors.summary && (<p className={style.error}>{errors.summary}</p>)}
