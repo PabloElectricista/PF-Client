@@ -78,35 +78,35 @@ function ProductDetail() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Category:</Col>
-                    <Col>${product.category}</Col>
+                    <Col>{product.category}</Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
                     <Col>Stock:</Col>
-                    <Col>${product.stock}</Col>
+                    <Col>{product.stock}</Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
                     <Col>Brand:</Col>
-                    <Col>${product.brand}</Col>
+                    <Col>{product.brand}</Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
                     <Col>Summary:</Col>
-                    <Col>${product.summary}</Col>
+                    <Col>{product.summary}</Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
                     <Col>Colors:</Col>
-                    <Col>${product.colors}</Col>
+                    <Col>{product.colors}</Col>
                   </Row>
                 </ListGroup.Item>
 
