@@ -60,9 +60,11 @@ function ProductListScreen() {
         </Col>
         <Col className="col text-end">
           <div>
+            <Link to='/admin/product/createProduct'>
             <Button type="button" onClick={createHandler}>
               Create Product
             </Button>
+            </Link>
           </div>
         </Col>
       </Row>

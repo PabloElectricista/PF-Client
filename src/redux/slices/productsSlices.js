@@ -20,11 +20,14 @@ export const productsSlice = createSlice({
             state.price = action.payload.price
             state.status = action.payload.status
         },
+        postProducts(state, action){
+            state.products = action.payload.products
+        },
         getProductById(state, actions){
             state.details = actions.payload
         }
     }
 })
 
-export const { getAllProducts, getProductById } = productsSlice.actions;
+export const { getAllProducts, getProductById, postProducts } = productsSlice.actions;
 export default productsSlice.reducer
