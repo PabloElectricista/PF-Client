@@ -11,7 +11,7 @@ import ProductListScreen from "./views/Home/ProductListScreen";
 import ProductEditScreen from "./views/ProductEdit/ProductEditScreen";
 // import Signin from "./views/Signin";
 
-// import CreateProduct from "./views/CreateProduct/CreateProduct";
+ import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 
 function App() {
   return (
@@ -80,14 +80,14 @@ function App() {
                     </AdminRoute>
                   }
                 ></Route>
-                {/* <Route
+                <Route
                   path="/admin/product/createProduct"
                   element={
                     <AdminRoute>
                       <CreateProduct />
                     </AdminRoute>
                   }
-                ></Route> */}
+                ></Route>
               </Routes>
             </Container>
           </main>

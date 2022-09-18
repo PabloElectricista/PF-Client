@@ -1,0 +1,70 @@
+.Carousel {
+    font-family: sans-serif;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  body {
+    background-color: #8a8d91 !important;
+  }
+  
+  /*slider.css  */
+  .products-container {
+    margin: 8% 0;
+    color: black;
+  }
+  .products-carousel-container {
+    margin: 3% ;
+
+  }
+  .products-container-heading {
+    color: #020101;
+    margin: 2% auto;
+    text-align: center;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .products-carousel-item {
+    position: relative;
+  }
+  .products-carousel-img {
+    height: 250px;
+    width: 250px;
+    margin: 3%;
+    margin-left: 23em;
+    border-radius: 50%;
+    position: relative;
+  }
+  .products-carousel-caption {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 1.25rem;
+    padding-top: 1.25rem;
+    margin: auto;
+    color: #0a0808;
+    text-align: center;
+    width: 50%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  
+  
+  @media screen and (max-width: 550px) {
+    .products-carousel-img {
+      height: 100px;
+      width: 100px;
+    }
+    .products-carousel-caption-title {
+      font-size: 14px;
+    }
+  }
+  
+  
+  .carousel-indicators [data-bs-target] {
+    background-color: #020101;
+  }
+
+  

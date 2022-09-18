@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllProducts, getProductById } from "../slices/productsSlices"
+import { getAllProducts, getProductById, postProducts } from "../slices/productsSlices"
 
 export const getProds = (page) => {
     return function (dispatch) {
@@ -13,6 +13,17 @@ export const getProdsById = (id) => {
     return function (dispatch) {
         axios("/products" + id)
             .then(res => dispatch(getProductById(res.data)))
+            .catch(err => console.error(err))
+    }
+}
+
+export const postProds = (product,tkn) => {
+    return function (dispatch) {
+        axios.post("/products",product, {
+            headers: {
+            'x-access-token': tkn
+          }})
+            .then(res => dispatch(postProducts(res.data)))
             .catch(err => console.error(err))
     }
 }
