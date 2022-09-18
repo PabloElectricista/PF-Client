@@ -17,9 +17,12 @@ export const getProdsById = (id) => {
     }
 }
 
-export const postProds = () => {
+export const postProds = (product,tkn) => {
     return function (dispatch) {
-        axios("/products")
+        axios.post("/products",product, {
+            headers: {
+            'x-access-token': tkn
+          }})
             .then(res => dispatch(postProducts(res.data)))
             .catch(err => console.error(err))
     }

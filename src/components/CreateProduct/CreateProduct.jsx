@@ -6,6 +6,7 @@ import style from "./CreateProduct.module.css";
 
 export default function CreateProduct() {
 
+    const tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWU2Mjk0M2RmMzBlNTQxOGJiMzVhNiIsImlhdCI6MTY2MzQzOTgxMiwiZXhwIjoxNjYzNTI2MjEyfQ.PeBSI_ivwUMNQDEly8RnetibNmwbSOek7K5NPTZsR0w'
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
     const [input, setInput] = useState({
@@ -71,8 +72,9 @@ export default function CreateProduct() {
             && input.category
             && !errors.hasOwnProperty("stock")
             && !errors.hasOwnProperty("colors")
-        ) {
-            dispatch(postProds(input))
+        ) 
+        {
+            dispatch(postProds(input,tkn))
             alert("Producto creado con exito")
             setInput({
                 name: "",
@@ -132,7 +134,7 @@ export default function CreateProduct() {
             <form className={style.contenedor} onSubmit={(e) => handleSubmit(e)} >
                 <div>
                     <input
-                        maxlength = "80"
+                        maxLength = "80"
                         className={style.input}
                         placeholder="Nombre del Producto: (*)"
                         autoComplete="off"
