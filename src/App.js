@@ -14,46 +14,6 @@ import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 // import Signin from "./views/Signin";
 
 function App() {
-  return (
-    <>
-      <Router>
-        <div className="d-flex flex-column site-container">
-          <header>
-            <Navbar bg="dark" variant="dark">
-              <Container>
-                <LinkContainer to="/">
-                  <Navbar.Brand>Hardware Hot Sales</Navbar.Brand>
-                </LinkContainer>
-                <SearchBox />
-                <Nav className="me-auto  w-100  justify-content-end">
-                  {/* {userInfo && userInfo.isAdmin && ( */}
-                  {true && (
-                    <NavDropdown title="Admin" id="admin-nav-dropdown">
-                      <LinkContainer to="/admin/dashboard">
-                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
-                      </LinkContainer>
-                    </NavDropdown>
-                  )}
-                </Nav>
-              </Container>
-            </Navbar>
-          </header>
-          <main>
-            <Container>
-              <Routes>
-                <Route path="/product/:_id" element={<ProductDetail />} />
-                {/* <Route path="/signin" element={<Signin />} /> */}
-                <Route path="/" element={<Home />} />
-                {/* <Route path="/search" element={<SearchScreen />} /> */}
 
     return (
         <>
