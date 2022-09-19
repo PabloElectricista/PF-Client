@@ -76,7 +76,7 @@ export default function CreateProduct() {
         {
             dispatch(postProds(input,tkn))
             toast("Producto creado con exito", {
-                type: "warning",
+                type: "success",
                 autoClose: 2000
               })
             setInput({
