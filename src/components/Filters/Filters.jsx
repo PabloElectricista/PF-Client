@@ -9,24 +9,39 @@ import { Row, Col } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 
 function Filters() {
-    
+
     const dispatch = useDispatch()
     let brand = useSelector(state => state.products.brand)
     let colors = useSelector(state => state.products.colors)
     let price = useSelector(state => state.products.price)
     let status = useSelector(state => state.products.status)
     let [query, setQuery] = useState({});
-    let [close, setClose] = useState({
-        brand: false,
-        colors: false,
-        status: false,
-        price: false
-    });
+    let [close, setClose] = useState({});
     const [minmax, setMinmax] = useState('');
     let [firstload, setFirstload] = useState(true);
 
     useEffect(() => {
+        let closefilterstate = JSON.parse(localStorage.getItem("closefilterstate"))
+        let setting = (closefilterstate === null || closefilterstate === undefined) ? {
+            brand: false,
+            colors: false,
+            status: false,
+            price: false
+        } : closefilterstate
+        setClose(setting)
+        let queryfilterstate = JSON.parse(localStorage.getItem("queryfilterstate"))
+        let querysettings = (queryfilterstate === null || queryfilterstate === undefined) ? {} : queryfilterstate
+        setQuery(querysettings)
+    }, [])
+
+    useEffect(() => {
         dispatch(setfilter(query))
+        const keys = Object.keys(query)
+            let text = ""
+            for (const key of keys) {
+                text += `&${key}=${query[key]}`
+            }
+        localStorage.setItem("filter", text)
     }, [query]);
 
     useEffect(() => {
@@ -43,39 +58,50 @@ function Filters() {
     const handleSelect = e => {
         e.preventDefault();
         if (e.target.name === (e.target.value).toLowerCase()) return;
-        setQuery({
+        let querysettings = {
             ...query,
             [e.target.name]: e.target.value
-        });
-        setClose({
+        }
+        setQuery(querysettings);
+        localStorage.setItem("queryfilterstate", JSON.stringify(querysettings))
+        let closesettings = {
             ...close,
             [e.target.name]: true
-        })
+        }
+        setClose(closesettings)
+        localStorage.setItem("closefilterstate", JSON.stringify(closesettings))
     }
 
     const handleClear = e => {
         e.preventDefault();
+        var querysettings = {}
+        var closesettings = {}
         if (e.target.name === 'price') {
-            setQuery({
+            querysettings = {
                 ...query,
                 price: minmax
-            });
-            setClose({
+            }
+            closesettings = {
                 ...close,
                 price: false
-            })
+            }
         } else {
-            var others = {}
             var keys = Object.keys(query)
             for (const key of keys) {
-                if (key !== e.target.name) others[key] = query[key]
+                if (key !== e.target.name) {
+                    console.log(key, query[key]);
+                    querysettings[key] = query[key]
+                }
             }
-            setQuery(others);
-            setClose({
+            closesettings = {
                 ...close,
                 [e.target.name]: false
-            })
+            }
         }
+        setQuery(querysettings);
+        localStorage.setItem("queryfilterstate", JSON.stringify(querysettings))
+        setClose(closesettings)
+        localStorage.setItem("closefilterstate", JSON.stringify(closesettings))
     }
 
     return <Card className="filtersContainer my-3" border="primary" style={{ width: '17rem' }}>
