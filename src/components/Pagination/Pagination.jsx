@@ -16,9 +16,15 @@ function Pagination() {
     const [query, setQuery] = useState("");
 
 
+    useState(() => {
+        let pagestate = localStorage.getItem("pagestate");
+        let setting = pagestate === undefined || pagestate === null ? 1 : parseInt(pagestate)
+        setCurrent(setting)
+    }, [])
 
     useEffect(() => {
         dispatch(getProds(`${current - 1}` + query))
+        localStorage.setItem("pagestate", current)
     }, [current, query])
 
     useEffect(() => {

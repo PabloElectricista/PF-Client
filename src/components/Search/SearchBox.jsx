@@ -15,12 +15,13 @@ export default function SearchBox() {
 
     useEffect(() => {
         let searchstate = localStorage.getItem("searchState")
-        let text = (searchstate === null || searchstate === undefined) ? "" : searchstate
-        setQuery(text)
-        setClose(localStorage.getItem("searchcloseState"))
+        if (searchstate !== null && searchstate !== undefined) setQuery(searchstate)
+        let searchcloseState = localStorage.getItem("searchcloseState")
+        if (searchcloseState !== null && searchcloseState !== undefined) setClose((searchcloseState === "false") ? false : true)
     }, [])
 
     useEffect(() => {
+        console.log(query);
         if (query === undefined || query === "") {
             localStorage.setItem("search", "")
             localStorage.setItem("searchState", "")
