@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { postProds } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 import style from "./CreateProduct.module.css";
-
+import { toast } from "react-toastify";
 
 export default function CreateProduct() {
 
@@ -75,7 +75,10 @@ export default function CreateProduct() {
         ) 
         {
             dispatch(postProds(input,tkn))
-            alert("Producto creado con exito")
+            toast("Producto creado con exito", {
+                type: "warning",
+                autoClose: 2000
+              })
             setInput({
                 name: "",
                 images: "",
@@ -89,7 +92,10 @@ export default function CreateProduct() {
             })
         }
         else {
-            alert("Debe completar correctamente todos los campos con asteriscos (*)")
+            toast("Debe completar correctamente todos los campos con asteriscos (*)", {
+                type: "warning",
+                autoClose: 2000
+              })
 
         }
     }

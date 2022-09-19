@@ -11,6 +11,8 @@ import ProductListScreen from "./views/Home/ProductListScreen";
 import ProductEditScreen from "./views/ProductEdit/ProductEditScreen";
 import logo from "./views/assets/micro50.jpg"
 import CreateProduct from '../src/components/CreateProduct/CreateProduct';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import Signin from "./views/Signin";
 
 function App() {
@@ -58,6 +60,7 @@ function App() {
                         </Navbar>
                     </header>
                     <main>
+                    <ToastContainer />
                         <Container>
                             <Routes>
                                 <Route path="/product/:_id" element={<ProductDetail />} />
