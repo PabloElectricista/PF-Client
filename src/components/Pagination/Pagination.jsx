@@ -14,19 +14,21 @@ function Pagination() {
     const [current, setCurrent] = useState(1)
     const [max, setMax] = useState(1)
     const [query, setQuery] = useState("");
-    
+
+
+
     useEffect(() => {
-        dispatch(getProds(current - 1 + query))
+        dispatch(getProds(`${current - 1}` + query))
     }, [current, query])
 
     useEffect(() => {
-        if (filter) {
-            const keys = Object.keys(filter)
-            let text = ""
-            for (const key of keys) {
-                text += `&${key}=${filter[key]}`
-            }
-            setQuery(text);}
+        var currentsettings = ""
+        if (filter !== undefined || filter !== null) {
+            currentsettings += localStorage.getItem("order")
+            currentsettings += localStorage.getItem("search")
+            currentsettings += localStorage.getItem("filter")
+            setQuery(currentsettings);
+        }
     }, [filter])
 
     useEffect(() => {

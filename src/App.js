@@ -9,95 +9,105 @@ import AdminRoute from "./components/Administrator/AdminRoute";
 import Dashboard from "./components/Administrator/Dashboard";
 import ProductListScreen from "./views/Home/ProductListScreen";
 import ProductEditScreen from "./views/ProductEdit/ProductEditScreen";
+import logo from "./views/assets/micro50.jpg"
+import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 // import Signin from "./views/Signin";
 
- import CreateProduct from '../src/components/CreateProduct/CreateProduct';
-
 function App() {
-  return (
-    <>
-      <Router>
-        <div className="d-flex flex-column site-container">
-          <header>
-            <Navbar bg="dark" variant="dark">
-              <Container>
-                <LinkContainer to="/">
-                  <Navbar.Brand>Our Ecommerce</Navbar.Brand>
-                </LinkContainer>
-                <SearchBox />
-                <Nav className="me-auto  w-100  justify-content-end">
-                  {/* {userInfo && userInfo.isAdmin && ( */}
-                  {true && (
-                    <NavDropdown title="Admin" id="admin-nav-dropdown">
-                      <LinkContainer to="/admin/dashboard">
-                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
-                      </LinkContainer>
-                    </NavDropdown>
-                  )}
-                </Nav>
-              </Container>
-            </Navbar>
-          </header>
-          <main>
-            <Container>
-              <Routes>
-                <Route path="/product/:_id" element={<ProductDetail />} />
-                {/* <Route path="/signin" element={<Signin />} /> */}
-                <Route path="/" element={<Home />} />
-                {/* <Route path="/search" element={<SearchScreen />} /> */}
 
-                {/* Admin Routes */}
-                <Route
-                  path="/admin/dashboard"
-                  element={
-                    <AdminRoute>
-                      <Dashboard />
-                    </AdminRoute>
-                  }
-                ></Route>
-                <Route
-                  path="/admin/products"
-                  element={
-                    <AdminRoute>
-                      <ProductListScreen />
-                    </AdminRoute>
-                  }
-                ></Route>
-                <Route
-                  path="/admin/product/:id"
-                  element={
-                    <AdminRoute>
-                      <ProductEditScreen />
-                    </AdminRoute>
-                  }
-                ></Route>
-                <Route
-                  path="/admin/product/createProduct"
-                  element={
-                    <AdminRoute>
-                      <CreateProduct />
-                    </AdminRoute>
-                  }
-                ></Route>
-              </Routes>
-            </Container>
-          </main>
-          <footer>
-            <div className="text-center">All rights reserved</div>
-          </footer>
-        </div>
-      </Router>
+    return (
+        <>
+            <Router>
+                <div className="d-flex flex-column site-container">
+                    <header>
+                        <Navbar bg="dark" variant="dark">
+                            <Container>
+                                <LinkContainer to="/">
+                                    <img
+                                        src={logo}
+                                        width="40"
+                                        height="40"
+                                        className="d-inline-block align-top"
+                                        alt="our logo"
+                                    />
+                                </LinkContainer>
+                                <LinkContainer to="/">
+                                    <Navbar.Brand>Hardware Hot Sales</Navbar.Brand>
+                                </LinkContainer>
+                                <SearchBox />
+                                <Nav className="me-auto  w-100  justify-content-end">
+                                    {/* {userInfo && userInfo.isAdmin && ( */}
+                                    {true && (
+                                        <NavDropdown title="Admin" id="admin-nav-dropdown">
+                                            <LinkContainer to="/admin/dashboard">
+                                                <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                                            </LinkContainer>
+                                            <LinkContainer to="/admin/products">
+                                                <NavDropdown.Item>Products</NavDropdown.Item>
+                                            </LinkContainer>
+                                            <LinkContainer to="/admin/orders">
+                                                <NavDropdown.Item>Orders</NavDropdown.Item>
+                                            </LinkContainer>
+                                            <LinkContainer to="/admin/users">
+                                                <NavDropdown.Item>Users</NavDropdown.Item>
+                                            </LinkContainer>
+                                        </NavDropdown>
+                                    )}
+                                </Nav>
+                            </Container>
+                        </Navbar>
+                    </header>
+                    <main>
+                        <Container>
+                            <Routes>
+                                <Route path="/product/:_id" element={<ProductDetail />} />
+                                {/* <Route path="/signin" element={<Signin />} /> */}
+                                <Route path="/" element={<Home />} />
+                                {/* <Route path="/search" element={<SearchScreen />} /> */}
 
-      {/* <Router>
+                                {/* Admin Routes */}
+                                <Route
+                                    path="/admin/dashboard"
+                                    element={
+                                        <AdminRoute>
+                                            <Dashboard />
+                                        </AdminRoute>
+                                    }
+                                ></Route>
+                                <Route
+                                    path="/admin/products"
+                                    element={
+                                        <AdminRoute>
+                                            <ProductListScreen />
+                                        </AdminRoute>
+                                    }
+                                ></Route>
+                                <Route
+                                    path="/admin/product/:id"
+                                    element={
+                                        <AdminRoute>
+                                            <ProductEditScreen />
+                                        </AdminRoute>
+                                    }
+                                ></Route>
+                                <Route
+                                    path="/admin/product/createProduct"
+                                    element={
+                                        <AdminRoute>
+                                            <CreateProduct />
+                                        </AdminRoute>
+                                    }
+                                ></Route>
+                            </Routes>
+                        </Container>
+                    </main>
+                    <footer>
+                        <div className="text-center">All rights reserved</div>
+                    </footer>
+                </div>
+            </Router>
+
+            {/* <Router>
                 <Navbar />
                 <ToastContainer />
                 <Routes>
@@ -107,8 +117,8 @@ function App() {
                 </Routes>
                 <Footer />
             </Router> */}
-    </>
-  );
+        </>
+    );
 }
 
 export default App;
