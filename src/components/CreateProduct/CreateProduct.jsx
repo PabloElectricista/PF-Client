@@ -6,7 +6,7 @@ import style from "./CreateProduct.module.css";
 
 export default function CreateProduct() {
 
-    const tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWU2Mjk0M2RmMzBlNTQxOGJiMzVhNiIsImlhdCI6MTY2MzQ2MzUyNSwiZXhwIjoxNjYzNTQ5OTI1fQ.-vbFPU5-gOe-8p4kmiNRQu_HXqUr7EcyTcMvEOAyLyI'
+    const tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWU2Mjk0M2RmMzBlNTQxOGJiMzVhNiIsImlhdCI6MTY2MzU2OTMxNywiZXhwIjoxNjYzNjU1NzE3fQ.shqGA5B7HiJHBEu4qUXAM1lIevOB29ARBogJ6cuUhFI'
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
     const [input, setInput] = useState({

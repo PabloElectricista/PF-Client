@@ -11,8 +11,19 @@ function Ordercomponent() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // localStorage.setItem('items', JSON.stringify(query));
-        dispatch(setfilter(query))
+        let orderstate = localStorage.getItem("orderState")
+        let text = (orderstate === null || orderstate === undefined) ? "" : orderstate
+        setQuery(text)
+    }, [])
+
+    useEffect(() => {
+        if (query === undefined || query === "") {
+            localStorage.setItem("order", "")
+            localStorage.setItem("orderState", "")
+        } else {
+            localStorage.setItem("order", `&order=${query}`)
+            localStorage.setItem("orderState", query)
+        }
     }, [query]);
 
     const styles = { 
@@ -23,10 +34,13 @@ function Ordercomponent() {
 
     const handleSelect = e => {
         e.preventDefault();
-        if(e.target.name === (e.target.value).toLowerCase()) return;
-        setQuery({
-            order: e.target.value
-        });
+        if(e.target.name === (e.target.value).toLowerCase()) {
+            setQuery("")
+            return
+        };
+        setQuery(`${e.target.value}`);
+        localStorage.setItem("orderState", `${e.target.value}`)
+        dispatch(setfilter({order: e.target.value}))
     }
 
     return <Card className="my-3" border="primary" style={styles}>
