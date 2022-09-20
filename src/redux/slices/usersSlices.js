@@ -12,9 +12,12 @@ export const usersSlices = createSlice({
         },
         getUserByEmail(state, actions){
             state.user = actions.payload
+        },
+        addNewUser(state, actions){
+            state.user = actions.payload
         }
     }
 })
 
-export const { getAllUsers, getUserByEmail } = usersSlices.actions;
+export const { getAllUsers, getUserByEmail, addNewUser } = usersSlices.actions;
 export default usersSlices.reducer
