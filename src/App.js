@@ -1,70 +1,64 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable-next-line
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./views/Home/Home";
 import ProductDetail from "./views/ProductDetail/ProductDetail";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import SearchBox from "./components/Search/SearchBox";
+import { Container } from "react-bootstrap";
 import AdminRoute from "./components/Administrator/AdminRoute";
 import Dashboard from "./components/Administrator/Dashboard";
+import NavBarComponent from "./components/NavBar/NavBarComponent";
 import ProductListScreen from "./views/Home/ProductListScreen";
 import ProductEditScreen from "./views/ProductEdit/ProductEditScreen";
-import logo from "./views/assets/micro50.jpg"
 import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import Signin from "./views/Signin";
+import UserProfile from "./components/UserProfile/UserProfile"
+import Signin from "./views/Signin/Signin";
+import { useGoogleOneTapLogin } from 'react-google-one-tap-login';
+import { useEffect, useState } from "react";
+import { getByEmail } from "./redux/actions/users"
+import { useDispatch } from "react-redux";
 
 function App() {
+
+    const [user, setUser] = useState({})
+    const dispatch = useDispatch()
+
+    // let clientId = "76641969651-1t60doovequmf8pmun1glt7ehj6hr80f.apps.googleusercontent.com"
+    let clientId = "837241183537-u5uki0e6odl7v0p8ilkst5e2j3ml9u4p.apps.googleusercontent.com"
+    useGoogleOneTapLogin({
+        onError: error => console.log(error),
+        onSuccess: response => setUser({
+            username: `${response.given_name}${response.family_name}`,
+            email: response.email,
+            password: "12345678",
+            picture: response.picture,
+            roles: "user"
+        }),
+        googleAccountConfigs: {
+            client_id: clientId
+        },
+    });
+
+    useEffect(() => {
+        if(user && user.email) {
+            dispatch(getByEmail(user))
+        }
+    }, [user])
 
     return (
         <>
             <Router>
                 <div className="d-flex flex-column site-container">
                     <header>
-                        <Navbar bg="dark" variant="dark">
-                            <Container>
-                                <LinkContainer to="/">
-                                    <img
-                                        src={logo}
-                                        width="40"
-                                        height="40"
-                                        className="d-inline-block align-top"
-                                        alt="our logo"
-                                    />
-                                </LinkContainer>
-                                <LinkContainer to="/">
-                                    <Navbar.Brand>Hardware Hot Sales</Navbar.Brand>
-                                </LinkContainer>
-                                <SearchBox />
-                                <Nav className="me-auto  w-100  justify-content-end">
-                                    {/* {userInfo && userInfo.isAdmin && ( */}
-                                    {true && (
-                                        <NavDropdown title="Admin" id="admin-nav-dropdown">
-                                            <LinkContainer to="/admin/dashboard">
-                                                <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                                            </LinkContainer>
-                                            <LinkContainer to="/admin/products">
-                                                <NavDropdown.Item>Products</NavDropdown.Item>
-                                            </LinkContainer>
-                                            <LinkContainer to="/admin/orders">
-                                                <NavDropdown.Item>Orders</NavDropdown.Item>
-                                            </LinkContainer>
-                                            <LinkContainer to="/admin/users">
-                                                <NavDropdown.Item>Users</NavDropdown.Item>
-                                            </LinkContainer>
-                                        </NavDropdown>
-                                    )}
-                                </Nav>
-                            </Container>
-                        </Navbar>
+                        <NavBarComponent />
                     </header>
                     <main>
-                    <ToastContainer />
+                        <ToastContainer />
                         <Container>
                             <Routes>
                                 <Route path="/product/:_id" element={<ProductDetail />} />
-                                {/* <Route path="/signin" element={<Signin />} /> */}
+                                <Route path="/signin" element={<Signin />} />
                                 <Route path="/" element={<Home />} />
                                 {/* <Route path="/search" element={<SearchScreen />} /> */}
 
@@ -101,6 +95,12 @@ function App() {
                                         </AdminRoute>
                                     }
                                 ></Route>
+                                <Route
+                                    path="/admin/profile"
+                                    element={
+                                        <UserProfile />
+                                    }
+                                ></Route>
                             </Routes>
                         </Container>
                     </main>
@@ -109,17 +109,6 @@ function App() {
                     </footer>
                 </div>
             </Router>
-
-            {/* <Router>
-                <Navbar />
-                <ToastContainer />
-                <Routes>
-                    <Route exact path="/" element={<LandingPage />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/createproduct" element={<CreateProduct />} />
-                </Routes>
-                <Footer />
-            </Router> */}
         </>
     );
 }
