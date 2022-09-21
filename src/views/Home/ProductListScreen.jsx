@@ -1,20 +1,25 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 import data from "../../data";
 import './ProductListScreen.css';
 
 function ProductListScreen() {
+
   const navigate = useNavigate();
-  // eslint-disable-next-line
   const { search } = useLocation();
-  
   const { products } = useSelector(state => state.products)
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      console.log(products);
+    }
+  }, [products])
 
   console.log('products>>>>>>',products)
   
@@ -60,6 +65,7 @@ function ProductListScreen() {
 
   return (
     <div>
+      <br></br><br></br><br></br>
       <Row>
         <Col>
           <h1>Products</h1>
@@ -88,13 +94,13 @@ function ProductListScreen() {
             </tr>
           </thead>
           <tbody>
-            {data.products.map((product) => (
-              <tr key={products._id}>
-                <td>{products._id}</td>
-                <td>{products.name}</td>
-                <td>{products.price}</td>
-                <td>{products.category}</td>
-                <td>{products.brand}</td>
+            {products.length && products.map((product) => (
+              <tr key={product.slug}>
+                <td>{product.slug}</td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
                 <td>
                   <Button
                     type="button"
