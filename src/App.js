@@ -18,6 +18,21 @@ import { useGoogleOneTapLogin } from 'react-google-one-tap-login';
 import { useEffect, useState } from "react";
 import { getByEmail } from "./redux/actions/users"
 import { useDispatch } from "react-redux";
+import { SnackbarProvider } from 'notistack';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#FFC400',
+      },
+      secondary: {
+        main: '#3a0ca3',
+      },
+    },
+  });
+
 
 function App() {
 
@@ -48,6 +63,8 @@ function App() {
 
     return (
         <>
+        <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={3}>
             <Router>
                 <div className="d-flex flex-column site-container">
                     <header>
@@ -96,6 +113,14 @@ function App() {
                                     }
                                 ></Route>
                                 <Route
+                                    path="/admin/product/updateProduct/:id"
+                                    element={
+                                        <AdminRoute>
+                                            <UpdateProduct />
+                                        </AdminRoute>
+                                    }
+                                ></Route>
+                                <Route
                                     path="/admin/profile"
                                     element={
                                         <UserProfile />
@@ -109,6 +134,8 @@ function App() {
                     </footer>
                 </div>
             </Router>
+            </SnackbarProvider>
+        </ThemeProvider>
         </>
     );
 }

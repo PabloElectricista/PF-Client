@@ -5,13 +5,19 @@ import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import data from "../../data";
+import './ProductListScreen.css';
 
 function ProductListScreen() {
   const navigate = useNavigate();
   // eslint-disable-next-line
   const { search } = useLocation();
+  
+  const { products } = useSelector(state => state.products)
 
+  console.log('products>>>>>>',products)
+  
   const createHandler = async () => {
     // if (window.confirm("Are you sure to create?")) {
     //   try {
@@ -61,7 +67,7 @@ function ProductListScreen() {
         <Col className="col text-end">
           <div>
             <Link to='/admin/product/createProduct'>
-            <Button type="button" onClick={createHandler}>
+            <Button className="createButton" type="button" onClick={createHandler}>
               Create Product
             </Button>
             </Link>
@@ -83,17 +89,17 @@ function ProductListScreen() {
           </thead>
           <tbody>
             {data.products.map((product) => (
-              <tr key={product.slug}>
-                <td>{product.slug}</td>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td>{product.category}</td>
-                <td>{product.brand}</td>
+              <tr key={products._id}>
+                <td>{products._id}</td>
+                <td>{products.name}</td>
+                <td>{products.price}</td>
+                <td>{products.category}</td>
+                <td>{products.brand}</td>
                 <td>
                   <Button
                     type="button"
                     variant="light"
-                    onClick={() => navigate(`/admin/product/${product.slug}`)}
+                    onClick={() => navigate(`/admin/product/updateProduct/${product._id}`)}
                   >
                     Edit
                   </Button>
