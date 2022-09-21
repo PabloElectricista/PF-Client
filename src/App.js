@@ -13,7 +13,6 @@ import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 import UserProfile from "./components/UserProfile/UserProfile"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import UserProfile from "./components/UserProfile/UserProfile"
 import Signin from "./views/Signin/Signin";
 import { useGoogleOneTapLogin } from 'react-google-one-tap-login';
 import { useEffect, useState } from "react";
