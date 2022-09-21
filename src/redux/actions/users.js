@@ -36,6 +36,7 @@ export const getByEmail = (user/* , tkn */) => {
 }
 
 export const postUser = (newuser) => async (dispatch) => {
+    console.log(newuser);
     try {
         const res = await axios.post("/users", newuser)
         dispatch(addNewUser(res.data))
