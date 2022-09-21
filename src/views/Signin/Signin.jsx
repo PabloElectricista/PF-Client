@@ -1,14 +1,64 @@
+/* global google */
+import { Button } from "react-bootstrap";
+import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
+import { postUser } from "../../redux/actions/users"
+import { useDispatch } from "react-redux";
 
+function Signin({ log, setLog }) {
 
-function Signin() {
-    
+    const dispatch = useDispatch()
 
-    return <div>
-        <br></br>
-        <br></br>
-        <br></br>
-        <button>back</button>
-    </div>
+    const handleCredentialResponse = ({ credential }) => {
+        const responsePayload = jwt_decode(credential);
+        if (responsePayload.email_verified) {
+            dispatch(postUser({credential}))
+            toast("Login Ok", { type: "success" })
+            setLog(responsePayload.email_verified)
+            localStorage.setItem("islogged", "true")
+        }
+    };
+
+    const login = () => {
+        google.accounts.id.initialize({
+            client_id: '837241183537-u5uki0e6odl7v0p8ilkst5e2j3ml9u4p.apps.googleusercontent.com',
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.prompt(notification => {
+            if (notification.isSkippedMoment()) {
+                toast("Login skipped", { type: "warning" });
+            }
+        });
+    };
+
+    const logout = () => {
+        google.accounts.id.disableAutoSelect()
+        toast("Logout done", { type: "info" })
+        setLog(false);
+        localStorage.setItem("islogged", "false")
+    }
+
+    return <>
+        {!log ?
+            <Button
+                size="sm"
+                variant="outline-success"
+                className="mx-2"
+                onClick={login}
+            >
+                Login
+            </Button>
+            :
+            <Button
+                size="sm"
+                variant="outline-danger"
+                className="g_id_signout mx-2"
+                onClick={logout}
+            >
+                Logout
+            </Button>
+        }
+    </>
 }
 
 export default Signin;
