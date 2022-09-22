@@ -6,7 +6,8 @@ import { Row, Col, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import data from "../../data";
+import './ProductListScreen.css';
 
 function ProductListScreen() {
 
@@ -20,6 +21,8 @@ function ProductListScreen() {
     }
   }, [products])
 
+  console.log('products>>>>>>',products)
+  
   const createHandler = async () => {
     // if (window.confirm("Are you sure to create?")) {
     //   try {
@@ -70,7 +73,7 @@ function ProductListScreen() {
         <Col className="col text-end">
           <div>
             <Link to='/admin/product/createProduct'>
-            <Button type="button" onClick={createHandler}>
+            <Button className="createButton" type="button" onClick={createHandler}>
               Create Product
             </Button>
             </Link>
@@ -91,9 +94,9 @@ function ProductListScreen() {
             </tr>
           </thead>
           <tbody>
-            {products.length && products.map((product) => (
-              <tr key={product.slug}>
-                <td>{product.slug}</td>
+            {products?.length && products.map((product) => (
+              <tr key={product._id}>
+                <td>{product._id}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.category}</td>
@@ -102,7 +105,7 @@ function ProductListScreen() {
                   <Button
                     type="button"
                     variant="light"
-                    onClick={() => navigate(`/admin/product/${product._id}`)}
+                    onClick={() => navigate(`/admin/product/updateProduct/${product._id}`)}
                   >
                     Edit
                   </Button>

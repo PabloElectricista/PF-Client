@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllProducts, getProductById, postProducts } from "../slices/productsSlices"
+import { getAllProducts, getProductById, postProducts, putProducts } from "../slices/productsSlices"
 
 export const getProds = (page) => {
     return function (dispatch) {
@@ -27,3 +27,14 @@ export const postProds = (product,tkn) => {
             .catch(err => console.error(err))
     }
 }
+export const updateProduct = (id, payload, tkn) => {
+    return function (dispatch) {
+                (axios.put(`/products/${id}`,payload, {
+            headers: {
+            'x-access-token': tkn
+          }}))
+            .then(res => console.log(res.data))
+            .catch(err => console.error(err))
+    }
+}
+
