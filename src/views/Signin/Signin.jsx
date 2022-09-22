@@ -16,6 +16,7 @@ function Signin({ log, setLog }) {
             toast("Login Ok", { type: "success" })
             setLog(responsePayload.email_verified)
             localStorage.setItem("islogged", "true")
+            localStorage.setItem("tkn", credential)
             localStorage.setItem("tkn", (credential))
         }
     };
@@ -42,6 +43,7 @@ function Signin({ log, setLog }) {
     return <>
         {!log ?
             <Button
+                style={{fontWeight:"bolder"}}
                 size="sm"
                 variant="outline-success"
                 className="mx-2"
@@ -51,6 +53,7 @@ function Signin({ log, setLog }) {
             </Button>
             :
             <Button
+                style={{fontWeight:"bolder"}}
                 size="sm"
                 variant="outline-danger"
                 className="g_id_signout mx-2"

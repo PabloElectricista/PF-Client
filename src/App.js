@@ -13,18 +13,13 @@ import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 import UserProfile from "./components/UserProfile/UserProfile"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Signin from "./views/Signin/Signin";
-import { useGoogleOneTapLogin } from 'react-google-one-tap-login';
-import { useEffect, useState } from "react";
-import { getByEmail } from "./redux/actions/users"
-import { useDispatch } from "react-redux";
 import { SnackbarProvider } from 'notistack';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
 import OrdersProducts from './components/OrdersProducts/OrdersProducts'
 import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
 import MessagesContainer from './components/Messages/MessagesContainer'
-
+import MessageDetails from './components/Messages/MessageDetails'
 
 const theme = createTheme({
     palette: {
@@ -36,7 +31,6 @@ const theme = createTheme({
       },
     },
   });
-
 
 function App() {
 
@@ -116,12 +110,12 @@ function App() {
                                         <MessagesContainer />
                                     }
                                 ></Route>
-                                {/* <Route
+                                <Route
                                     path="/admin/messagedetails/:id"
                                     element={
                                         <MessageDetails />
                                     }
-                                ></Route> */}
+                                ></Route>
                                 <Route
                                     path="/admin/profile"
                                     element={
