@@ -21,6 +21,10 @@ import { useDispatch } from "react-redux";
 import { SnackbarProvider } from 'notistack';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
+import OrdersProducts from './components/OrdersProducts/OrdersProducts'
+import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
+import MessagesContainer from './components/Messages/MessagesContainer'
+
 
 const theme = createTheme({
     palette: {
@@ -33,9 +37,6 @@ const theme = createTheme({
     },
   });
 
-import OrdersProducts from './components/OrdersProducts/OrdersProducts'
-import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
-import MessagesContainer from './components/Messages/MessagesContainer'
 
 function App() {
 
