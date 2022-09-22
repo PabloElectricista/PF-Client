@@ -1,16 +1,24 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import data from "../../data";
+
 
 function ProductListScreen() {
+
   const navigate = useNavigate();
-  // eslint-disable-next-line
   const { search } = useLocation();
+  const { products } = useSelector(state => state.products)
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      console.log(products);
+    }
+  }, [products])
 
   const createHandler = async () => {
     // if (window.confirm("Are you sure to create?")) {
@@ -54,6 +62,7 @@ function ProductListScreen() {
 
   return (
     <div>
+      <br></br><br></br><br></br>
       <Row>
         <Col>
           <h1>Products</h1>
@@ -82,7 +91,7 @@ function ProductListScreen() {
             </tr>
           </thead>
           <tbody>
-            {data.products.map((product) => (
+            {products.length && products.map((product) => (
               <tr key={product.slug}>
                 <td>{product.slug}</td>
                 <td>{product.name}</td>
@@ -93,7 +102,7 @@ function ProductListScreen() {
                   <Button
                     type="button"
                     variant="light"
-                    onClick={() => navigate(`/admin/product/${product.slug}`)}
+                    onClick={() => navigate(`/admin/product/${product._id}`)}
                   >
                     Edit
                   </Button>
