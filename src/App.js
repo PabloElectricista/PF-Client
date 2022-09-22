@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import OrdersProducts from './components/OrdersProducts/OrdersProducts'
 import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
 import MessagesContainer from './components/Messages/MessagesContainer'
+import MessageDetails from './components/Messages/MessageDetails'
 
 function App() {
 
@@ -85,12 +86,12 @@ function App() {
                                         <MessagesContainer />
                                     }
                                 ></Route>
-                                {/* <Route
+                                <Route
                                     path="/admin/messagedetails/:id"
                                     element={
                                         <MessageDetails />
                                     }
-                                ></Route> */}
+                                ></Route>
                                 <Route
                                     path="/admin/profile"
                                     element={
