@@ -31,13 +31,12 @@ export default function UpdateProduct() {
     const navigate = useNavigate ()
     const location = useLocation()
     let id = (location.pathname.substring(29,location.pathname.length)) 
-    console.log('id >>>>>>>>>>',id)
+
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
 
     const products = useSelector((state) => state.products.products);
     const update = products.find((x) => x._id === id);
-    console.log('Este es el update>>>>>>>>>>>>',update)
      
     if (!update.name){
     dispatch(getProdsById(id))
