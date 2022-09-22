@@ -23,11 +23,14 @@ export const productsSlice = createSlice({
         postProducts(state, action){
             state.products = action.payload.products
         },
+        putProducts(state, action){
+            state.products = action.payload.products
+        },
         getProductById(state, actions){
             state.details = actions.payload
         }
     }
 })
 
-export const { getAllProducts, getProductById, postProducts } = productsSlice.actions;
+export const { getAllProducts, getProductById, postProducts, putProducts } = productsSlice.actions;
 export default productsSlice.reducer

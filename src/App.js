@@ -13,15 +13,31 @@ import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 import UserProfile from "./components/UserProfile/UserProfile"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SnackbarProvider } from 'notistack';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
 import OrdersProducts from './components/OrdersProducts/OrdersProducts'
 import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
 import MessagesContainer from './components/Messages/MessagesContainer'
 import MessageDetails from './components/Messages/MessageDetails'
 
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#FFC400',
+      },
+      secondary: {
+        main: '#3a0ca3',
+      },
+    },
+  });
+
 function App() {
 
     return (
         <>
+        <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={3}>
             <Router>
                 <div className="d-flex flex-column site-container">
                     <header>
@@ -69,6 +85,14 @@ function App() {
                                     }
                                 ></Route>
                                 <Route
+                                    path="/admin/product/updateProduct/:id"
+                                    element={
+                                        <AdminRoute>
+                                            <UpdateProduct />
+                                        </AdminRoute>
+                                    }
+                                ></Route>
+                                <Route
                                     path="/admin/orders"
                                     element={
                                         <OrdersProducts />
@@ -106,6 +130,8 @@ function App() {
                     </footer>
                 </div>
             </Router>
+            </SnackbarProvider>
+        </ThemeProvider>
         </>
     );
 }
