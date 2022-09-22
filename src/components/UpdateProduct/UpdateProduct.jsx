@@ -29,20 +29,19 @@ export default function UpdateProduct() {
  
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate ()
-    //const location = useLocation()
-    //let id = (location.pathname.substring(4,location.pathname.length)) 
-    //console.log('id >>>>>>>>>>',id)
+    const location = useLocation()
+    let id = (location.pathname.substring(29,location.pathname.length)) 
+    console.log('id >>>>>>>>>>',id)
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
 
-    //let update = useSelector ((state) => state.products);
-    const { update } = useSelector(state => state.products)
-    console.log('updateeeeeeeeeeeee',update) 
-    if (!update.name){
-    dispatch(getProdsById(update[0]._id))
-    }
+    const products = useSelector((state) => state.products.products);
+    const update = products.find((x) => x._id === id);
+    console.log('Este es el update>>>>>>>>>>>>',update)
      
-
+    if (!update.name){
+    dispatch(getProdsById(id))
+    }
 
     const [input, setInput] = useState({
         user: {}, name: "", colors:[{}], category: [{}], images: [{}], brand: "", stock: 0, price: 0, summary: "", description: "", status: ["New"]
@@ -179,11 +178,7 @@ export default function UpdateProduct() {
     return (
 
         <div>
-            <Link to= "/hay que ver a que ruta vuelvo" className= {style.volver1}>
-                <Button sx={{ m: 1, width: '20ch', color: '#022335', bgcolor:'#fff', borderColor:'#dee2e6',  borderRadius: "5px"}}   variant="outlined" startIcon={<KeyboardReturnIcon fontSize = "large"/>}>
-                    volver
-                </Button>
-            </Link> 
+            
             <form  onSubmit={(e) => handleSubmit(e)} >
 
                 <Box  sx={{'& .MuiTextField-root': { m: 1, width: '60ch', color: "white" },width: '62ch', my: "2%", mx: "30%", maxWidth: "100%", bgcolor:'#fff', borderRadius: "10px" }}>
@@ -392,6 +387,11 @@ export default function UpdateProduct() {
                             </div>
                         </div>
                     </Box>
+                    <Link to= "/admin/products" className= {style.volver1}>
+                        <Button sx={{ m: 1, width: '20ch', color: '#022335', bgcolor:'#fff', borderColor:'#dee2e6',  borderRadius: "5px"}}   variant="outlined" startIcon={<KeyboardReturnIcon fontSize = "large"/>}>
+                            volver
+                        </Button>
+                    </Link> 
                     <Stack direction="row" spacing={2} >
                         <Button sx={{ m: 1, width: '70ch', color: '#022335', bgcolor:'#fff', borderColor:'#022335',  borderRadius: "10px"}} type='submit' className= {style.modificar} variant="outlined" startIcon={<EditIcon fontSize = "large"/>}>
                             Modificar Producto
