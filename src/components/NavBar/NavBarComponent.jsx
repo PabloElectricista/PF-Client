@@ -60,7 +60,7 @@ function NavBarComponent() {
                                 height="30"
                             />
                         } id="admin-nav-dropdown" >
-                            <LinkContainer to="#" style={itemstyle}>
+                            <LinkContainer to="/admin/messages" style={itemstyle}>
                                 <NavDropdown.Item>
                                 <i className="material-icons">mail</i>
                                     Messages

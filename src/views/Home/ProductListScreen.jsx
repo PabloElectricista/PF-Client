@@ -102,7 +102,7 @@ function ProductListScreen() {
                   <Button
                     type="button"
                     variant="light"
-                    onClick={() => navigate(`/admin/product/${product.slug}`)}
+                    onClick={() => navigate(`/admin/product/${product._id}`)}
                   >
                     Edit
                   </Button>
