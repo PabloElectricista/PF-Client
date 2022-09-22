@@ -139,7 +139,7 @@ export default function UpdateProduct() {
              enqueueSnackbar("Debe completar correctamente todos los campos con asteriscos (*)", { variant: 'error' });
         }
         else {
-            dispatch(updateProduct(update[0]._id, input))
+            dispatch(updateProduct(update._id, input))
              enqueueSnackbar("Producto modificado con exito", { variant: 'success' });
              setTimeout(() => {
                 navigate('/admin/products')
@@ -177,7 +177,7 @@ export default function UpdateProduct() {
 
     return (
 
-        <div>
+        <div className={style.container}>
             
             <form  onSubmit={(e) => handleSubmit(e)} >
 
@@ -342,7 +342,9 @@ export default function UpdateProduct() {
                                         <MenuItem value={"Fuente de alimentación"}>Fuente de alimentación</MenuItem>
                                         <MenuItem value={"Gabinete"}>Gabinete</MenuItem>
                                         <MenuItem value={"HDD"}>HDD</MenuItem>
+                                        <MenuItem value={"Cam"}>Cam</MenuItem>
                                         <MenuItem value={"Micro-procesador"}>Micro-procesador</MenuItem>
+                                        <MenuItem value={"Graphics"}>Graphics</MenuItem>
 
                                         <MenuItem value={"Micrófono"}>Micrófono</MenuItem>
                                         <MenuItem value={"Monitor"}>Monitor</MenuItem>
