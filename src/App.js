@@ -33,6 +33,9 @@ const theme = createTheme({
     },
   });
 
+import OrdersProducts from './components/OrdersProducts/OrdersProducts'
+import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
+import MessagesContainer from './components/Messages/MessagesContainer'
 
 function App() {
 
@@ -94,6 +97,30 @@ function App() {
                                         </AdminRoute>
                                     }
                                 ></Route>
+                                <Route
+                                    path="/admin/orders"
+                                    element={
+                                        <OrdersProducts />
+                                    }
+                                ></Route>
+                                <Route
+                                    path="/admin/ordersdetails/:id"
+                                    element={
+                                        <OrderProductsDetails />
+                                    }
+                                ></Route>
+                                <Route
+                                    path="/admin/messages"
+                                    element={
+                                        <MessagesContainer />
+                                    }
+                                ></Route>
+                                {/* <Route
+                                    path="/admin/messagedetails/:id"
+                                    element={
+                                        <MessageDetails />
+                                    }
+                                ></Route> */}
                                 <Route
                                     path="/admin/profile"
                                     element={

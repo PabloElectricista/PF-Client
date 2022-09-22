@@ -105,7 +105,7 @@ function ProductListScreen() {
                   <Button
                     type="button"
                     variant="light"
-                    onClick={() => navigate(`/admin/product/updateProduct/${product._id}`)}
+                    onClick={() => navigate(`/admin/product/${product._id}`)}
                   >
                     Edit
                   </Button>
