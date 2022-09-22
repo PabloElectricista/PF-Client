@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { postProds } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 import style from "./CreateProduct.module.css";
@@ -6,7 +6,13 @@ import { toast } from "react-toastify";
 
 export default function CreateProduct() {
 
-    const tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWU2Mjk0M2RmMzBlNTQxOGJiMzVhNiIsImlhdCI6MTY2MzU2OTMxNywiZXhwIjoxNjYzNjU1NzE3fQ.shqGA5B7HiJHBEu4qUXAM1lIevOB29ARBogJ6cuUhFI'
+    const [tkn, setTkn] = useState("")
+
+    useEffect(() => {
+        setTkn(localStorage.getItem('tkn'))
+    }, [])
+
+    //const tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWU2Mjk0M2RmMzBlNTQxOGJiMzVhNiIsImlhdCI6MTY2MzU2OTMxNywiZXhwIjoxNjYzNjU1NzE3fQ.shqGA5B7HiJHBEu4qUXAM1lIevOB29ARBogJ6cuUhFI'
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
     const [input, setInput] = useState({

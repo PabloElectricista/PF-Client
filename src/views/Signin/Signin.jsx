@@ -16,7 +16,7 @@ function Signin({ log, setLog }) {
             toast("Login Ok", { type: "success" })
             setLog(responsePayload.email_verified)
             localStorage.setItem("islogged", "true")
-            localStorage.setItem("tkn", JSON.stringify(credential))
+            localStorage.setItem("tkn", (credential))
         }
     };
 

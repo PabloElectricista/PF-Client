@@ -5,7 +5,6 @@ import style from './UpdateProduct.module.css';
 import { updateProduct } from '../../redux/actions/products';
 import {useLocation, useNavigate} from "react-router-dom";
 import { getProdsById } from '../../redux/actions/products';
-
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -17,7 +16,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -26,6 +24,13 @@ import { Link } from "react-router-dom";
 import { useSnackbar } from 'notistack';
 
 export default function UpdateProduct() {
+
+    const [tkn, setTkn] = useState("")
+
+    useEffect(() => {
+        setTkn(localStorage.getItem('tkn'))
+    }, [])
+
  
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate ()
@@ -34,11 +39,19 @@ export default function UpdateProduct() {
 
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
+    const [update,setUpdate] = useState({})
 
     const products = useSelector((state) => state.products.products);
-    const update = products.find((x) => x._id === id);
-     
-    if (!update.name){
+    console.log('esto es prod>>>>>>>>',products)
+    
+
+    useEffect(() => {
+        if (products && products.length > 0) {
+            setUpdate(products.find((x) => x._id === id))
+        }
+    }, [products])
+
+    if (!update){
     dispatch(getProdsById(id))
     }
 
@@ -134,7 +147,7 @@ export default function UpdateProduct() {
              enqueueSnackbar("Debe completar correctamente todos los campos con asteriscos (*)", { variant: 'error' });
         }
         else {
-            dispatch(updateProduct(update._id, input))
+            dispatch(updateProduct(update._id, input, tkn))
              enqueueSnackbar("Producto modificado con exito", { variant: 'success' });
              setTimeout(() => {
                 navigate('/admin/products')
@@ -175,11 +188,12 @@ export default function UpdateProduct() {
         <div className={style.container}>
             
             <form  onSubmit={(e) => handleSubmit(e)} >
-
+                
                 <Box  sx={{'& .MuiTextField-root': { m: 1, width: '60ch', color: "white" },width: '62ch', my: "2%", mx: "30%", maxWidth: "100%", bgcolor:'#fff', borderRadius: "10px" }}>
                     <Box component="form" sx={{'& .MuiTextField-root': { m: 1, width: '60ch', color: "white" }, maxWidth: "100%", bgcolor:'#fff', borderRadius: "10px" }} noValidate autoComplete="off">
-   
+
                         <div>
+                            
                             <div>
                                 <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
                                     id="outlined-helperText"

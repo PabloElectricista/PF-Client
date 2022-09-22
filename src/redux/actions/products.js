@@ -29,12 +29,11 @@ export const postProds = (product,tkn) => {
 }
 export const updateProduct = (id, payload, tkn) => {
     return function (dispatch) {
-        const response = (axios.put(`/products/${id}`,payload, {
+                (axios.put(`/products/${id}`,payload, {
             headers: {
             'x-access-token': tkn
           }}))
-            console.log("accionesssssssssssss", response)
-            .then(res => dispatch(putProducts(res.data)))
+            .then(res => console.log(res.data))
             .catch(err => console.error(err))
     }
 }
