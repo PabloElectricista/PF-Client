@@ -44,15 +44,12 @@ export default function UpdateProduct() {
     }
 
     const [input, setInput] = useState({
-        user: {}, name: "", colors:[{}], category: [{}], images: [{}], brand: "", stock: 0, price: 0, summary: "", description: "", status: ["New"]
+         name: "", colors:[{}], category: [{}], images: [{}], brand: "", stock: 0, price: 0, summary: "", description: "", status: ["New"]
     })
 
     function validate(input) {
         let errors = {};
 
-        if (!input.user) {
-            errors.user = 'Coloca un usuario.';
-        }
         if (!input.name) {
             errors.name = 'Coloca un nombre al producto.';
         }
@@ -89,7 +86,6 @@ export default function UpdateProduct() {
     }
     
     useEffect(()=>(setInput({
-        user: update.user,
         name: update.name,
         colors: update.colors,
         category: update.category,
@@ -108,8 +104,8 @@ export default function UpdateProduct() {
         e.preventDefault()
 
                 
-        if  (  input.user === update.user
-            && input.name === update.name
+        if  (  
+               input.name === update.name
             && input.colors === update.colors
             && input.category === update.category
             && input.images === update.images
@@ -124,7 +120,7 @@ export default function UpdateProduct() {
 
          }
         else if (input.name.length === 0
-            || errors.hasOwnProperty("user") //devuelve un buleano si el objeto tiene la propiedad especificada 
+             //devuelve un buleano si el objeto tiene la propiedad especificada 
             || errors.hasOwnProperty("name")
             || errors.hasOwnProperty("colors")
             || errors.hasOwnProperty("category")
@@ -185,22 +181,6 @@ export default function UpdateProduct() {
                     <Box component="form" sx={{'& .MuiTextField-root': { m: 1, width: '60ch', color: "white" }, maxWidth: "100%", bgcolor:'#fff', borderRadius: "10px" }} noValidate autoComplete="off">
    
                         <div>
-                            <div>
-                                <TextField sx={{ bgcolor:'#fff ', color: '#dee2e6',  borderRadius: "10px" }}
-                                    id="outlined-helperText"
-                                    label="Usuario: "
-                                    maxlength = "70"
-                                    htmlFor="user"
-                                    value={input.user}
-                                    name="user"
-                                    onChange={(e) => handleChange(e)}
-                                    helperText="Campo obligatorio (*)"
-                                    InputLabelProps={{
-                                    shrink: true,
-                                    }}
-                                />
-                                {errors.user && (<p className={style.error}>{errors.user}</p>)}
-                            </div>
                             <div>
                                 <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
                                     id="outlined-helperText"
