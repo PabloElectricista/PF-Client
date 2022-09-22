@@ -62,17 +62,11 @@ function NavBarComponent() {
                         } id="admin-nav-dropdown" >
                             <LinkContainer to="/admin/messages" style={itemstyle}>
                                 <NavDropdown.Item>
-                                <i className="material-icons">mail</i>
+                                    <i className="material-icons">mail</i>
                                     Messages
                                 </NavDropdown.Item>
                             </LinkContainer>
                             {user && !user.isBlocked && <>
-                                <LinkContainer to="/admin/products" style={itemstyle}>
-                                    <NavDropdown.Item>
-                                        <i className="material-icons">dataset</i>
-                                        Products
-                                    </NavDropdown.Item>
-                                </LinkContainer>
                                 <LinkContainer to="/admin/orders" style={itemstyle}>
                                     <NavDropdown.Item>
                                         <i className="material-icons">app_registration</i>
@@ -88,9 +82,15 @@ function NavBarComponent() {
                             {user && user.isAdmin && (
                                 <>
                                     <NavDropdown.Divider />
+                                    <LinkContainer to="/admin/products" style={itemstyle}>
+                                        <NavDropdown.Item>
+                                            <i className="material-icons">dataset</i>
+                                            Products
+                                        </NavDropdown.Item>
+                                    </LinkContainer>
                                     <LinkContainer to="/admin/dashboard" style={itemstyle}>
                                         <NavDropdown.Item>
-                                        <i className="material-icons">settings</i>
+                                            <i className="material-icons">settings</i>
                                             Admin
                                         </NavDropdown.Item>
                                     </LinkContainer>
