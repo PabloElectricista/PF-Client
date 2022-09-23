@@ -20,6 +20,7 @@ import OrdersProducts from './components/OrdersProducts/OrdersProducts'
 import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
 import MessagesContainer from './components/Messages/MessagesContainer'
 import MessageDetails from './components/Messages/MessageDetails'
+import Contactform from './views/ContactUs/Contactform'
 
 const theme = createTheme({
     palette: {
@@ -120,6 +121,12 @@ function App() {
                                     path="/admin/profile"
                                     element={
                                         <UserProfile />
+                                    }
+                                ></Route>
+                                <Route
+                                    path="/contactus"
+                                    element={
+                                        <Contactform />
                                     }
                                 ></Route>
                             </Routes>

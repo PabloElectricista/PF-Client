@@ -43,22 +43,24 @@ function Signin({ log, setLog }) {
     return <>
         {!log ?
             <Button
-                style={{fontWeight:"bolder"}}
+                
                 size="sm"
                 variant="outline-success"
-                className="mx-2"
+                className="mx-2 pt-1"
                 onClick={login}
             >
+                <i className="material-icons">login</i>
                 Login
             </Button>
             :
             <Button
-                style={{fontWeight:"bolder"}}
+                
                 size="sm"
                 variant="outline-danger"
-                className="g_id_signout mx-2"
+                className="g_id_signout mx-2  pt-1"
                 onClick={logout}
             >
+                <i className="material-icons">logout</i>
                 Logout
             </Button>
         }
