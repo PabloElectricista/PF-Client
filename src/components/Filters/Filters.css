@@ -52,6 +52,10 @@
     padding: 0 !important;
 }
 
+#mui-component-select-category {
+    padding: 0 !important;
+}
+
 .filterPrice {
     display: flex;
     flex-direction: row !important;

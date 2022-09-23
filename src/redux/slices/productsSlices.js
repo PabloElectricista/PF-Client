@@ -19,6 +19,7 @@ export const productsSlice = createSlice({
             state.colors = action.payload.colors
             state.price = action.payload.price
             state.status = action.payload.status
+            state.categories = action.payload.categories
         },
         postProducts(state, action){
             state.products = action.payload.products

@@ -1,4 +1,4 @@
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
 import logo from "../../views/assets/micro50.jpg"
@@ -18,19 +18,13 @@ function NavBarComponent() {
         setIslogged(logstate === "true" ? true : false)
     }, [])
 
-    const dropstyle = {
-        backgroundColor: "white",
-        color: "black",
-        borderRadius: "10px"
-    }
-
     const itemstyle = {
         backgroundColor: "black",
         color: "white",
         padding: "5px",
         fontWeight: "bolder",
         margin: "5px",
-        width: "95%",
+        width: "95%"
     }
 
     return <div>
@@ -46,19 +40,37 @@ function NavBarComponent() {
                     />
                 </LinkContainer>
                 <LinkContainer to="/">
-                    <Navbar.Brand>Hardware Hot Sales</Navbar.Brand>
+                    <Navbar.Brand>
+                        <p 
+                            style={{FontFace: "Helvetica Neue", fontFamily: "italic"}}
+                            className="d-inline-block mx-3 justify-content-center"
+                        >Hardware Hot Sales</p>
+                    </Navbar.Brand>
                 </LinkContainer>
                 <SearchBox />
                 <Nav className="me-auto  w-100  justify-content-end">
+                    <Signin log={islogged} setLog={setIslogged} />
+                    <Button
+                        href="/contactus"
+                        variant="outline-warning"
+                        className="me-2"
+
+                    >
+                        <i className="material-icons">create</i>
+                        Contact us
+                    </Button>
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
-                        <NavDropdown style={dropstyle} title={user && user.roles === "admin" ? "Admin" :
-                            <img className="thumbnail-image rounded mx-3"
-                                src={user.picture ? user.picture : useravatar}
-                                alt="avatar"
-                                width="30"
-                                height="30"
-                            />
+                        <NavDropdown /* style={dropstyle}  */ title={user && user.roles === "admin" ? "Admin" :
+                            <Button variant="outline-secondary" /* className="px-1 " */>
+                                <img 
+                                    className="thumbnail-image rounded mx-1"
+                                    src={user.picture ? user.picture : useravatar}
+                                    alt="avatar"
+                                    width="20"
+                                    height="20"
+                                />
+                            </Button>
                         } id="admin-nav-dropdown" >
                             <LinkContainer to="/admin/messages" style={itemstyle}>
                                 <NavDropdown.Item>
@@ -98,7 +110,6 @@ function NavBarComponent() {
                             )}
                         </NavDropdown>
                     ) : null}
-                    <Signin log={islogged} setLog={setIslogged} />
                 </Nav>
             </Container>
         </Navbar>
