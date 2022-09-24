@@ -15,9 +15,12 @@ export const usersSlices = createSlice({
         },
         addNewUser(state, actions){
             state.user = actions.payload
+        },
+        updateUserData(state, actions){
+            state.user = actions.payload
         }
     }
 })
 
-export const { getAllUsers, getUserByEmail, addNewUser } = usersSlices.actions;
+export const { getAllUsers, getUserByEmail, addNewUser, updateUserData } = usersSlices.actions;
 export default usersSlices.reducer
