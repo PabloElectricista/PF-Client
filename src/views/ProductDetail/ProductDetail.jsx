@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useParams } from "react-router-dom";
 import { Row, Col, ListGroup, Card, Button, Form, FloatingLabel } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
 import { useRef, useState } from "react";
 import MessageBox from "../../components/MessageBox";
@@ -15,6 +14,8 @@ import {Store} from '../../Store.js'
 import { useContext } from 'react';
 
 function ProductDetail() {
+  const navigate = useNavigate()
+  
   // hardcoded data
   // userInfo seria un valor que saco del store y que me indica si hay un usuario logueado
   let userInfo = {
@@ -75,6 +76,7 @@ function ProductDetail() {
 
     ctxDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}})
   };
+  navigate('/cart')
   //
 
   if (!product) return <div>Product Not Found</div>;

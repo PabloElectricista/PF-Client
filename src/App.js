@@ -3,6 +3,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./views/Home/Home";
 import ProductDetail from "./views/ProductDetail/ProductDetail";
+import CartScreen from "./views/CartScreen";
 import { Container } from "react-bootstrap";
 import AdminRoute from "./components/Administrator/AdminRoute";
 import Dashboard from "./components/Administrator/Dashboard";
@@ -51,6 +52,7 @@ function App() {
                         <Container>
                             <Routes>
                                 <Route path="/product/:_id" element={<ProductDetail />} />
+                                <Route path="/cart" element={<CartScreen />} />
                                 <Route path="/" element={<Home />} />
                                 {/* <Route path="/search" element={<SearchScreen />} /> */}
 
