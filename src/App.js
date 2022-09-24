@@ -21,6 +21,8 @@ import OrderProductsDetails from "./components/OrderProductsDetails/OrderProduct
 import MessagesContainer from './components/Messages/MessagesContainer'
 import MessageDetails from './components/Messages/MessageDetails'
 
+import { StoreProvider } from './Store'
+
 const theme = createTheme({
     palette: {
       primary: {
@@ -34,9 +36,10 @@ const theme = createTheme({
 
 function App() {
 
-    return (
-        <>
-        <ThemeProvider theme={theme}>
+  return (
+  <>
+    <StoreProvider>
+      <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={3}>
             <Router>
                 <div className="d-flex flex-column site-container">
@@ -130,9 +133,10 @@ function App() {
                     </footer>
                 </div>
             </Router>
-            </SnackbarProvider>
+          </SnackbarProvider>
         </ThemeProvider>
-        </>
+      </StoreProvider>
+  </>
     );
 }
 

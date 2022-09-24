@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setfilter } from '../../redux/slices/filterSlice'
 import { useEffect } from "react";
 
+
 export default function SearchBox() {
 
     const dispatch = useDispatch()
@@ -48,7 +49,7 @@ export default function SearchBox() {
     }
 
     return (
-        <Form className="d-flex me-auto" onSubmit={submitHandler}>
+        <Form className="d-flex me-auto w-100" onSubmit={submitHandler}>
             <InputGroup>
                 <Button
                     size="sm"
@@ -56,7 +57,7 @@ export default function SearchBox() {
                     variant="danger"
                     onClick={handleClear}
                 >x</Button>
-                <FormControl
+                <FormControl               
                     type="text"
                     name="q"
                     id="q"
@@ -67,7 +68,8 @@ export default function SearchBox() {
                     value={query}
                 ></FormControl>
 
-                <Button variant="outline-primary" type="submit" id="button-search">
+                <Button 
+                variant="outline-primary" type="submit" id="button-search">
                     <i className="fas fa-search"></i>
                 </Button>
             </InputGroup>

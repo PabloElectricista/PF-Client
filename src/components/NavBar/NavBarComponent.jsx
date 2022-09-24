@@ -1,4 +1,4 @@
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
 import logo from "../../views/assets/micro50.jpg"
@@ -8,7 +8,16 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Signin from '../../views/Signin/Signin'
 
+// agregado por nes -> funcionalidad cart
+import {Link} from 'react-router-dom';
+import { Store } from '../../Store';
+import { useContext} from 'react'
+
 function NavBarComponent() {
+
+  // agregado por nes funcionalidad cart
+  const { state } = useContext(Store);
+  const { cart } = state;
 
     const { user } = useSelector(state => state.users)
     const [islogged, setIslogged] = useState(false)
@@ -48,7 +57,21 @@ function NavBarComponent() {
                 <LinkContainer to="/">
                     <Navbar.Brand>Hardware Hot Sales</Navbar.Brand>
                 </LinkContainer>
-                <SearchBox />
+                <SearchBox/>
+                    
+
+                {/* Cart */}
+      <Nav className="me-auto w-100">
+                  <span className="px-4"><Link to="/cart" className="nav-link">
+                    Cart {cart.cartItems.length > 0 && (
+                      <Badge pill bg="danger">
+                        {cart.cartItems.length}
+                      </Badge>
+                    )}
+                  </Link></span>
+                </Nav>
+
+            
                 <Nav className="me-auto  w-100  justify-content-end">
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (

@@ -10,6 +10,10 @@ import LoadingBox from "../../components/LoadingBox";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+// agregado por Nes para funcionalidad cart
+import {Store} from '../../Store.js'
+import { useContext } from 'react';
+
 function ProductDetail() {
   // hardcoded data
   // userInfo seria un valor que saco del store y que me indica si hay un usuario logueado
@@ -51,7 +55,11 @@ function ProductDetail() {
   const products = useSelector((state) => state.products.products);
   const product = products.find((x) => x._id === _id);
 
-  const addToCartHandler = async () => {};
+  // funcionalidad para armado de cart
+  const {state, dispatch: ctxDispatch} = useContext(Store);
+  const addToCartHandler = async () => {
+    ctxDispatch({type: 'CART_ADD_ITEM', payload: {product, quantity: 1}})
+  };
 
   if (!product) return <div>Product Not Found</div>;
 
