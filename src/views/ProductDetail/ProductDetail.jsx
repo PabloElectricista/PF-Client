@@ -25,18 +25,21 @@ function ProductDetail() {
   product1.rating = 3;
   product1.reviews = [
     {
+      _id: 1,
       name: "Juan",
       comment: "Muy bueno, lo recomiendo",
       rating: 4,
       createdAt: "2022-04-05T00:00:00.000Z",
     },
     {
+      _id: 2,
       name: "Francisco",
       comment: "Excelente",
       rating: 5,
       createdAt: "2022-05-12T00:00:00.000Z",
     },
     {
+      _id: 3,
       name: "Roberto",
       comment: "Este producto es una mierda",
       rating: 3,
@@ -57,9 +60,22 @@ function ProductDetail() {
 
   // funcionalidad para armado de cart
   const {state, dispatch: ctxDispatch} = useContext(Store);
+  const {cart} = state;
+  
   const addToCartHandler = async () => {
-    ctxDispatch({type: 'CART_ADD_ITEM', payload: {product, quantity: 1}})
+    const existItem = cart.cartItems.find((x) => x._id === product._id)
+    console.log('existItem: ', existItem);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    console.log('quantity: ', quantity)
+    const { data } = await axios.get(`/products/${product._id}`);
+    if (data.stock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+
+    ctxDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}})
   };
+  //
 
   if (!product) return <div>Product Not Found</div>;
 
@@ -95,6 +111,7 @@ function ProductDetail() {
       toast.error("Error al enviar comentario");
     }
   }
+  //
 
   return (
     <div

@@ -13,7 +13,8 @@ import axios from "axios";
 //     REACT_APP_AUTH0_CLIENT_ID
 // } from './config'
 axios.defaults.baseURL =
-  process.env.REACT_APP_API || "https://pf-serve.herokuapp.com/api";
+  process.env.REACT_APP_API || "http://localhost:4000/api";
+  // process.env.REACT_APP_API || "https://pf-serve.herokuapp.com/api";
 
 ReactDOM.render(
   <React.StrictMode>

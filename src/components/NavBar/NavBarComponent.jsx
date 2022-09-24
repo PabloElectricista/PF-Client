@@ -65,7 +65,7 @@ function NavBarComponent() {
                   <span className="px-4"><Link to="/cart" className="nav-link">
                     Cart {cart.cartItems.length > 0 && (
                       <Badge pill bg="danger">
-                        {cart.cartItems.length}
+                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                       </Badge>
                     )}
                   </Link></span>
