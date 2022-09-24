@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllProducts, getProductById, postProducts, putProducts } from "../slices/productsSlices"
+import { getAllProducts, getProductById, postProducts } from "../slices/productsSlices"
 
 export const getProds = (page) => {
     return function (dispatch) {
