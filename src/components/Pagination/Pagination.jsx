@@ -33,6 +33,7 @@ function Pagination() {
             currentsettings += localStorage.getItem("order")
             currentsettings += localStorage.getItem("search")
             currentsettings += localStorage.getItem("filter")
+            setCurrent(1)
             setQuery(currentsettings);
         }
     }, [filter])

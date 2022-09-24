@@ -4,6 +4,7 @@ import usersreducer from './slices/usersSlices'
 import filterreducer from './slices/filterSlice'
 import ordersreducer from './slices/ordersSlice'
 import messagesreducer from './slices/messagesSlices'
+import themereducer from "./slices/themeSlice";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         users: usersreducer,
         filter: filterreducer,
         orders: ordersreducer,
-        messages: messagesreducer
+        messages: messagesreducer,
+        theme: themereducer
     }
 });
