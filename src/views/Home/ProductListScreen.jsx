@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line
 
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -9,11 +11,14 @@ import { toast } from "react-toastify";
 import data from "../../data";
 import './ProductListScreen.css';
 
+
 function ProductListScreen() {
 
   const navigate = useNavigate();
   const { search } = useLocation();
-  const { products } = useSelector(state => state.products)
+  const [ products, setProducts ] = useState({});
+  const { count } = useSelector(state => state.products)
+  
 
   useEffect(() => {
     if (products && products.length > 0) {
@@ -21,7 +26,14 @@ function ProductListScreen() {
     }
   }, [products])
 
-  console.log('products>>>>>>',products)
+  useEffect(() => {
+    axios('/products?start=0&limit=',count)
+      .then(({data }) => {
+      setProducts(data.products)} )
+      .catch( error => console.log(error))
+  },[])
+
+  
   
   const createHandler = async () => {
     // if (window.confirm("Are you sure to create?")) {
