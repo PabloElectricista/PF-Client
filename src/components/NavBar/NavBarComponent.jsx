@@ -1,22 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
 import logo from "../../views/assets/micro50.jpg"
 import useravatar from "../../views/assets/user.png"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import Signin from '../../views/Signin/Signin'
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import { settheme } from '../../redux/slices/themeSlice'
 
 function NavBarComponent() {
 
+    const dark = useSelector(state => state.theme.theme)
+    const dispatch = useDispatch();
     const { user } = useSelector(state => state.users)
     const [islogged, setIslogged] = useState(false)
 
     useEffect(() => {
         const logstate = localStorage.getItem('islogged')
+        const themestate = localStorage.getItem('theme')
         setIslogged(logstate === "true" ? true : false)
+        dispatch(settheme(themestate === "true" ? true : false))
     }, [])
+
+    useEffect(() => {
+        localStorage.setItem('theme', dark ? true : false)
+    }, [dark])
 
     const itemstyle = {
         backgroundColor: "black",
@@ -49,16 +60,6 @@ function NavBarComponent() {
                 </LinkContainer>
                 <SearchBox />
                 <Nav className="me-auto  w-100  justify-content-end">
-                    <Signin log={islogged} setLog={setIslogged} />
-                    <Button
-                        href="/contactus"
-                        variant="outline-warning"
-                        className="me-2"
-
-                    >
-                        <i className="material-icons">create</i>
-                        Contact us
-                    </Button>
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
                         <NavDropdown /* style={dropstyle}  */ title={user && user.roles === "admin" ? "Admin" :
@@ -110,6 +111,24 @@ function NavBarComponent() {
                             )}
                         </NavDropdown>
                     ) : null}
+                    <Signin log={islogged} setLog={setIslogged} />
+                    <Button
+                        href="/contactus"
+                        variant="outline-warning"
+                        className="me-2"
+
+                    >
+                        <i className="material-icons">create</i>
+                        Contact us
+                    </Button>
+                    <BootstrapSwitchButton
+                        checked={dark ? true : false}  
+                        onstyle="dark" 
+                        offstyle="light"
+                        onChange={(checked) => dispatch(settheme(checked))} 
+                        onlabel={<i className="material-icons">mode_night</i>}
+                        offlabel={<i className="material-icons">light_mode</i>}
+                    />
                 </Nav>
             </Container>
         </Navbar>

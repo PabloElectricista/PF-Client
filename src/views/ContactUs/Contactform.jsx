@@ -1,11 +1,11 @@
-import { Button, Col, Form, Image, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Image, Row } from "react-bootstrap";
 import listen from '../assets/listen.jpg'
 import { sendcontact } from '../../redux/actions/messages'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
 function Contactform() {
-    const dark = false;
+    const dark = useSelector(state => state.theme.theme)
     const dispatch = useDispatch()
     const initialstate = {
         message: "",
@@ -41,11 +41,12 @@ function Contactform() {
 
     return <div style={{ marginTop: "7rem" }}>
         <div className="container mt-5 p-3" style={{ backgroundColor: dark ? "black" : "white", width: "70vw" }}>
+        <Card.Title className="fw-bold text-primary text-center">Contact us</Card.Title>
             <Row>
                 <Col>
                     <Form className="ms-5" noValidate validated={validated} onSubmit={handleSubmit}>
                         <Form.Group className="my-3" controlId="validationCustom01">
-                            <Form.Label className="text-primary">Name</Form.Label>
+                            <Form.Label className="fw-bold text-primary">Name</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="your name"
@@ -59,7 +60,7 @@ function Contactform() {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="validationCustom02">
-                            <Form.Label className="text-primary">Your email</Form.Label>
+                            <Form.Label className="fw-bold text-primary">Your email</Form.Label>
                             <Form.Control
                                 type="email"
                                 placeholder="name@example.com"
@@ -73,7 +74,7 @@ function Contactform() {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="my-3" controlId="validationCustom03">
-                            <Form.Label className="text-primary">Subject</Form.Label>
+                            <Form.Label className="fw-bold text-primary">Subject</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="subject message"
@@ -87,7 +88,7 @@ function Contactform() {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="validationCustom04">
-                            <Form.Label className="text-primary ">Message</Form.Label>
+                            <Form.Label className="fw-bold text-primary ">Message</Form.Label>
                             <Form.Control
                                 as="textarea"
                                 rows={5}
@@ -105,7 +106,7 @@ function Contactform() {
                             variant={dark ? "primary" : "outline-primary"}
                             type="submit"
                             style={{ fontWeight: "bolder" }}
-                            className={dark ? "text-black" : "text-primary"}
+                            className={dark ? "fw-bold text-black" : "fw-bold text-primary"}
                         >
                             Submit
                             <i className="material-icons ms-3">done_outlined</i>
