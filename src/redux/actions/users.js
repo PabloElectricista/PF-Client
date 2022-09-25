@@ -37,6 +37,7 @@ export const getByEmail = (user, tkn) => {
 
 export const postUser = (newuser) => async (dispatch) => {
     try {
+        console.log(newuser);
         const res = await axios.post("/users", newuser)
         dispatch(addNewUser(res.data))
     } catch (error) {
