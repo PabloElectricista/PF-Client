@@ -4,7 +4,9 @@ export const Store = createContext();
 
 const initialState = {
   cart: {
-    cartItems: [],
+    cartItems: localStorage.getItem('cartItems')
+      ? JSON.parse(localStorage.getItem('cartItems'))
+      : [],
   },
 };
 function reducer(state, action) {
@@ -12,19 +14,25 @@ function reducer(state, action) {
     case 'CART_ADD_ITEM':
       // add to cart - newItem ya viene con el atributo quantity actualizado
       const newItem = action.payload;
-      // console.log('newItem: ', newItem);
       const existItem = state.cart.cartItems.find(
         (item) => item._id === newItem._id
       )
-      // console.log('existItem: ', existItem)
       const cartItems = existItem
         ? state.cart.cartItems.map((item) =>
           item._id === existItem._id ? newItem : item
         )
         // si existItem is null -> significa que newItem es un nuevo producto en el cart
         : [...state.cart.cartItems, newItem];
-      // console.log('cartItems: ', cartItems)
+        localStorage.setItem('cartItems', JSON.stringify(cartItems))
       return {...state, cart: {...state.cart, cartItems},};
+    // usamos block {} para no mezclar cartItems entre los distintos casos de reducer
+    case 'CART_REMOVE_ITEM': {
+      const cartItems = state.cart.cartItems.filter(
+        (item) => item._id !== action.payload._id
+      );
+      localStorage.setItem('cartItems', JSON.stringify(cartItems))
+      return {...state, cart: {...state.cart, cartItems}}
+    }
     default:
       return state;
   }

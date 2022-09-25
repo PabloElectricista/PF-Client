@@ -3,7 +3,7 @@ import { Row, Col, ListGroup, Card, Button, Form, FloatingLabel } from "react-bo
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import MessageBox from "../../components/MessageBox";
 import LoadingBox from "../../components/LoadingBox";
 import { toast } from "react-toastify";
@@ -65,9 +65,7 @@ function ProductDetail() {
   
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id)
-    console.log('existItem: ', existItem);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    console.log('quantity: ', quantity)
     const { data } = await axios.get(`/products/${product._id}`);
     if (data.stock < quantity) {
       window.alert('Sorry. Product is out of stock');
@@ -76,8 +74,13 @@ function ProductDetail() {
 
     ctxDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}})
   };
-  navigate('/cart')
-  //
+
+  // useEffect(() => {
+  //   if (cart){
+  //    navigate("/cart")   
+  //   }
+  // },[])
+
 
   if (!product) return <div>Product Not Found</div>;
 

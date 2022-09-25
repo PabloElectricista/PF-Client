@@ -22,7 +22,7 @@ export default function SearchBox() {
     }, [])
 
     useEffect(() => {
-        console.log(query);
+        // console.log(query);
         if (query === undefined || query === "") {
             localStorage.setItem("search", "")
             localStorage.setItem("searchState", "")
