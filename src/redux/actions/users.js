@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllUsers, getUserByEmail, addNewUser } from "../slices/usersSlices"
+import { getAllUsers, getUserByEmail, addNewUser, updateUserData } from "../slices/usersSlices"
 
 
 export const getUsers = (tkn) => {
@@ -14,11 +14,11 @@ export const getUsers = (tkn) => {
     }
 }
 
-export const getByEmail = (user/* , tkn */) => {
+export const getByEmail = (user, tkn) => {
     return function (dispatch) {
         axios("/users/byEmail/" + user.email, {
             headers: {
-                'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWU2Mjk0M2RmMzBlNTQxOGJiMzVhNiIsImlhdCI6MTY2MzY1NTY4OSwiZXhwIjoxNjYzNzQyMDg5fQ.fJAD8txqmjl7ta8lveKvj9HI_Mv36Oh3nQMs5QnALLY"
+                'x-access-token': tkn
             }
         })
             .then(res => {
@@ -40,6 +40,20 @@ export const postUser = (newuser) => async (dispatch) => {
     try {
         const res = await axios.post("/users", newuser)
         dispatch(addNewUser(res.data))
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateUser = (userdata, tkn) => async (dispatch) => {
+    console.log(userdata);
+    try {
+        const res = await axios.put("/users", userdata, {
+            headers: {
+                'x-access-token': tkn
+            }
+        })
+        dispatch(updateUserData(res.data))
     } catch (error) {
         console.log(error);
     }
