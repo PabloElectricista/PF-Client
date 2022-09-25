@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 export default function CreateProduct() {
 
     const [tkn, setTkn] = useState("")
+    const [selectedFile, setSelectedFile] = useState(null);
 
     useEffect(() => {
         setTkn(localStorage.getItem('tkn'))
@@ -160,12 +161,12 @@ export default function CreateProduct() {
                 <div><br />
                     <input 
                         className={style.input}
-                        type="text"
-                        value={input.images}
+                        type="file"
+                        value={selectedFile}
                         autoComplete="off"
                         name='images'
                         placeholder="Imagen del producto: (*)"
-                        onChange={(e) => handleChange(e)} />
+                        onChange={(e) => setSelectedFile(e.target.files[0])} />
                     {errors.images && (<p className={style.error}>{errors.images}</p>)}
                 </div>
 
