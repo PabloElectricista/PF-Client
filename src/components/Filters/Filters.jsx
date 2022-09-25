@@ -9,7 +9,13 @@ import { Row, Col } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 
 function Filters() {
-
+    let closeinitial = {
+        brand: false,
+        colors: false,
+        status: false,
+        price: false,
+        category: false
+    }
     const dispatch = useDispatch()
     let brand = useSelector(state => state.products.brand)
     let colors = useSelector(state => state.products.colors)
@@ -17,27 +23,13 @@ function Filters() {
     let status = useSelector(state => state.products.status)
     let category = useSelector(state => state.products.categories)
     let [query, setQuery] = useState({});
-    let [close, setClose] = useState({});
+    let [close, setClose] = useState(closeinitial);
     const [minmax, setMinmax] = useState('');
     let [firstload, setFirstload] = useState(true);
-    
 
-    useEffect(() => {
-        let closefilterstate = JSON.parse(localStorage.getItem("closefilterstate"))
-        let setting = (closefilterstate === null || closefilterstate === undefined) ? {
-            brand: false,
-            colors: false,
-            status: false,
-            price: false,
-            category: false
-        } : closefilterstate
-        setClose(setting)
-     
-        let queryfilterstate = JSON.parse(localStorage.getItem("queryfilterstate"))
-        let querysettings = (queryfilterstate === null || queryfilterstate === undefined) ? {} : queryfilterstate
-        setQuery(querysettings)
-    }, [])
 
+    // JSON.parse(localStorage.getItem("closefilterstate"))
+    // JSON.parse(localStorage.getItem("queryfilterstate"))
     useEffect(() => {
         dispatch(setfilter(query))
         const keys = Object.keys(query)
@@ -73,6 +65,7 @@ function Filters() {
             [e.target.name]: true
         }
         setClose(closesettings)
+        console.log(closesettings);
         localStorage.setItem("closefilterstate", JSON.stringify(closesettings))
     }
 

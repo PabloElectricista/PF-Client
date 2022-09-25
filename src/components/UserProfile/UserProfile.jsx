@@ -46,7 +46,6 @@ function UserProfile() {
             event.stopPropagation();
         }
         setValidated(true);
-        console.log("entro en handleSubmit");
         dispatch(updateUser(userdata, tkn));
         setUserdata(initialstate)
     };
