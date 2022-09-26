@@ -135,7 +135,7 @@ function Filters() {
                     <Col xs={8}>
                         <Form.Select
                             size="sm"
-                            name="categories"
+                            name="category"
                             onChange={handleSelect}
                         >
                             <option>Categories</option>
