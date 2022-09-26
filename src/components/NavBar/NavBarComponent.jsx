@@ -3,7 +3,6 @@ import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
 import logo from "../../views/assets/micro50.jpg"
-import useravatar from "../../views/assets/user.png"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -24,6 +23,12 @@ function NavBarComponent() {
         setIslogged(logstate === "true" ? true : false)
         dispatch(settheme(themestate === "true" ? true : false))
     }, [])
+
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+        }
+    },[user])
 
     useEffect(() => {
         localStorage.setItem('theme', dark ? true : false)
@@ -52,8 +57,8 @@ function NavBarComponent() {
                 </LinkContainer>
                 <LinkContainer to="/">
                     <Navbar.Brand>
-                        <p 
-                            style={{FontFace: "Helvetica Neue", fontFamily: "italic"}}
+                        <p
+                            style={{ FontFace: "Helvetica Neue", fontFamily: "italic" }}
                             className="d-inline-block mx-3 justify-content-center"
                         >Hardware Hot Sales</p>
                     </Navbar.Brand>
@@ -63,14 +68,17 @@ function NavBarComponent() {
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
                         <NavDropdown /* style={dropstyle}  */ title={user && user.roles === "admin" ? "Admin" :
-                            <Button variant="outline-secondary" /* className="px-1 " */>
-                                <img 
-                                    className="thumbnail-image rounded mx-1"
-                                    src={user.picture ? user.picture : useravatar}
-                                    alt="avatar"
-                                    width="20"
-                                    height="20"
-                                />
+                            <Button variant="outline-secondary" className="mx-1 ">
+                                <>
+                                    {user.picture ? <img
+                                        className="thumbnail-image rounded "
+                                        src={user.picture}
+                                        alt="avatar"
+                                        width="25"
+                                        height="25"
+                                    /> :
+                                        <p>{localStorage.getItem("name")}</p> }
+                                </>
                             </Button>
                         } id="admin-nav-dropdown" >
                             <LinkContainer to="/admin/messages" style={itemstyle}>
@@ -122,10 +130,10 @@ function NavBarComponent() {
                         Contact us
                     </Button>
                     <BootstrapSwitchButton
-                        checked={dark ? true : false}  
-                        onstyle="dark" 
+                        checked={dark ? true : false}
+                        onstyle="dark"
                         offstyle="light"
-                        onChange={(checked) => dispatch(settheme(checked))} 
+                        onChange={(checked) => dispatch(settheme(checked))}
                         onlabel={<i className="material-icons">mode_night</i>}
                         offlabel={<i className="material-icons">light_mode</i>}
                     />

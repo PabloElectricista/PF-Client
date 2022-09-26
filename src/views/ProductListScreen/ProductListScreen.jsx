@@ -62,7 +62,7 @@ function ProductListScreen() {
         if (window.confirm("Are you sure to delete?")) {
             try {
                 const {data} = await axios.put(`/products/${product._id}`, { isDisabled: true }, {
-                    headers: { credentials: localStorage.getItem("tkn") },
+                    headers: { credential: localStorage.getItem("tkn") },
                 });
                 if(data === "product delected ok") {
                     getAllproducts()

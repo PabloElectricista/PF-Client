@@ -11,12 +11,15 @@ function Signin({ log, setLog }) {
 
     const handleCredentialResponse = ({ credential }) => {
         const responsePayload = jwt_decode(credential);
-        if (responsePayload.email_verified) {
+        if(responsePayload.given_name) {
             dispatch(postUser({credential}))
             toast("Login Ok", { type: "success" })
             setLog(responsePayload.email_verified)
             localStorage.setItem("islogged", "true")
             localStorage.setItem("tkn", credential)
+            localStorage.setItem("name", responsePayload.given_name)
+            localStorage.setItem("email", responsePayload.email)
+            localStorage.setItem("picture", responsePayload.picture)
         }
     };
 

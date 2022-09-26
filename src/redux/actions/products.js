@@ -15,6 +15,7 @@ export const getProdsById = (id) => {
     return function (dispatch) {
         axios("/products/" + id)
             .then(res => {
+                console.log(res.data);
                 dispatch(getProductById(res.data))
             })
             .catch(err => console.error(err))
@@ -32,8 +33,9 @@ export const postProds = (product,tkn) => {
     }
 }
 export const updateProduct = (id, payload, tkn) => {
-    return function (dispatch) {
-                (axios.put(`/products/${id}`,payload, {
+    console.log(id, payload, tkn)
+    return function () {
+                (axios.put(`/products/${id}`, payload, {
             headers: {
             'credential': tkn
           }}))
@@ -41,4 +43,3 @@ export const updateProduct = (id, payload, tkn) => {
             .catch(err => console.error(err))
     }
 }
-

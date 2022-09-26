@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
@@ -32,18 +33,20 @@ export default function UpdateProduct() {
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
     const [input, setInput] = useState({})
-    const {product, categorieslist }= useSelector((state) => state.products.details);
+    const { product, categorieslist } = useSelector((state) => state.products.details);
 
     useEffect(() => {
         dispatch(getProdsById(id))
     }, [])
 
-    useEffect(()=>{ 
-        setInput({
-            ...product,
-            status: product.status && product.status === "New"
-        })
-    },[product])
+    useEffect(() => {
+        if (product) {
+            setInput({
+                ...product,
+                status: product.status && product.status === "New"
+            })
+        }
+    }, [product])
 
 
     function validate(input) {
@@ -85,7 +88,7 @@ export default function UpdateProduct() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        
+
         if (input == product) {
             enqueueSnackbar("Debe modificar algún campo", { variant: 'error' });
         }
@@ -289,13 +292,13 @@ export default function UpdateProduct() {
                                     >
                                         {categorieslist && categorieslist.length > 0 ?
                                             categorieslist.map((category, idx) => <MenuItem value={category}
-                                                    key={idx}
-                                                >
-                                                    {category}
-                                                </MenuItem>) : 
-                                                <MenuItem value="no hay categorias">no hay categorias</MenuItem>
+                                                key={idx}
+                                            >
+                                                {category}
+                                            </MenuItem>) :
+                                            <MenuItem value="no hay categorias">no hay categorias</MenuItem>
                                         }
-                        
+
                                     </Select>
                                 </FormControl>
                                 {errors.category && (<p className={style.error}><p className="error" >{errors.category}</p></p>)}
