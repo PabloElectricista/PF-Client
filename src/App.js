@@ -3,6 +3,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./views/Home/Home";
 import ProductDetail from "./views/ProductDetail/ProductDetail";
+import CartScreen from "./views/CartScreen";
 import { Container } from "react-bootstrap";
 import AdminRoute from "./components/Administrator/AdminRoute";
 import Dashboard from "./components/Administrator/Dashboard";
@@ -22,6 +23,8 @@ import MessagesContainer from './components/Messages/MessagesContainer'
 import MessageDetails from './components/Messages/MessageDetails'
 import Contactform from './views/ContactUs/Contactform'
 
+import { StoreProvider } from './Store'
+
 const theme = createTheme({
     palette: {
       primary: {
@@ -35,9 +38,10 @@ const theme = createTheme({
 
 function App() {
 
-    return (
-        <>
-        <ThemeProvider theme={theme}>
+  return (
+  <>
+    <StoreProvider>
+      <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={3}>
             <Router>
                 <div className="d-flex flex-column site-container">
@@ -49,6 +53,7 @@ function App() {
                         <Container>
                             <Routes>
                                 <Route path="/product/:_id" element={<ProductDetail />} />
+                                <Route path="/cart" element={<CartScreen />} />
                                 <Route path="/" element={<Home />} />
                                 {/* <Route path="/search" element={<SearchScreen />} /> */}
 
@@ -137,9 +142,10 @@ function App() {
                     </footer>
                 </div>
             </Router>
-            </SnackbarProvider>
+          </SnackbarProvider>
         </ThemeProvider>
-        </>
+      </StoreProvider>
+  </>
     );
 }
 
