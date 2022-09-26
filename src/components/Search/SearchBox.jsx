@@ -11,19 +11,17 @@ import { useEffect } from "react";
 export default function SearchBox() {
 
     const dispatch = useDispatch()
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState(localStorage.getItem("searchState"));
     let [close, setClose] = useState(false)
 
     useEffect(() => {
-        let searchstate = localStorage.getItem("searchState")
-        if (searchstate !== null && searchstate !== undefined) setQuery(searchstate)
         let searchcloseState = localStorage.getItem("searchcloseState")
         if (searchcloseState !== null && searchcloseState !== undefined) setClose((searchcloseState === "false") ? false : true)
+        console.log(searchcloseState);
     }, [])
 
-    useEffect(() => {
-        // console.log(query);
-        if (query === undefined || query === "") {
+    useEffect(() => {        
+            if (query === undefined || query === "") {
             localStorage.setItem("search", "")
             localStorage.setItem("searchState", "")
         } else {
@@ -61,7 +59,11 @@ export default function SearchBox() {
                     type="text"
                     name="q"
                     id="q"
-                    onChange={(e) => setQuery(e.target.value)}
+                    onChange={(e) => {
+                        let name = `&name=${e.target.value}`
+                        localStorage.setItem("search", name)
+                        setQuery(name)
+                    }}
                     placeholder="search products..."
                     aria-label="Search Products"
                     aria-describedby="button-search"

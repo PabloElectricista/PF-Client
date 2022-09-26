@@ -7,7 +7,7 @@ function Card({image, name, _id, price, brand}) {
 
     return <div className="card-container">
         <div className="card" style={{width: "5rem;"}} key={_id}>
-            <img src="https://via.placeholder.com/40/2299ff" className="card-img-top p-2" alt="product"/>
+            <img src={image[0]} className="card-img-top p-2" alt="product"/>
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text">${brand}</p>

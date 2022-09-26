@@ -1,127 +1,113 @@
-import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-// import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
-import Card from 'react-bootstrap/Card';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
+import { Col, Row, Container, Card } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../redux/actions/users'
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import profile from "../../views/assets/profile.jpg"
+import UpdateAcount from './UpdateAcount';
+import ShowProfile from './ShowProfile';
+import { getUserByEmail } from '../../redux/slices/usersSlices';
 
 function UserProfile() {
-  const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+    const { email } = useSelector(state => state.users.user)
+    const initialstate = {
+        email,
+        firstName: " ",
+        lastName: " ",
+        phone: 0,
+        identificationnumber: 0,
+        address: " ",
+        addressnumber: 0,
+        floor: " ",
+        department: " ",
+        zipcode: 0,
+        city: " ",
+        state: " ",
+        country: " "
     }
 
-    setValidated(true);
-  };
-  const containerStyle = {
-    backgroundColor: "white",
-    marginTop: "5rem",
-    paddingTop: "5rem"
-  }
+    const [validated, setValidated] = useState(false);
+    const [userdata, setUserdata] = useState(initialstate);
+    const dispatch = useDispatch()
+    const [tkn, setTkn] = useState("")
+    const dark = useSelector(state => state.theme.theme)
+    const [update, setUpdate] = useState(false)
 
-  return (
-    <Container style={containerStyle}>
-      <Card.Title >Update account</Card.Title>
-      <Row>
-        <Col  xs="8">
-          <Form className="m-3" noValidate validated={validated} onSubmit={handleSubmit}>
-            <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom01">
-                <Form.Label>First name</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="First name"
-                  defaultValue="Mark"
+    useEffect(() => {
+        setTkn(localStorage.getItem('tkn'))
+        dispatch(getUserByEmail(
+            localStorage.getItem("email"),
+            localStorage.getItem("tkn")
+        ))
+    }, [])
+
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+        }
+        dispatch(updateUser(userdata, tkn));
+        setTimeout(() => setUserdata(initialstate), 1000)
+        setValidated(true);
+    };
+
+    const handlechange = e => {
+        e.preventDefault();
+        setUserdata({
+            ...userdata,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const containerStyle = {
+        backgroundColor: dark ? "black" : "white",
+        marginTop: "7rem",
+        paddingTop: "5rem"
+    }
+    const Profile = () => <div
+        className="fw-bold text-primary"
+    >
+        Profile Data <i className="material-icons">person_filled</i>
+    </div>
+    const Update = () => <div className="fw-bold text-primary">
+        Update Account <i className="material-icons">app_registration</i>
+    </div>
+
+    return (
+        <Container style={containerStyle}>
+            <Card.Title className="fw-bold text-primary text-center">
+                <BootstrapSwitchButton
+                    checked={update}
+                    onstyle="outline-secondary"
+                    offstyle="outline-secondary"
+                    onChange={(checked) => (setUpdate(checked))}
+                    onlabel={<Update />}
+                    offlabel={<Profile />}
+                    width={320} height={75}
+
                 />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom02">
-                <Form.Label>Last name</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Last name"
-                  defaultValue="Otto"
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom02">
-                <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="54 11 12345678"
-                  defaultValue="54 11 12345678"
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              </Form.Group>
+            </Card.Title>
+            <Row className='mb-3'>
+                <Col xs="8">
+                    {update ? <UpdateAcount
+                        handlechange={handlechange}
+                        handleSubmit={handleSubmit}
+                        userdata={userdata}
+                        validated={validated}
+                    /> :
+                        <ShowProfile />}
+                </Col>
+                <Col xs="1">
+                    <br></br>
+                    <img src={profile} alt="figure" width="350px" />
+                </Col>
             </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom03">
-                <Form.Label>Address</Form.Label>
-                <Form.Control type="text" placeholder="Your street" required />
-              </Form.Group>
-              <Form.Group as={Col} md="2" controlId="validationCustom03">
-                <Form.Label>Number</Form.Label>
-                <Form.Control type="number" placeholder="1234" required />
-              </Form.Group>
-              <Form.Group as={Col} md="2" controlId="validationCustom03">
-                <Form.Label>Floor</Form.Label>
-                <Form.Control type="text" placeholder="10º" required />
-              </Form.Group>
-              <Form.Group as={Col} md="2" controlId="validationCustom03">
-                <Form.Label>Department</Form.Label>
-                <Form.Control type="text" placeholder="A" required />
-              </Form.Group>
-              <Form.Group as={Col} md="2" controlId="validationCustom06">
-                <Form.Label>Zip</Form.Label>
-                <Form.Control type="number" placeholder="2000" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid zip.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>City</Form.Label>
-                <Form.Control type="text" placeholder="City" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom05">
-                <Form.Label>State</Form.Label>
-                <Form.Control type="text" placeholder="State" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid state.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom05">
-                <Form.Label>Country</Form.Label>
-                <Form.Control type="text" placeholder="Country" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid Country.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Button variant='success' type="submit">Update</Button>
-          </Form>
-        </Col>
-        <Col  xs="1">
-          <br></br>
-          <img src={profile} alt="figure" width="350px"/>
-        </Col>
-      </Row>
-    </Container >
-  );
+        </Container >
+    );
 }
 
 export default UserProfile;

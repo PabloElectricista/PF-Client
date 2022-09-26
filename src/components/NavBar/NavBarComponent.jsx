@@ -1,12 +1,15 @@
-import { Container, Navbar, Nav, NavDropdown, Badge } from "react-bootstrap";
+
+import { Container, Navbar, Nav, NavDropdown, Badge, Button } from "react-bootstrap";
+/* eslint-disable react-hooks/exhaustive-deps */
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
 import logo from "../../views/assets/micro50.jpg"
-import useravatar from "../../views/assets/user.png"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import Signin from '../../views/Signin/Signin'
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import { settheme } from '../../redux/slices/themeSlice'
 
 // agregado por nes -> funcionalidad cart
 import {Link} from 'react-router-dom';
@@ -15,23 +18,33 @@ import { useContext} from 'react'
 
 function NavBarComponent() {
 
+
   // agregado por nes funcionalidad cart
   const { state } = useContext(Store);
   const { cart } = state;
+
+    const dark = useSelector(state => state.theme.theme)
+    const dispatch = useDispatch();
 
     const { user } = useSelector(state => state.users)
     const [islogged, setIslogged] = useState(false)
 
     useEffect(() => {
         const logstate = localStorage.getItem('islogged')
+        const themestate = localStorage.getItem('theme')
         setIslogged(logstate === "true" ? true : false)
+        dispatch(settheme(themestate === "true" ? true : false))
     }, [])
 
-    const dropstyle = {
-        backgroundColor: "white",
-        color: "black",
-        borderRadius: "10px"
-    }
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+        }
+    },[user])
+
+    useEffect(() => {
+        localStorage.setItem('theme', dark ? true : false)
+    }, [dark])
 
     const itemstyle = {
         backgroundColor: "black",
@@ -39,7 +52,7 @@ function NavBarComponent() {
         padding: "5px",
         fontWeight: "bolder",
         margin: "5px",
-        width: "95%",
+        width: "95%"
     }
 
     return <div>
@@ -55,7 +68,12 @@ function NavBarComponent() {
                     />
                 </LinkContainer>
                 <LinkContainer to="/">
-                    <Navbar.Brand>Hardware Hot Sales</Navbar.Brand>
+                    <Navbar.Brand>
+                        <p
+                            style={{ FontFace: "Helvetica Neue", fontFamily: "italic" }}
+                            className="d-inline-block mx-3 justify-content-center"
+                        >Hardware Hot Sales</p>
+                    </Navbar.Brand>
                 </LinkContainer>
                 <SearchBox/>
                     
@@ -75,13 +93,19 @@ function NavBarComponent() {
                 <Nav className="me-auto  w-100  justify-content-end">
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
-                        <NavDropdown style={dropstyle} title={user && user.roles === "admin" ? "Admin" :
-                            <img className="thumbnail-image rounded mx-3"
-                                src={user.picture ? user.picture : useravatar}
-                                alt="avatar"
-                                width="30"
-                                height="30"
-                            />
+                        <NavDropdown /* style={dropstyle}  */ title={user && user.roles === "admin" ? "Admin" :
+                            <Button variant="outline-secondary" className="mx-1 ">
+                                <>
+                                    {user.picture ? <img
+                                        className="thumbnail-image rounded "
+                                        src={user.picture}
+                                        alt="avatar"
+                                        width="25"
+                                        height="25"
+                                    /> :
+                                        <p>{localStorage.getItem("name")}</p> }
+                                </>
+                            </Button>
                         } id="admin-nav-dropdown" >
                             <LinkContainer to="/admin/messages" style={itemstyle}>
                                 <NavDropdown.Item>
@@ -122,6 +146,23 @@ function NavBarComponent() {
                         </NavDropdown>
                     ) : null}
                     <Signin log={islogged} setLog={setIslogged} />
+                    <Button
+                        href="/contactus"
+                        variant="outline-warning"
+                        className="me-2"
+
+                    >
+                        <i className="material-icons">create</i>
+                        Contact us
+                    </Button>
+                    <BootstrapSwitchButton
+                        checked={dark ? true : false}
+                        onstyle="dark"
+                        offstyle="light"
+                        onChange={(checked) => dispatch(settheme(checked))}
+                        onlabel={<i className="material-icons">mode_night</i>}
+                        offlabel={<i className="material-icons">light_mode</i>}
+                    />
                 </Nav>
             </Container>
         </Navbar>

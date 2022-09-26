@@ -8,7 +8,7 @@ import { Container } from "react-bootstrap";
 import AdminRoute from "./components/Administrator/AdminRoute";
 import Dashboard from "./components/Administrator/Dashboard";
 import NavBarComponent from "./components/NavBar/NavBarComponent";
-import ProductListScreen from "./views/Home/ProductListScreen";
+import ProductListScreen from "./views/ProductListScreen/ProductListScreen";
 import ProductEditScreen from "./views/ProductEdit/ProductEditScreen";
 import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 import UserProfile from "./components/UserProfile/UserProfile"
@@ -21,6 +21,7 @@ import OrdersProducts from './components/OrdersProducts/OrdersProducts'
 import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
 import MessagesContainer from './components/Messages/MessagesContainer'
 import MessageDetails from './components/Messages/MessageDetails'
+import Contactform from './views/ContactUs/Contactform'
 
 import { StoreProvider } from './Store'
 
@@ -125,6 +126,12 @@ function App() {
                                     path="/admin/profile"
                                     element={
                                         <UserProfile />
+                                    }
+                                ></Route>
+                                <Route
+                                    path="/contactus"
+                                    element={
+                                        <Contactform />
                                     }
                                 ></Route>
                             </Routes>

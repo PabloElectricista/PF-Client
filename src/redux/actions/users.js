@@ -1,12 +1,12 @@
 import axios from "axios";
-import { getAllUsers, getUserByEmail, addNewUser } from "../slices/usersSlices"
+import { getAllUsers, getUserByEmail, addNewUser, updateUserData } from "../slices/usersSlices"
 
 
 export const getUsers = (tkn) => {
     return function (dispatch) {
         axios("/users", {
             headers: {
-                'x-access-token': tkn
+                'credential': tkn
             }
         })
             .then(res => {dispatch(getAllUsers(res.data))})
@@ -14,11 +14,11 @@ export const getUsers = (tkn) => {
     }
 }
 
-export const getByEmail = (user/* , tkn */) => {
+export const getByEmail = (user, tkn) => {
     return function (dispatch) {
         axios("/users/byEmail/" + user.email, {
             headers: {
-                'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWU2Mjk0M2RmMzBlNTQxOGJiMzVhNiIsImlhdCI6MTY2MzY1NTY4OSwiZXhwIjoxNjYzNzQyMDg5fQ.fJAD8txqmjl7ta8lveKvj9HI_Mv36Oh3nQMs5QnALLY"
+                'credential': tkn
             }
         })
             .then(res => {
@@ -29,17 +29,31 @@ export const getByEmail = (user/* , tkn */) => {
                     })
                     .catch(err => console.error(err))
                 }
-                else dispatch(getUserByEmail(res.data[0]))
+                else dispatch(getUserByEmail(res))
             })
             .catch(err => console.error(err))
     }
 }
 
 export const postUser = (newuser) => async (dispatch) => {
-    console.log(newuser);
     try {
+        console.log(newuser);
         const res = await axios.post("/users", newuser)
         dispatch(addNewUser(res.data))
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateUser = (userdata, tkn) => async (dispatch) => {
+    console.log(userdata);
+    try {
+        const res = await axios.put("/users", userdata, {
+            headers: {
+                'credential': tkn
+            }
+        })
+        dispatch(updateUserData(res.data))
     } catch (error) {
         console.log(error);
     }

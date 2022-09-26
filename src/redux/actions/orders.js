@@ -5,7 +5,7 @@ export const getOrders = (tkn) => {
     return function (dispatch) {
         axios("/orders", {
             headers: {
-                'x-access-token': tkn
+                'credentials': tkn
             }
         })
             .then(res => {dispatch(setallorders(res.data))})
@@ -17,7 +17,7 @@ export const getOrdersByUser = (id, tkn) => {
     return function (dispatch) {
         axios("/orders/" + id, {
             headers: {
-                'x-access-token': tkn
+                'credentials': tkn
             }
         })
             .then(res => dispatch(setordersuser(res.data)))

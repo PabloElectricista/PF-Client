@@ -11,13 +11,15 @@ function Signin({ log, setLog }) {
 
     const handleCredentialResponse = ({ credential }) => {
         const responsePayload = jwt_decode(credential);
-        if (responsePayload.email_verified) {
+        if(responsePayload.given_name) {
             dispatch(postUser({credential}))
             toast("Login Ok", { type: "success" })
             setLog(responsePayload.email_verified)
             localStorage.setItem("islogged", "true")
             localStorage.setItem("tkn", credential)
-            localStorage.setItem("tkn", (credential))
+            localStorage.setItem("name", responsePayload.given_name)
+            localStorage.setItem("email", responsePayload.email)
+            localStorage.setItem("picture", responsePayload.picture)
         }
     };
 
@@ -43,22 +45,24 @@ function Signin({ log, setLog }) {
     return <>
         {!log ?
             <Button
-                style={{fontWeight:"bolder"}}
+                
                 size="sm"
                 variant="outline-success"
-                className="mx-2"
+                className="mx-2 pt-1"
                 onClick={login}
             >
+                <i className="material-icons">login</i>
                 Login
             </Button>
             :
             <Button
-                style={{fontWeight:"bolder"}}
+                
                 size="sm"
                 variant="outline-danger"
-                className="g_id_signout mx-2"
+                className="g_id_signout mx-2  pt-1"
                 onClick={logout}
             >
+                <i className="material-icons">logout</i>
                 Logout
             </Button>
         }

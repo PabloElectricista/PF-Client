@@ -16,14 +16,14 @@ function Pagination() {
     const [query, setQuery] = useState("");
 
 
-    useState(() => {
+    useEffect(() => {
         let pagestate = localStorage.getItem("pagestate");
         let setting = pagestate === undefined || pagestate === null ? 1 : parseInt(pagestate)
         setCurrent(setting)
     }, [])
 
     useEffect(() => {
-        dispatch(getProds(`${current - 1}` + query))
+        dispatch(getProds(`${current - 1}${query}`))
         localStorage.setItem("pagestate", current)
     }, [current, query])
 
@@ -33,6 +33,8 @@ function Pagination() {
             currentsettings += localStorage.getItem("order")
             currentsettings += localStorage.getItem("search")
             currentsettings += localStorage.getItem("filter")
+            console.log(currentsettings !== query)
+            setCurrent(1)
             setQuery(currentsettings);
         }
     }, [filter])
