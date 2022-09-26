@@ -11,13 +11,14 @@ import { useEffect } from "react";
 export default function SearchBox() {
 
     const dispatch = useDispatch()
-    const [query, setQuery] = useState(localStorage.getItem("searchState"));
+    const [query, setQuery] = useState('');
     let [close, setClose] = useState(false)
 
     useEffect(() => {
         let searchcloseState = localStorage.getItem("searchcloseState")
         if (searchcloseState !== null && searchcloseState !== undefined) setClose((searchcloseState === "false") ? false : true)
-        console.log(searchcloseState);
+        // let queryState = localStorage.getItem("searchState")
+        // if (queryState !== null && queryState !== undefined) setQuery(queryState)
     }, [])
 
     useEffect(() => {        
@@ -25,7 +26,7 @@ export default function SearchBox() {
             localStorage.setItem("search", "")
             localStorage.setItem("searchState", "")
         } else {
-            localStorage.setItem("search", `&name=${query}`)
+            localStorage.setItem("search", `${query}`)
             localStorage.setItem("searchState", query)
         }
     }, [query])
@@ -47,7 +48,7 @@ export default function SearchBox() {
     }
 
     return (
-        <Form className="d-flex me-auto w-100" onSubmit={submitHandler}>
+        <Form className="d-flex me-auto w-50" onSubmit={submitHandler}>
             <InputGroup>
                 <Button
                     size="sm"
@@ -60,7 +61,7 @@ export default function SearchBox() {
                     name="q"
                     id="q"
                     onChange={(e) => {
-                        let name = `&name=${e.target.value}`
+                        let name = `${e.target.value}`
                         localStorage.setItem("search", name)
                         setQuery(name)
                     }}
