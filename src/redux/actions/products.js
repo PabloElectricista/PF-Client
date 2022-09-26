@@ -25,7 +25,7 @@ export const postProds = (product,tkn) => {
     return function (dispatch) {
         axios.post("/products",product, {
             headers: {
-            'credentials': tkn
+            'credential': tkn
           }})
             .then(res => dispatch(postProducts(res.data)))
             .catch(err => console.error(err))
@@ -35,7 +35,7 @@ export const updateProduct = (id, payload, tkn) => {
     return function (dispatch) {
                 (axios.put(`/products/${id}`,payload, {
             headers: {
-            'credentials': tkn
+            'credential': tkn
           }}))
             .then(res => console.log(res.statusText))
             .catch(err => console.error(err))
