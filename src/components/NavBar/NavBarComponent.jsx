@@ -1,5 +1,6 @@
+
+import { Container, Navbar, Nav, NavDropdown, Badge, Button } from "react-bootstrap";
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
 import logo from "../../views/assets/micro50.jpg"
@@ -10,10 +11,21 @@ import Signin from '../../views/Signin/Signin'
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { settheme } from '../../redux/slices/themeSlice'
 
+// agregado por nes -> funcionalidad cart
+import {Link} from 'react-router-dom';
+import { Store } from '../../Store';
+import { useContext} from 'react'
+
 function NavBarComponent() {
+
+
+  // agregado por nes funcionalidad cart
+  const { state } = useContext(Store);
+  const { cart } = state;
 
     const dark = useSelector(state => state.theme.theme)
     const dispatch = useDispatch();
+
     const { user } = useSelector(state => state.users)
     const [islogged, setIslogged] = useState(false)
 
@@ -63,7 +75,21 @@ function NavBarComponent() {
                         >Hardware Hot Sales</p>
                     </Navbar.Brand>
                 </LinkContainer>
-                <SearchBox />
+                <SearchBox/>
+                    
+
+                {/* Cart */}
+      <Nav className="me-auto w-100">
+                  <span className="px-4"><Link to="/cart" className="nav-link">
+                    Cart {cart.cartItems.length > 0 && (
+                      <Badge pill bg="danger">
+                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      </Badge>
+                    )}
+                  </Link></span>
+                </Nav>
+
+            
                 <Nav className="me-auto  w-100  justify-content-end">
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
