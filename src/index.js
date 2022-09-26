@@ -9,8 +9,8 @@ import { Provider } from "react-redux";
 import axios from "axios";
 
 axios.defaults.baseURL =  
-  "http://localhost:4000/api"
-  // process.env.REACT_APP_API || "https://pf-serve.herokuapp.com/api";
+  //"http://localhost:4000/api"
+   process.env.REACT_APP_API || "https://pf-serve.herokuapp.com/api";
 
 ReactDOM.render(
   <React.StrictMode>
