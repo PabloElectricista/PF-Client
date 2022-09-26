@@ -1,5 +1,5 @@
 
-import { Container, Navbar, Nav, NavDropdown, Badge, Button } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, Badge, Button, Image } from "react-bootstrap";
 /* eslint-disable react-hooks/exhaustive-deps */
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
@@ -12,16 +12,16 @@ import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { settheme } from '../../redux/slices/themeSlice'
 
 // agregado por nes -> funcionalidad cart
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Store } from '../../Store';
-import { useContext} from 'react'
+import { useContext } from 'react'
 
 function NavBarComponent() {
 
 
-  // agregado por nes funcionalidad cart
-  const { state } = useContext(Store);
-  const { cart } = state;
+    // agregado por nes funcionalidad cart
+    const { state } = useContext(Store);
+    const { cart } = state;
 
     const dark = useSelector(state => state.theme.theme)
     const dispatch = useDispatch();
@@ -40,7 +40,7 @@ function NavBarComponent() {
         if (user) {
             console.log(user);
         }
-    },[user])
+    }, [user])
 
     useEffect(() => {
         localStorage.setItem('theme', dark ? true : false)
@@ -59,12 +59,13 @@ function NavBarComponent() {
         <Navbar bg="dark" variant="dark" fixed="top">
             <Container>
                 <LinkContainer to="/">
-                    <img
+                    <Image
                         src={logo}
                         width="40"
                         height="40"
-                        className="d-inline-block align-top mx-3"
+                        className="d-inline-block align-top mx-3 outlie-light"
                         alt="our logo"
+                        roundedCircle
                     />
                 </LinkContainer>
                 <LinkContainer to="/">
@@ -75,21 +76,10 @@ function NavBarComponent() {
                         >Hardware Hot Sales</p>
                     </Navbar.Brand>
                 </LinkContainer>
-                <SearchBox/>
-                    
 
-                {/* Cart */}
-      <Nav className="me-auto w-100">
-                  <span className="px-4"><Link to="/cart" className="nav-link">
-                    Cart {cart.cartItems.length > 0 && (
-                      <Badge pill bg="danger">
-                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                      </Badge>
-                    )}
-                  </Link></span>
-                </Nav>
+                <SearchBox />
 
-            
+
                 <Nav className="me-auto  w-100  justify-content-end">
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
@@ -103,7 +93,7 @@ function NavBarComponent() {
                                         width="25"
                                         height="25"
                                     /> :
-                                        <p>{localStorage.getItem("name")}</p> }
+                                        <p>{localStorage.getItem("name")}</p>}
                                 </>
                             </Button>
                         } id="admin-nav-dropdown" >
@@ -146,15 +136,30 @@ function NavBarComponent() {
                         </NavDropdown>
                     ) : null}
                     <Signin log={islogged} setLog={setIslogged} />
+                    <Button size="sm" bg="white" variant="outline-info" className="m-2">
+                        <Link to="/" className="nav-link">
+                            <i className="material-icons">home</i>
+                            Home
+                        </Link>
+                    </Button>
                     <Button
+                        size="sm"
                         href="/contactus"
                         variant="outline-warning"
-                        className="me-2"
-
+                        className="m-2"
                     >
                         <i className="material-icons">create</i>
                         Contact us
                     </Button>
+                    {/* Cart */}
+                    <Button size="sm" className="mx-2" variant="outline-success"><Link to="/cart" className="nav-link">
+                        <i className="material-icons">shopping_cart_checkout</i>
+                        Cart {cart.cartItems.length > 0 && (
+                            <Badge pill bg="danger ">
+                                {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                            </Badge>
+                        )}
+                    </Link></Button>
                     <BootstrapSwitchButton
                         checked={dark ? true : false}
                         onstyle="dark"
@@ -162,6 +167,7 @@ function NavBarComponent() {
                         onChange={(checked) => dispatch(settheme(checked))}
                         onlabel={<i className="material-icons">mode_night</i>}
                         offlabel={<i className="material-icons">light_mode</i>}
+                        
                     />
                 </Nav>
             </Container>

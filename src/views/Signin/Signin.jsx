@@ -48,7 +48,7 @@ function Signin({ log, setLog }) {
                 
                 size="sm"
                 variant="outline-success"
-                className="mx-2 pt-1"
+                className="mx-2"
                 onClick={login}
             >
                 <i className="material-icons">login</i>
@@ -59,7 +59,7 @@ function Signin({ log, setLog }) {
                 
                 size="sm"
                 variant="outline-danger"
-                className="g_id_signout mx-2  pt-1"
+                className="g_id_signout mx-2"
                 onClick={logout}
             >
                 <i className="material-icons">logout</i>
