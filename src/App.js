@@ -24,6 +24,7 @@ import MessageDetails from './components/Messages/MessageDetails'
 import Contactform from './views/ContactUs/Contactform'
 
 import { StoreProvider } from './Store'
+import ShippingAddressScreen from "./views/ShippingAddressScreen";
 
 const theme = createTheme({
     palette: {
@@ -55,6 +56,7 @@ function App() {
                                 <Route path="/product/:_id" element={<ProductDetail />} />
                                 <Route path="/cart" element={<CartScreen />} />
                                 <Route path="/" element={<Home />} />
+                                <Route path="/shipping" element={<ShippingAddressScreen />} />
                                 {/* <Route path="/search" element={<SearchScreen />} /> */}
 
                                 {/* Admin Routes */}
