@@ -7,7 +7,7 @@ import { Container } from "react-bootstrap";
 import AdminRoute from "./components/Administrator/AdminRoute";
 import Dashboard from "./components/Administrator/Dashboard";
 import NavBarComponent from "./components/NavBar/NavBarComponent";
-import ProductListScreen from "./views/Home/ProductListScreen";
+import ProductListScreen from "./views/ProductListScreen/ProductListScreen";
 import ProductEditScreen from "./views/ProductEdit/ProductEditScreen";
 import CreateProduct from '../src/components/CreateProduct/CreateProduct';
 import UserProfile from "./components/UserProfile/UserProfile"

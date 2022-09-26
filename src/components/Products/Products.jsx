@@ -1,7 +1,6 @@
 /* eslint-disable array-callback-return */
 import Product from "./Product";
 import { useSelector } from "react-redux";
-// import { Col, Row } from "react-bootstrap";
 
 function Products() {
     const { products } = useSelector(state => state.products)
