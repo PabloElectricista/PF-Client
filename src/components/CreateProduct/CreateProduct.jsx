@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { postProds } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 import style from "./CreateProduct.module.css";
@@ -152,7 +152,7 @@ export default function CreateProduct() {
                         if(file) {
                             setInput({
                         ...input,
-                        image: `${file.secure_url}`
+                        images: `${file.secure_url}`
                         })
                     }
                     })
@@ -177,16 +177,12 @@ export default function CreateProduct() {
                     {errors.name && (<p className={style.error}>{errors.name}</p>)}
                 </div>
                 <div><br />
-                    {/* <input 
-                        className={style.input}
-                        type="file"
-                        accept="image/*"
-                        value={input.images}
-                        autoComplete="off"
-                        name='images'
-                        placeholder="Imagen del producto: (*)"
-                        onChange={(e) => handleChange(e)} /> */}
-                        <input name="images" type="file" onChange={handleImageChange}/>
+                        <input 
+                        className={style.input} 
+                        name="images" 
+                        type="file" 
+                        onChange={handleImageChange}
+                        />
                     {errors.images && (<p className={style.error}>{errors.images}</p>)}
                 </div>
                 
