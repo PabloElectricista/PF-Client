@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Container, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +7,7 @@ import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import profile from "../../views/assets/profile.jpg"
 import UpdateAcount from './UpdateAcount';
 import ShowProfile from './ShowProfile';
+import { getUserByEmail } from '../../redux/slices/usersSlices';
 
 function UserProfile() {
 
@@ -35,6 +37,10 @@ function UserProfile() {
 
     useEffect(() => {
         setTkn(localStorage.getItem('tkn'))
+        dispatch(getUserByEmail(
+            localStorage.getItem("email"),
+            localStorage.getItem("tkn")
+        ))
     }, [])
 
 
@@ -62,7 +68,7 @@ function UserProfile() {
         marginTop: "7rem",
         paddingTop: "5rem"
     }
-    const Profile = () => <div 
+    const Profile = () => <div
         className="fw-bold text-primary"
     >
         Profile Data <i className="material-icons">person_filled</i>
@@ -75,13 +81,14 @@ function UserProfile() {
         <Container style={containerStyle}>
             <Card.Title className="fw-bold text-primary text-center">
                 <BootstrapSwitchButton
-                    checked={dark ? true : false}
-                    onstyle="ligth"
-                    offstyle="ligth"
+                    checked={update}
+                    onstyle="outline-secondary"
+                    offstyle="outline-secondary"
                     onChange={(checked) => (setUpdate(checked))}
                     onlabel={<Update />}
                     offlabel={<Profile />}
                     width={320} height={75}
+
                 />
             </Card.Title>
             <Row className='mb-3'>

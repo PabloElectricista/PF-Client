@@ -6,7 +6,7 @@ export const getUsers = (tkn) => {
     return function (dispatch) {
         axios("/users", {
             headers: {
-                'credentials': tkn
+                'credential': tkn
             }
         })
             .then(res => {dispatch(getAllUsers(res.data))})
@@ -18,7 +18,7 @@ export const getByEmail = (user, tkn) => {
     return function (dispatch) {
         axios("/users/byEmail/" + user.email, {
             headers: {
-                'credentials': tkn
+                'credential': tkn
             }
         })
             .then(res => {
@@ -29,7 +29,7 @@ export const getByEmail = (user, tkn) => {
                     })
                     .catch(err => console.error(err))
                 }
-                else dispatch(getUserByEmail(res.data[0]))
+                else dispatch(getUserByEmail(res))
             })
             .catch(err => console.error(err))
     }
@@ -50,7 +50,7 @@ export const updateUser = (userdata, tkn) => async (dispatch) => {
     try {
         const res = await axios.put("/users", userdata, {
             headers: {
-                'credentials': tkn
+                'credential': tkn
             }
         })
         dispatch(updateUserData(res.data))
