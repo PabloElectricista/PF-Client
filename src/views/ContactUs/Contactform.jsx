@@ -10,16 +10,16 @@ function Contactform() {
     const initialstate = {
         message: "",
         name: "",
-        sender: "",
-        subject: ""
+        email: "",
+        subject: "",
     }
     const [mail, setMail] = useState(initialstate)
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = event => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
         setValidated(true);
@@ -28,7 +28,7 @@ function Contactform() {
             message: `${mail.message} 
     ${mail.name}`
         }))
-        setMail(initialstate)
+        // setMail(initialstate)
     }
 
     const handleChange = e => {
@@ -64,9 +64,9 @@ function Contactform() {
                             <Form.Control
                                 type="email"
                                 placeholder="name@example.com"
-                                name="sender"
+                                name="email"
                                 onChange={handleChange}
-                                value={mail.sender}
+                                value={mail.email}
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
