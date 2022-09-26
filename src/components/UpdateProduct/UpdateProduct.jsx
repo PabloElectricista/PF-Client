@@ -1,16 +1,17 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable eqeqeq */
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import style from './UpdateProduct.module.css';
-import { updateProduct } from '../../redux/actions/products';
-import {useLocation, useNavigate} from "react-router-dom";
-import { getProdsById } from '../../redux/actions/products';
+import { updateProduct, getProdsById } from '../../redux/actions/products';
+import { useLocation, useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import Stack from '@mui/material/Stack';
-
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -25,39 +26,28 @@ import { useSnackbar } from 'notistack';
 
 export default function UpdateProduct() {
 
-    const [tkn, setTkn] = useState("")
-
-    useEffect(() => {
-        setTkn(localStorage.getItem('tkn'))
-    }, [])
-
- 
     const { enqueueSnackbar } = useSnackbar();
-    const navigate = useNavigate ()
+    const navigate = useNavigate()
     const location = useLocation()
-    let id = (location.pathname.substring(29,location.pathname.length)) 
-
+    let id = (location.pathname.substring(29, location.pathname.length))
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
-    const [update,setUpdate] = useState({})
-
-    const products = useSelector((state) => state.products.products);
-    console.log('esto es prod>>>>>>>>',products)
-    
+    const [input, setInput] = useState({})
+    const { product, categorieslist } = useSelector((state) => state.products.details);
 
     useEffect(() => {
-        if (products && products.length > 0) {
-            setUpdate(products.find((x) => x._id === id))
+        dispatch(getProdsById(id))
+    }, [])
+
+    useEffect(() => {
+        if (product) {
+            setInput({
+                ...product,
+                status: product.status && product.status === "New"
+            })
         }
-    }, [products])
+    }, [product])
 
-    if (!update){
-    dispatch(getProdsById(id))
-    }
-
-    const [input, setInput] = useState({
-         name: "", colors:[{}], category: [{}], images: [{}], brand: "", stock: 0, price: 0, summary: "", description: "", status: ["New"]
-    })
 
     function validate(input) {
         let errors = {};
@@ -77,16 +67,16 @@ export default function UpdateProduct() {
         if (!input.brand) {
             errors.brand = 'Coloca una marca al producto.';
         }
-        if (!input.stock || !/^[0-9]\d*(\.\d+)?$/.test(input.stock)) { 
+        if (!input.stock || !/^[0-9]\d*(\.\d+)?$/.test(input.stock)) {
             errors.stock = 'Coloca un numero, cero o más.';
         }
-        if (!input.price || !/^[1-9]\d*(\.\d+)?$/.test(input.price)) { 
+        if (!input.price || !/^[1-9]\d*(\.\d+)?$/.test(input.price)) {
             errors.price = 'Coloca un precio al producto mayor a 0.';
         }
         if (!input.summary) {
             errors.summary = 'Coloca un resumen del producto.';
         }
-        if(!input.description){ 
+        if (!input.description) {
             errors.description = 'Coloca una descripcón del producto.';
         }
         if (!input.status) {
@@ -94,45 +84,16 @@ export default function UpdateProduct() {
         }
 
         return errors
-
     }
-    
-    useEffect(()=>(setInput({
-        name: update.name,
-        colors: update.colors,
-        category: update.category,
-        images: update.images,
-        brand: update.brand,
-        stock: update.stock,
-        price: update.price,
-        summary: update.summary,
-        description: update.description,
-        status: update.status,
-      })),[update]
-      )
-  
 
     function handleSubmit(e) {
         e.preventDefault()
 
-                
-        if  (  
-               input.name === update.name
-            && input.colors === update.colors
-            && input.category === update.category
-            && input.images === update.images
-            && input.brand === update.brand
-            && input.stock === update.stock
-            && input.price === update.price
-            && input.summary === update.summary
-            && input.description === update.description
-            && input.status === update.status
-         ){
-             enqueueSnackbar("Debe modificar algún campo", { variant: 'error' }); 
-
-         }
+        if (input == product) {
+            enqueueSnackbar("Debe modificar algún campo", { variant: 'error' });
+        }
         else if (input.name.length === 0
-             //devuelve un buleano si el objeto tiene la propiedad especificada 
+            //devuelve un buleano si el objeto tiene la propiedad especificada 
             || errors.hasOwnProperty("name")
             || errors.hasOwnProperty("colors")
             || errors.hasOwnProperty("category")
@@ -144,19 +105,20 @@ export default function UpdateProduct() {
             || errors.hasOwnProperty("description")
             || errors.hasOwnProperty("status")
         ) {
-             enqueueSnackbar("Debe completar correctamente todos los campos con asteriscos (*)", { variant: 'error' });
+            enqueueSnackbar("Debe completar correctamente todos los campos con asteriscos (*)", { variant: 'error' });
         }
         else {
-            dispatch(updateProduct(update._id, input, tkn))
-             enqueueSnackbar("Producto modificado con exito", { variant: 'success' });
-             setTimeout(() => {
+            let data = {
+                ...input,
+                status: input.status === "true" ? "New" : "Used"
+            }
+            dispatch(updateProduct(product._id, data, localStorage.getItem('tkn')))
+            enqueueSnackbar("Producto modificado con exito", { variant: 'success' });
+            setTimeout(() => {
                 navigate('/admin/products')
             }, 2000);
-           
         }
-                
     }
-
 
     function handleChange(e) {
         e.preventDefault();
@@ -167,35 +129,33 @@ export default function UpdateProduct() {
     }
 
     function handleStatus(e) {
-      
-            setInput({
-                ...input,
-                status: e.target.value
-            })
-        
+        e.preventDefault();
+        setInput({
+            ...input,
+            status: e.target.value
+        })
+
     }
 
     function handleCheck(e) {
-
-            setInput({
-                ...input,
-                category: e.target.value
-            })
-    }  
+        e.preventDefault();
+        setInput({
+            ...input,
+            category: e.target.value
+        })
+    }
 
     return (
 
         <div className={style.container}>
-            
-            <form  onSubmit={(e) => handleSubmit(e)} >
-                
-                <Box  sx={{'& .MuiTextField-root': { m: 1, width: '60ch', color: "white" },width: '62ch', my: "2%", mx: "30%", maxWidth: "100%", bgcolor:'#fff', borderRadius: "10px" }}>
-                    <Box component="form" sx={{'& .MuiTextField-root': { m: 1, width: '60ch', color: "white" }, maxWidth: "100%", bgcolor:'#fff', borderRadius: "10px" }} noValidate autoComplete="off">
+            <form onSubmit={(e) => handleSubmit(e)} >
+                <Box sx={{ '& .MuiTextField-root': { m: 1, width: '60ch', color: "white" }, width: '62ch', my: "2%", mx: "30%", maxWidth: "100%", bgcolor: '#fff', borderRadius: "10px" }}>
+                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '60ch', color: "white" }, maxWidth: "100%", bgcolor: '#fff', borderRadius: "10px" }} noValidate autoComplete="off">
 
                         <div>
-                            
+
                             <div>
-                                <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
+                                <TextField sx={{ bgcolor: '#fff ', color: '#FFC400', borderRadius: "10px" }}
                                     id="outlined-helperText"
                                     label="Nombre del producto:"
                                     htmlFor="name"
@@ -204,13 +164,13 @@ export default function UpdateProduct() {
                                     name="name"
                                     helperText="Campo obligatorio (*)"
                                     InputLabelProps={{
-                                    shrink: true,
+                                        shrink: true,
                                     }}
                                 />
                                 {errors.name && (<p className={style.error}>{errors.name}</p>)}
                             </div>
                             <div>
-                                <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
+                                <TextField sx={{ bgcolor: '#fff ', color: '#FFC400', borderRadius: "10px" }}
                                     id="outlined-helperText"
                                     label="Color del producto:"
                                     htmlFor="colors"
@@ -219,18 +179,18 @@ export default function UpdateProduct() {
                                     name="colors"
                                     helperText="Campo obligatorio (*)"
                                     InputLabelProps={{
-                                    shrink: true,
+                                        shrink: true,
                                     }}
                                 />
                                 {errors.colors && (<p className={style.error}>{errors.colors}</p>)}
                             </div>
                             <div>
-                                <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
+                                <TextField sx={{ bgcolor: '#fff ', color: '#FFC400', borderRadius: "10px" }}
                                     id="outlined-number"
                                     label="Imagen del producto"
                                     htmlFor="images"
                                     value={input.images}
-                                    onChange={(e) => handleChange(e)}                      
+                                    onChange={(e) => handleChange(e)}
                                     name="images"
                                     helperText="Campo obligatorio (*)"
                                     InputLabelProps={{
@@ -240,12 +200,12 @@ export default function UpdateProduct() {
                                 {errors.images && (<p className={style.error}>{errors.images}</p>)}
                             </div>
                             <div>
-                                <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
+                                <TextField sx={{ bgcolor: '#fff ', color: '#FFC400', borderRadius: "10px" }}
                                     id="outlined-number"
                                     label="Marca del producto"
                                     htmlFor="brand"
                                     value={input.brand}
-                                    onChange={(e) => handleChange(e)}                      
+                                    onChange={(e) => handleChange(e)}
                                     name="brand"
                                     helperText="Campo obligatorio (*)"
                                     InputLabelProps={{
@@ -255,12 +215,12 @@ export default function UpdateProduct() {
                                 {errors.brand && (<p className={style.error}>{errors.brand}</p>)}
                             </div>
                             <div>
-                                <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
+                                <TextField sx={{ bgcolor: '#fff ', color: '#FFC400', borderRadius: "10px" }}
                                     id="outlined-number"
                                     label="Stock del producto"
                                     htmlFor="stock"
                                     value={input.stock}
-                                    onChange={(e) => handleChange(e)}                      
+                                    onChange={(e) => handleChange(e)}
                                     name="stock"
                                     type="number"
                                     helperText="Campo obligatorio (*)"
@@ -271,12 +231,12 @@ export default function UpdateProduct() {
                                 {errors.stock && (<p className={style.error}>{errors.stock}</p>)}
                             </div>
                             <div>
-                                <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
+                                <TextField sx={{ bgcolor: '#fff ', color: '#FFC400', borderRadius: "10px" }}
                                     id="outlined-number"
                                     label="Precio del producto"
                                     htmlFor="price"
                                     value={input.price}
-                                    onChange={(e) => handleChange(e)}                      
+                                    onChange={(e) => handleChange(e)}
                                     name="price"
                                     type="number"
                                     placeholder="$"
@@ -288,12 +248,12 @@ export default function UpdateProduct() {
                                 {errors.price && (<p className={style.error}>{errors.price}</p>)}
                             </div>
                             <div>
-                                <TextField sx={{ bgcolor:'#fff ', color: '#FFC400',  borderRadius: "10px" }}
+                                <TextField sx={{ bgcolor: '#fff ', color: '#FFC400', borderRadius: "10px" }}
                                     id="outlined-number"
                                     label="Resumen del producto"
                                     htmlFor="summary"
                                     value={input.summary}
-                                    onChange={(e) => handleChange(e)}                      
+                                    onChange={(e) => handleChange(e)}
                                     name="summary"
                                     helperText="Campo obligatorio (*)"
                                     InputLabelProps={{
@@ -302,25 +262,25 @@ export default function UpdateProduct() {
                                 />
                                 {errors.summary && (<p className={style.error}>{errors.summary}</p>)}
                             </div>
-                            <div> 
-                                <TextField sx={{ bgcolor:'#fff ', color: '#dee2e6',  borderRadius: "10px" }}
+                            <div>
+                                <TextField sx={{ bgcolor: '#fff ', color: '#dee2e6', borderRadius: "10px" }}
                                     textarea
                                     id="outlined-helperText"
                                     label="Descripción del producto: "
-                                    maxlength = "100"
+                                    maxlength="100"
                                     htmlFor="description"
                                     value={input.description}
                                     name="description"
                                     onChange={(e) => handleChange(e)}
                                     helperText="Campo obligatorio (*)"
                                     InputLabelProps={{
-                                    shrink: true,
+                                        shrink: true,
                                     }}
                                 />
                                 {errors.description && (<p className={style.error}>{errors.description}</p>)}
                             </div>
                             <div >
-                                <FormControl sx={{ m: 1, minWidth: 80, width: '97%', bgcolor:'#fff'}}>
+                                <FormControl sx={{ m: 1, minWidth: 80, width: '97%', bgcolor: '#fff' }}>
                                     <InputLabel id="demo-simple-select-autowidth-label" >Categorias</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-autowidth-label"
@@ -330,65 +290,50 @@ export default function UpdateProduct() {
                                         label="Category"
                                         onChange={e => handleCheck(e)}
                                     >
+                                        {categorieslist && categorieslist.length > 0 ?
+                                            categorieslist.map((category, idx) => <MenuItem value={category}
+                                                key={idx}
+                                            >
+                                                {category}
+                                            </MenuItem>) :
+                                            <MenuItem value="no hay categorias">no hay categorias</MenuItem>
+                                        }
 
-                                        <MenuItem value={"Auriculares"}>Auriculares</MenuItem>
-                                        <MenuItem value={"Fuente de alimentación"}>Fuente de alimentación</MenuItem>
-                                        <MenuItem value={"Gabinete"}>Gabinete</MenuItem>
-                                        <MenuItem value={"HDD"}>HDD</MenuItem>
-                                        <MenuItem value={"Cam"}>Cam</MenuItem>
-                                        <MenuItem value={"Micro-procesador"}>Micro-procesador</MenuItem>
-                                        <MenuItem value={"Graphics"}>Graphics</MenuItem>
-
-                                        <MenuItem value={"Micrófono"}>Micrófono</MenuItem>
-                                        <MenuItem value={"Monitor"}>Monitor</MenuItem>
-                                        <MenuItem value={"MotherBoard"}>MotherBoard</MenuItem>
-                                        <MenuItem value={"Mouse"}>Mouse</MenuItem>
-                                        <MenuItem value={"Mousepad"}>Mousepad</MenuItem>
-
-                                        <MenuItem value={"M.2NVme"}>M.2NVme</MenuItem>
-                                        <MenuItem value={"Parlante"}>Parlante</MenuItem>
-                                        <MenuItem value={"Placa de video"}>Placa de video</MenuItem>
-                                        <MenuItem value={"RAM"}>RAM</MenuItem>
-                                        <MenuItem value={"Refrigeración"}>Refrigeración</MenuItem>
-
-                                        <MenuItem value={"Sillas"}>Sillas</MenuItem>
-                                        <MenuItem value={"SSD"}>SSD</MenuItem>
-                                        <MenuItem value={"Teclados"}>Teclados</MenuItem>
-                                        <MenuItem value={"Webcam"}>Webcam</MenuItem>
                                     </Select>
                                 </FormControl>
                                 {errors.category && (<p className={style.error}><p className="error" >{errors.category}</p></p>)}
                             </div>
                             <div>
                                 <FormControl>
-                                    <FormLabel id="demo-form-control-label-placement"  sx={{ ml: 2, mt:2 }}>Estado</FormLabel>
-                                    <RadioGroup   row   aria-labelledby="demo-form-control-label-placement" 
-                                        name="position"  defaultValue="false" onChange={e => handleStatus(e)} value={input.status}>
+                                    <FormLabel id="demo-form-control-label-placement" sx={{ ml: 2, mt: 2 }}>Estado</FormLabel>
+                                    <RadioGroup row aria-labelledby="demo-form-control-label-placement"
+                                        name="position"
+                                        onChange={e => handleStatus(e)} value={input.status}>
 
-                                        <FormControlLabel sx={{ ml: 2, mb:2, color: 'gray', bgcolor:'#fff',}}
-                                        value="false"
-                                        control={<Radio />}
-                                        label="Nuevo"
-                                        labelPlacement="start"
+                                        <FormControlLabel sx={{ ml: 2, mb: 2, color: 'gray', bgcolor: '#fff', }}
+                                            value="true"
+                                            control={<Radio />}
+                                            label="Nuevo"
+                                            labelPlacement="start"
                                         />
-                                        <FormControlLabel sx={{ ml: 2, mb:2, color: 'gray', bgcolor:'#fff',}}
-                                        value="true"
-                                        control={<Radio />}
-                                        label="Usado"
-                                        labelPlacement="start"
+                                        <FormControlLabel sx={{ ml: 2, mb: 2, color: 'gray', bgcolor: '#fff', }}
+                                            value="false"
+                                            control={<Radio />}
+                                            label="Usado"
+                                            labelPlacement="start"
                                         />
                                     </RadioGroup>
-                                </FormControl>  
+                                </FormControl>
                             </div>
                         </div>
                     </Box>
-                    <Link to= "/admin/products" className= {style.volver1}>
-                        <Button sx={{ m: 1, width: '20ch', color: '#022335', bgcolor:'#fff', borderColor:'#dee2e6',  borderRadius: "5px"}}   variant="outlined" startIcon={<KeyboardReturnIcon fontSize = "large"/>}>
+                    <Link to="/admin/products" className={style.volver1}>
+                        <Button sx={{ m: 1, width: '20ch', color: '#022335', bgcolor: '#fff', borderColor: '#dee2e6', borderRadius: "5px" }} variant="outlined" startIcon={<KeyboardReturnIcon fontSize="large" />}>
                             volver
                         </Button>
-                    </Link> 
+                    </Link>
                     <Stack direction="row" spacing={2} >
-                        <Button sx={{ m: 1, width: '70ch', color: '#022335', bgcolor:'#fff', borderColor:'#022335',  borderRadius: "10px"}} type='submit' className= {style.modificar} variant="outlined" startIcon={<EditIcon fontSize = "large"/>}>
+                        <Button sx={{ m: 1, width: '70ch', color: '#022335', bgcolor: '#fff', borderColor: '#022335', borderRadius: "10px" }} type='submit' className={style.modificar} variant="outlined" startIcon={<EditIcon fontSize="large" />}>
                             Modificar Producto
                         </Button>
                     </Stack>
