@@ -26,6 +26,7 @@ import Contactform from './views/ContactUs/Contactform'
 import { StoreProvider } from './Store'
 import ShippingAddressScreen from "./views/ShippingAddressScreen";
 import PaymentMethodScreen from "./views/PaymentMethodScreen";
+import PlaceOrderScreen from "./views/PlaceOrderScreen";
 
 const theme = createTheme({
     palette: {
@@ -64,6 +65,10 @@ function App() {
                       <Route
                         path="/payment"
                         element={<PaymentMethodScreen />}
+                      />
+                      <Route
+                        path="/placeorder"
+                        element={<PlaceOrderScreen />}
                       />
                       {/* <Route path="/search" element={<SearchScreen />} /> */}
 

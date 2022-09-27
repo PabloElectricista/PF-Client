@@ -29,7 +29,7 @@ export default function PaymentMethodScreen() {
   return (
     <div>
       <div className="container small-container">
-        <h1 className="my-3">Payment Method</h1>
+        <h1 className="my-3 text-light">Payment Method</h1>
         <Form onSubmit={submitHandler}>
           <div className="mb-3">
             <Form.Check
@@ -39,6 +39,7 @@ export default function PaymentMethodScreen() {
               value="PayPal"
               checked={paymentMethodName === "PayPal"}
               onChange={(e) => setPaymentMethod(e.target.value)}
+              className="text-light"
             />
           </div>
           <div className="mb-3">
@@ -49,6 +50,7 @@ export default function PaymentMethodScreen() {
               value="Stripe"
               checked={paymentMethodName === "Stripe"}
               onChange={(e) => setPaymentMethod(e.target.value)}
+              className="text-light"
             />
           </div>
           <div className="mb-3">
@@ -59,6 +61,7 @@ export default function PaymentMethodScreen() {
               value="MercadoPago"
               checked={paymentMethodName === "MercadoPago"}
               onChange={(e) => setPaymentMethod(e.target.value)}
+              className="text-light"
             />
           </div>
           <div className="mb-3">
@@ -69,6 +72,7 @@ export default function PaymentMethodScreen() {
               value="PagoFacil"
               checked={paymentMethodName === "PagoFacil"}
               onChange={(e) => setPaymentMethod(e.target.value)}
+              className="text-light"
             />
           </div>
           <div className="mb-3">
