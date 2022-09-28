@@ -8,10 +8,10 @@ function Contactform() {
     const dark = useSelector(state => state.theme.theme)
     const dispatch = useDispatch()
     const initialstate = {
-        message: "",
-        name: "",
-        email: "",
-        subject: "",
+        message: " ",
+        name: " ",
+        email: " ",
+        subject: " ",
     }
     const [mail, setMail] = useState(initialstate)
     const [validated, setValidated] = useState(false);
@@ -28,7 +28,7 @@ function Contactform() {
             message: `${mail.message} 
     ${mail.name}`
         }))
-        // setMail(initialstate)
+        setMail(initialstate)
     }
 
     const handleChange = e => {
