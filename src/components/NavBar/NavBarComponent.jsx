@@ -18,7 +18,7 @@ import { useContext } from 'react'
 
 function NavBarComponent() {
 
-
+    
     // agregado por nes funcionalidad cart
     const { state } = useContext(Store);
     const { cart } = state;
@@ -35,12 +35,6 @@ function NavBarComponent() {
         setIslogged(logstate === "true" ? true : false)
         dispatch(settheme(themestate === "true" ? true : false))
     }, [])
-
-    useEffect(() => {
-        if (user) {
-            console.log(user);
-        }
-    }, [user])
 
     useEffect(() => {
         localStorage.setItem('theme', dark ? true : false)
