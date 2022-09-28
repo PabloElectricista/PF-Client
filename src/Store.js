@@ -39,7 +39,9 @@ function reducer(state, action) {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
-      // compatibilizar con autenticacion por google - nes 26/9/22
+    case "CART_CLEAR":
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
+    // compatibilizar con autenticacion por google - nes 26/9/22
     case "USER_SIGNIN":
       return { ...state, userInfo: action.payload };
     case "USER_SIGNOUT":
@@ -52,7 +54,7 @@ function reducer(state, action) {
           paymentMethod: "",
         },
       };
-    
+
     case "SAVE_SHIPPING_ADDRESS":
       return {
         ...state,
@@ -61,7 +63,7 @@ function reducer(state, action) {
           shippingAddress: action.payload,
         },
       };
-    case 'SAVE_PAYMENT_METHOD':
+    case "SAVE_PAYMENT_METHOD":
       return {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload },
