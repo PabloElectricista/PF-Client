@@ -28,13 +28,24 @@ function NavBarComponent() {
 
     const { user } = useSelector(state => state.users)
     const [islogged, setIslogged] = useState(false)
+    const [ client, setClient] = useState({})
 
     useEffect(() => {
         const logstate = localStorage.getItem('islogged')
-        const themestate = localStorage.getItem('theme')
         setIslogged(logstate === "true" ? true : false)
+        const themestate = localStorage.getItem('theme')
         dispatch(settheme(themestate === "true" ? true : false))
+        const clientstate = JSON.parse(localStorage.getItem('user'))
+        setClient(clientstate === null ? {} : clientstate)
     }, [])
+
+    useEffect(() => {
+        if(user && user.username){
+            console.log("entro");
+            localStorage.setItem("user", JSON.stringify(user))
+            setClient(user)
+        }
+    }, [user])
 
     useEffect(() => {
         localStorage.setItem('theme', dark ? true : false)
@@ -77,12 +88,12 @@ function NavBarComponent() {
                 <Nav className="me-auto  w-100  justify-content-end">
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
-                        <NavDropdown /* style={dropstyle}  */ title={user && user.roles === "admin" ? "Admin" :
+                        <NavDropdown /* style={dropstyle}  */ title={client && client.roles === "admin" ? "Admin" :
                             <Button variant="outline-secondary" className="mx-1 ">
                                 <>
-                                    {user.picture ? <img
+                                    {client.picture ? <img
                                         className="thumbnail-image rounded "
-                                        src={user.picture}
+                                        src={client.picture}
                                         alt="avatar"
                                         width="25"
                                         height="25"
@@ -97,7 +108,7 @@ function NavBarComponent() {
                                     Messages
                                 </NavDropdown.Item>
                             </LinkContainer>
-                            {user && !user.isBlocked && <>
+                            {client && !client.isBlocked && <>
                                 <LinkContainer to="/admin/orders" style={itemstyle}>
                                     <NavDropdown.Item>
                                         <i className="material-icons">app_registration</i>
@@ -110,7 +121,7 @@ function NavBarComponent() {
                                     <i className="material-icons">person</i>
                                     Profile</NavDropdown.Item>
                             </LinkContainer>
-                            {user && user.isAdmin && (
+                            {client && client.isAdmin && (
                                 <>
                                     <NavDropdown.Divider />
                                     <LinkContainer to="/admin/products" style={itemstyle}>

@@ -4,17 +4,13 @@ import { getAllProducts, getProductById, postProducts } from "../slices/products
 export const getProds = () => {
     return function (dispatch) {
         let currentsettings =  ''
-        let page = localStorage.getItem("page") === null ? "" : localStorage.getItem("page")
-        console.log(page);
+        let page = localStorage.getItem("page") === null ? 0 : localStorage.getItem("page")
         currentsettings += page
         let order = localStorage.getItem("order") === null ? "" : localStorage.getItem("order")
-        console.log(order);
         currentsettings += order
         let search = localStorage.getItem("search") === null ? "" :  localStorage.getItem("search")
-        console.log(search);
         currentsettings += search
         let filter = localStorage.getItem("filter") === null ? "" : localStorage.getItem("filter")
-        console.log(filter);
         currentsettings += filter
         console.log(currentsettings);
 

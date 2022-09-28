@@ -17,9 +17,6 @@ function Signin({ log, setLog }) {
             setLog(responsePayload.email_verified)
             localStorage.setItem("islogged", "true")
             localStorage.setItem("tkn", credential)
-            localStorage.setItem("name", responsePayload.given_name)
-            localStorage.setItem("email", responsePayload.email)
-            localStorage.setItem("picture", responsePayload.picture)
         }
     };
 

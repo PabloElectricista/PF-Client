@@ -3,6 +3,7 @@ import { getAllUsers, getUserByEmail, addNewUser, updateUserData } from "../slic
 
 
 export const getUsers = (tkn) => {
+    console.log("allusers");
     return function (dispatch) {
         axios("/users", {
             headers: {
@@ -29,7 +30,7 @@ export const getByEmail = (user, tkn) => {
                     })
                     .catch(err => console.error(err))
                 }
-                else dispatch(getUserByEmail(res))
+                else dispatch(getUserByEmail(res.data[0]))
             })
             .catch(err => console.error(err))
     }
@@ -37,7 +38,6 @@ export const getByEmail = (user, tkn) => {
 
 export const postUser = (newuser) => async (dispatch) => {
     try {
-        console.log(newuser);
         const res = await axios.post("/users", newuser)
         dispatch(addNewUser(res.data))
     } catch (error) {

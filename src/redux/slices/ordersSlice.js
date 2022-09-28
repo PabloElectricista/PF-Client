@@ -4,17 +4,18 @@ export const ordersSlice = createSlice({
     name: 'orders',
     initialState: {
         orders: [],
-        ordersuser: []
+        ordersuser: [],
+        order: {}
     },
     reducers: {
         setallorders(state, action){
-            state.filter = action.payload
+            state.orders = action.payload
         },
         setordersuser(state, action){
             state.ordersuser = action.payload
         },
         updateorder(state, action){
-            state.filter = action.payload
+            state.order = action.payload
         }
     }
 })
