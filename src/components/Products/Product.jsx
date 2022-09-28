@@ -8,7 +8,6 @@ import {Store} from '../../Store.js'
 
 function Product({ _id, name, images, rating, numReviews, price, stock }) {
 
-  console.log("stock: ",name, stock)
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { cart: { cartItems }} = state;
 
