@@ -47,7 +47,7 @@ export default function PlaceOrderScreen() {
       dispatch({ type: "CREATE_REQUEST" });
 
       const { data } = await Axios.post(
-        "1orders",
+        "/1orders",
         {
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
