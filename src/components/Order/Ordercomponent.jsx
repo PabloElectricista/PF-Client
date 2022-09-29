@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Form from 'react-bootstrap/Form';
 import Card from "react-bootstrap/Card";
-import { setfilter } from '../../redux/slices/filterSlice';
 import { useDispatch } from 'react-redux';
+import { getProds } from '../../redux/actions/products';
 
 function Ordercomponent() {
 
@@ -18,7 +18,9 @@ function Ordercomponent() {
         const { name, value } = e.target
         if (name === (value).toLowerCase()) return
         localStorage.setItem("order", `&order=${value}`)
-        dispatch(setfilter({ order: `&order=${value}` }))
+        localStorage.setItem("page", 0)
+        console.log("order dispatch");
+        dispatch(getProds())
     }
 
     return <Card className="my-3" border="primary" style={styles}>

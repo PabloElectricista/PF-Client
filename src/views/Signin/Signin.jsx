@@ -17,9 +17,6 @@ function Signin({ log, setLog }) {
             setLog(responsePayload.email_verified)
             localStorage.setItem("islogged", "true")
             localStorage.setItem("tkn", credential)
-            localStorage.setItem("name", responsePayload.given_name)
-            localStorage.setItem("email", responsePayload.email)
-            localStorage.setItem("picture", responsePayload.picture)
         }
     };
 
@@ -40,6 +37,7 @@ function Signin({ log, setLog }) {
         toast("Logout done", { type: "info" })
         setLog(false);
         localStorage.setItem("islogged", "false")
+        localStorage.clear();
     }
 
     return <>
@@ -48,7 +46,7 @@ function Signin({ log, setLog }) {
                 
                 size="sm"
                 variant="outline-success"
-                className="mx-2"
+                className="mx-2 py-0"
                 onClick={login}
             >
                 <i className="material-icons">login</i>
@@ -59,7 +57,7 @@ function Signin({ log, setLog }) {
                 
                 size="sm"
                 variant="outline-danger"
-                className="g_id_signout mx-2"
+                className="g_id_signout mx-2 py-0"
                 onClick={logout}
             >
                 <i className="material-icons">logout</i>
