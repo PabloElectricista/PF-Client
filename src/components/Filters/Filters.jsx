@@ -28,7 +28,7 @@ function Filters() {
         let closefilterstate = JSON.parse(localStorage.getItem("closefilterstate"))
         setClose(closefilterstate === null ? closeinitial : closefilterstate)
         let queryfilterstate = (JSON.parse(localStorage.getItem("queryfilterstate")))
-        console.log(queryfilterstate);
+        // console.log(queryfilterstate);
         setQuery(queryfilterstate === null ? {} : queryfilterstate)
     }, []);
 
@@ -38,11 +38,10 @@ function Filters() {
         for (const key of keys) {
             text += `&${key}=${query[key]}`
         }
-        console.log("useEffect text", text);
-        localStorage.setItem("filter", text)
+        // console.log("useEffect text", text);        localStorage.setItem("filter", text)
         localStorage.setItem("pagestate", 1)
         localStorage.setItem("page", 0)
-        console.log("filter dispatch");
+        // console.log("filter dispatch");
         dispatch(getProds())
     }, [query]);
 
@@ -62,7 +61,6 @@ function Filters() {
             [e.target.name]: e.target.value
         }
         setQuery(querysettings);
-        console.log("handleSelect querysettings", querysettings);
         localStorage.setItem("queryfilterstate", JSON.stringify(querysettings))
         let closesettings = {
             ...close,

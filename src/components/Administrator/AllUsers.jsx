@@ -10,7 +10,7 @@ function AllUsers() {
 
     const tkn = localStorage.getItem('tkn')
     const dispatch = useDispatch()
-    const { allusers,  } = useSelector(state => state.users)
+    const { users, count } = useSelector(state => state.users.allusers)
     const user = useSelector(state => state.users.userselected)
 
     useEffect(() => {
@@ -24,7 +24,7 @@ function AllUsers() {
     return <Container className='p-2 m-3' >
         <Row>
             <Col  md={5}>
-                <UserList allusers={allusers} />
+                <UserList allusers={users} />
             </Col>
             <Col  md={5}>
                 {user && user.picture ?

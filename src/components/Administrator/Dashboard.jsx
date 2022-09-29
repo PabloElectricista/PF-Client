@@ -24,6 +24,13 @@ function Dashboard() {
                         <AdminSearch select={"Orders"} />
                         <AllOrders />
                     </Tab>
+                    <Tab eventKey="balance" title="balance">
+                        <br></br><br></br><br></br><br></br>
+                        <h1>Total Balance</h1>
+                        <p>profit</p>
+                        <p>profit</p>
+                        <p>bla bla bla</p>
+                    </Tab>
                 </Tabs>
             </div>
         </>
