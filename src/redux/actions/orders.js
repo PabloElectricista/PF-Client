@@ -1,11 +1,11 @@
 import axios from "axios";
 import { setallorders, setordersuser, updateorder } from '../slices/ordersSlice'
 
-export const getOrders = (tkn) => {
+export const getOrders = (page, tkn) => {
     return function (dispatch) {
-        axios("/orders", {
+        axios("/orders?start="+page, {
             headers: {
-                'credentials': tkn
+                'credential': tkn
             }
         })
             .then(res => {dispatch(setallorders(res.data))})
@@ -17,7 +17,7 @@ export const getOrdersByUser = (id, tkn) => {
     return function (dispatch) {
         axios("/orders/" + id, {
             headers: {
-                'credentials': tkn
+                'credential': tkn
             }
         })
             .then(res => dispatch(setordersuser(res.data)))
