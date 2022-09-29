@@ -7,11 +7,13 @@ import Carousel from "../../components/Carousel/Carousel"
 import Ordercomponent from '../../components/Order/Ordercomponent';
 import './Home.css'
 import Ads from "../../components/advertisements/Ads";
+import Sound from "../../components/Sound/Sound";
 
 function Home() {
     return (
         <div className="homecontainer">
             <Carousel />
+            <Sound />
             <Row className="d-flex justify-content-start">
                 <Col  xs={3}>
                     <Filters />
