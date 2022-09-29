@@ -132,7 +132,7 @@ export default function UpdateProduct() {
         e.preventDefault();
         setInput({
             ...input,
-            status: e.target.value
+            status: input.status === "on" ? "New" : "Used"
         })
 
     }
