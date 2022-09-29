@@ -25,13 +25,15 @@ export default function CreateProduct() {
     })
     
     function handleSubmit(e) {
-        e.preventDefault()
+        
         const form = e.currentTarget;
         
         if (form.checkValidity() === false) {
+            e.preventDefault()
             e.stopPropagation();
-        }
-        //setValidated(true);
+            setValidated(true);
+        }else{
+        
 
         dispatch(postProds(input,localStorage.getItem('tkn')))
         toast("Product created successfully", {
@@ -50,6 +52,7 @@ export default function CreateProduct() {
             colors: "",
             status: 'Used'
         })
+    }
     }
 
 
@@ -252,7 +255,6 @@ export default function CreateProduct() {
                         <Form.Check 
                             type="switch"
                             id="state-switch"
-                            required
                             label="Check this button if the product is new."
                             onClick={(e) => handleStatus(e)} 
                         />
