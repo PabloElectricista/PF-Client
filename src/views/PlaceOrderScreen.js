@@ -58,11 +58,8 @@ export default function PlaceOrderScreen() {
           totalPrice: cart.totalPrice,
         },
         {
-          headers: {
-            // authorization: `Bearer ${userInfo.token}`,
-            authorization: `Bearer tokendeusuarionestor`,
-          },
-        }
+          headers: { credential: localStorage.getItem("tkn") },
+        },
       );
       // console.log(cart.cartItems);
       ctxDispatch({ type: "CART_CLEAR" });

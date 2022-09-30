@@ -95,10 +95,11 @@ export default function OrderScreen() {
       try {
         dispatch({ type: "FETCH_REQUEST" });
         const { data } = await axios.get(
-          `/orders/${orderId}`
-          // {
+          `/orders/${orderId}`,
+          {
           // headers: { authorization: `Bearer ${userInfo.token}` },
-          // }
+          headers: { credential: localStorage.getItem("tkn") },
+          }
         );
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
@@ -116,12 +117,9 @@ export default function OrderScreen() {
       }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get(
-          "/keys/paypal"
-          // {
-          // headers: { authorization: `Bearer ${userInfo.token}` },
-          // }
-        );
+        const { data: clientId } = await axios.get("/keys/paypal", {
+          headers: { credential: localStorage.getItem("tkn") },
+        });
         paypalDispatch({
           type: "resetOptions",
           value: {
