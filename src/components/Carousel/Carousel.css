@@ -6,15 +6,19 @@
     align-items: center;
     justify-content: center;
   }
+
+  .mainContainer{
+    margin-top: 30em;
+  }
   
-  /* body {
+  body {
     background-color: #8a8d91 !important;
-  } */
-  
-  /*slider.css  */
+  }
+    
   .products-container {
-    margin: 8% 0;
+    margin: 10% 0;
     color: black;
+    background-color: #a3a2a2;
   }
   .products-carousel-container {
     margin: 3% ;
@@ -31,8 +35,8 @@
     position: relative;
   }
   .products-carousel-img {
-    height: 250px;
-    width: 250px;
+    height: 350px;
+    width: 350px;
     margin: 3%;
     margin-left: 23em;
     border-radius: 50%;
