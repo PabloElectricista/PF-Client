@@ -41,7 +41,9 @@ function Filters() {
         // console.log("useEffect text", text);        localStorage.setItem("filter", text)
         localStorage.setItem("pagestate", 1)
         localStorage.setItem("page", 0)
+
         // console.log("filter dispatch");
+        localStorage.setItem("closefilterstate", JSON.stringify(closeinitial))
         dispatch(getProds())
     }, [query]);
 
@@ -87,7 +89,6 @@ function Filters() {
             var keys = Object.keys(query)
             for (const key of keys) {
                 if (key !== e.target.name) {
-                    console.log(key, query[key]);
                     querysettings[key] = query[key]
                 }
             }

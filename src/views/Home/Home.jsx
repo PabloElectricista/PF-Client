@@ -3,11 +3,15 @@ import { Row, Col } from "react-bootstrap";
 import Products from "../../components/Products/Products";
 import Pagination from "../../components/Pagination/Pagination";
 import Filters from '../../components/Filters/Filters'
-import Carousel from "../../components/Carousel/Carousel"
 import Ordercomponent from '../../components/Order/Ordercomponent';
 import './Home.css'
 import Ads from "../../components/advertisements/Ads";
+
+import Carousel from "../../components/Carousel/Carousel"
+
+
 import Sound from "../../components/Sound/Sound";
+
 
 function Home() {
     return (
