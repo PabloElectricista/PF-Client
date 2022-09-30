@@ -72,7 +72,7 @@ export default function OrderScreen() {
       try {
         dispatch({ type: "PAY_REQUEST" });
         const { data } = await axios.put(
-          `/1orders/${order._id}/pay`,
+          `/orders/${order._id}/pay`,
           details
           // {
           //   headers: { authorization: `Bearer ${userInfo.token}` },
@@ -95,7 +95,7 @@ export default function OrderScreen() {
       try {
         dispatch({ type: "FETCH_REQUEST" });
         const { data } = await axios.get(
-          `/1orders/${orderId}`
+          `/orders/${orderId}`
           // {
           // headers: { authorization: `Bearer ${userInfo.token}` },
           // }

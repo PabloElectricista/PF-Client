@@ -47,7 +47,7 @@ export default function PlaceOrderScreen() {
       dispatch({ type: "CREATE_REQUEST" });
 
       const { data } = await Axios.post(
-        "/1orders",
+        "/orders",
         {
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
@@ -123,7 +123,7 @@ export default function PlaceOrderScreen() {
                           className="img-fluid rounded img-thumbnail"
                           style={{ height: 80 }}
                         ></img>{" "}
-                        <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                        <Link to={`/product/${item._id}`}>{item.name}</Link>
                       </Col>
                       <Col md={3}>
                         <span>{item.quantity}</span>
