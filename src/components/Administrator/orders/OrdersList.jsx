@@ -1,6 +1,6 @@
 import { Button, Table } from "react-bootstrap";
 
-function OrdersList({ orders, setId }) {
+function OrdersList({ orders, setId, id }) {
 
     return <>
         <Table striped="columns" size="sm" hover>
@@ -35,25 +35,25 @@ function OrdersList({ orders, setId }) {
                             {idx + 1}
                         </td>
                         <td>
-                            {order.buyer ? order.buyer.username : null}
+                            {order.user ? order.user.username : null}
                         </td>
                         <td>
-                            {order.products.length}
+                            {order.orderItems.length}
                         </td>
                         <td>
-                            {order.total_amount}
+                            {order.totalPrice}
                         </td>
                         <td>
                             {order.status}
                         </td>
                         <td>
-                            {order.createdAt}
+                            <div>{order.createdAt.slice(0,10)}</div><div>{order.createdAt.slice(11,19)}</div>
                         </td>
                         <td>
                             <Button
                                 id={order._id}
                                 size="sm"
-                                variant="primary"
+                                variant={order._id === id ? "primary" : "outline-primary"}
                                 className="px-0"
                                 onClick={() => setId(order._id)}
                             >

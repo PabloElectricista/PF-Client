@@ -60,7 +60,7 @@ function NavBarComponent() {
     }
 
     return <div>
-        <Navbar bg="dark" variant="dark" fixed="top">
+        <Navbar bg="dark" variant="dark" fixed="top" className="d-flex flex-row align-items-baseline">
             <Container>
                 <LinkContainer to="/">
                     <Image
@@ -84,18 +84,18 @@ function NavBarComponent() {
                 <SearchBox />
 
 
-                <Nav className="me-auto  w-100  justify-content-end">
+                <Nav className="my-0  w-100">
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
-                        <NavDropdown /* style={dropstyle}  */ title={client && client.roles === "admin" ? "Admin" :
+                        <NavDropdown className="align-self-center" title={client && client.roles === "admin" ? "Admin" :
                             <Button variant="outline-secondary" className="mx-1 ">
                                 <>
                                     {client.picture ? <img
                                         className="thumbnail-image rounded "
                                         src={client.picture}
                                         alt="avatar"
-                                        width="25"
-                                        height="25"
+                                        width="60"
+                                        height="60"
                                     /> :
                                         <p>{localStorage.getItem("name")}</p>}
                                 </>

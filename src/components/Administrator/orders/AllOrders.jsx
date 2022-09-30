@@ -10,7 +10,7 @@ function AllOrders() {
 
     const [orders, setOrders] = useState([])
     const [order, setOrder] = useState(null)
-    const [count, setCount] = useState(null)
+    const [count, setCount] = useState(1)
     const [id, setId] = useState(null)
     const [pages, setPages] = useState([1])
     const [current, setCurrent] = useState(1)
@@ -48,6 +48,7 @@ function AllOrders() {
 
     useEffect(() => {
         let selected = orders.find(user => user._id === id)
+        console.log(selected);
         setOrder(selected)
     }, [id])
 
@@ -73,10 +74,10 @@ function AllOrders() {
                     </Pagination>
                 </Col>
                 <Col>
-                    <OrdersList orders={orders} setId={setId} />
+                    <OrdersList orders={orders} setId={setId} id={id} />
                 </Col>
-                <Col>
-                    <OrderSelected products={"order.products"} />
+                <Col md={3}>
+                    <OrderSelected order={order} />
                 </Col>
             </Row>
         </Container>
