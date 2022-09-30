@@ -1,16 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { useParams } from "react-router-dom";
 import { Row, Col, ListGroup, Card, Button, Form, FloatingLabel } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import MessageBox from "../../components/MessageBox";
 import LoadingBox from "../../components/LoadingBox";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+// agregado por Nes para funcionalidad cart
+import {Store} from '../../Store.js'
+import { useContext } from 'react';
+
 function ProductDetail() {
+  const navigate = useNavigate()
+  
   // hardcoded data
   // userInfo seria un valor que saco del store y que me indica si hay un usuario logueado
   let userInfo = {
@@ -21,18 +26,21 @@ function ProductDetail() {
   product1.rating = 3;
   product1.reviews = [
     {
+      _id: 1,
       name: "Juan",
       comment: "Muy bueno, lo recomiendo",
       rating: 4,
       createdAt: "2022-04-05T00:00:00.000Z",
     },
     {
+      _id: 2,
       name: "Francisco",
       comment: "Excelente",
       rating: 5,
       createdAt: "2022-05-12T00:00:00.000Z",
     },
     {
+      _id: 3,
       name: "Roberto",
       comment: "Este producto es una mierda",
       rating: 3,
@@ -51,7 +59,28 @@ function ProductDetail() {
   const products = useSelector((state) => state.products.products);
   const product = products.find((x) => x._id === _id);
 
-  const addToCartHandler = async () => {};
+  // funcionalidad para armado de cart
+  const {state, dispatch: ctxDispatch} = useContext(Store);
+  const {cart} = state;
+  
+  const addToCartHandler = async () => {
+    const existItem = cart.cartItems.find((x) => x._id === product._id)
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const { data } = await axios.get(`/products/${product._id}`);
+    if (data.stock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+
+    ctxDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}})
+  };
+
+  // useEffect(() => {
+  //   if (cart){
+  //    navigate("/cart")   
+  //   }
+  // },[])
+
 
   if (!product) return <div>Product Not Found</div>;
 
@@ -63,11 +92,15 @@ function ProductDetail() {
       return;
     }
     try {
-      const { data } = await axios.post(`/api/products/${product._id}/reviews`, {
-        rating, comment, name: userInfo.name
-      },
+      const { data } = await axios.post(
+        `/api/products/${product._id}/reviews`,
         {
-          headers: { Authorization: `Bearer ${userInfo.token}` }
+          rating,
+          comment,
+          name: userInfo.name,
+        },
+        {
+          headers: { credential: localStorage.getItem("tkn") },
         }
       );
 
@@ -87,6 +120,7 @@ function ProductDetail() {
       toast.error("Error al enviar comentario");
     }
   }
+  //
 
   return (
     <div

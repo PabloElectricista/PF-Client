@@ -6,12 +6,14 @@ import { postUser } from "../../redux/actions/users"
 import { useDispatch } from "react-redux";
 
 function Signin({ log, setLog }) {
+  console.log('signin nestor');
 
     const dispatch = useDispatch()
 
-    const handleCredentialResponse = ({ credential }) => {
+  const handleCredentialResponse = ({ credential }) => {
+      console.log('handleCredentialResponse');
         const responsePayload = jwt_decode(credential);
-        if (responsePayload.email_verified) {
+        if(responsePayload.given_name) {
             dispatch(postUser({credential}))
             toast("Login Ok", { type: "success" })
             setLog(responsePayload.email_verified)
@@ -20,12 +22,14 @@ function Signin({ log, setLog }) {
         }
     };
 
-    const login = () => {
+  const login = () => {
+      console.log('login nestor');
         google.accounts.id.initialize({
             client_id: '837241183537-u5uki0e6odl7v0p8ilkst5e2j3ml9u4p.apps.googleusercontent.com',
             callback: handleCredentialResponse
         });
-        google.accounts.id.prompt(notification => {
+    google.accounts.id.prompt(notification => {
+          console.log(notification)
             if (notification.isSkippedMoment()) {
                 toast("Login skipped", { type: "warning" });
             }
@@ -37,6 +41,7 @@ function Signin({ log, setLog }) {
         toast("Logout done", { type: "info" })
         setLog(false);
         localStorage.setItem("islogged", "false")
+        localStorage.clear();
     }
 
     return <>
@@ -45,7 +50,7 @@ function Signin({ log, setLog }) {
                 
                 size="sm"
                 variant="outline-success"
-                className="mx-2 pt-1"
+                className="mx-2 py-0"
                 onClick={login}
             >
                 <i className="material-icons">login</i>
@@ -56,7 +61,7 @@ function Signin({ log, setLog }) {
                 
                 size="sm"
                 variant="outline-danger"
-                className="g_id_signout mx-2  pt-1"
+                className="g_id_signout mx-2 py-0"
                 onClick={logout}
             >
                 <i className="material-icons">logout</i>

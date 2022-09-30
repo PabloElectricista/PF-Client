@@ -1,31 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { postProds } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 import style from "./CreateProduct.module.css";
 import { toast } from "react-toastify";
 
 export default function CreateProduct() {
-
-    const [tkn, setTkn] = useState("")
-
-    useEffect(() => {
-        setTkn(localStorage.getItem('tkn'))
-    }, [])
-
-    //const tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWU2Mjk0M2RmMzBlNTQxOGJiMzVhNiIsImlhdCI6MTY2MzU2OTMxNywiZXhwIjoxNjYzNjU1NzE3fQ.shqGA5B7HiJHBEu4qUXAM1lIevOB29ARBogJ6cuUhFI'
+    
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
     const [input, setInput] = useState({
         name: "",
-        images: "", 
+        images: [], 
         price: 0, 
         description: "", 
         stock: 1, 
         category: "", 
         brand: "", 
-        colors: "",
+        colors: [],
         summary: ""
     })
+
+    console.log('inputImaaaaageeeee', input.images)
 
     function validate(input) {
         let errors = {};
@@ -33,9 +28,9 @@ export default function CreateProduct() {
         if (!input.name) {
             errors.name = 'Coloca un nombre al producto.';
         }
-        if (!input.images) {
-            errors.images = 'Coloca una imagen al producto.';
-        }
+        // if (!input.images) {
+        //     errors.images = 'Coloca una imagen al producto.';
+        // }
 
         if (!input.price || !/^[1-9]\d*(\.\d+)?$/.test(input.price)) { 
             errors.price = 'Coloca un precio al producto mayor a 0.';
@@ -64,7 +59,7 @@ export default function CreateProduct() {
         return errors
 
     }
-
+    
     function handleSubmit(e) {
         e.preventDefault()
         if (input.name.length > 1
@@ -80,7 +75,7 @@ export default function CreateProduct() {
             && !errors.hasOwnProperty("colors")
         ) 
         {
-            dispatch(postProds(input,tkn))
+            dispatch(postProds(input,localStorage.getItem('tkn')))
             toast("Producto creado con exito", {
                 type: "success",
                 autoClose: 2000
@@ -139,9 +134,33 @@ export default function CreateProduct() {
             })
         }
     }
+
+    async function handleImageChange(e){
+        if (e.target.files && e.target.files[0]) {
+            console.log(e.target.files[0])
+            const data = new FormData()
+            data.append("file", e.target.files[0])
+            data.append("upload_preset", "bx6aojc3")
+            fetch (
+                "https://api.cloudinary.com/v1_1/dyjgtikqw/upload", {
+                 method: "POST",
+                 body: data
+                 // mode: 'no-cors'
+                }
+            ).then(resp => resp.json())
+                    .then(file => {
+                        if(file) {
+                            setInput({
+                        ...input,
+                        images: `${file.secure_url}`
+                        })
+                    }
+                    })
+        }
+    }
     
     return (
-        <div>
+        <div className={style.container}>
 
             <form className={style.contenedor} onSubmit={(e) => handleSubmit(e)} >
                 <div>
@@ -158,17 +177,15 @@ export default function CreateProduct() {
                     {errors.name && (<p className={style.error}>{errors.name}</p>)}
                 </div>
                 <div><br />
-                    <input 
-                        className={style.input}
-                        type="text"
-                        value={input.images}
-                        autoComplete="off"
-                        name='images'
-                        placeholder="Imagen del producto: (*)"
-                        onChange={(e) => handleChange(e)} />
+                        <input 
+                        className={style.input} 
+                        name="images" 
+                        type="file" 
+                        onChange={handleImageChange}
+                        />
                     {errors.images && (<p className={style.error}>{errors.images}</p>)}
                 </div>
-
+                
                 <div><br />
                     <input
                         className={style.input}
@@ -286,6 +303,7 @@ export default function CreateProduct() {
                 <br /><br />
             
             </form>
+            
         </div>
     )
 

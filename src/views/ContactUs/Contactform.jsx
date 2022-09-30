@@ -8,18 +8,18 @@ function Contactform() {
     const dark = useSelector(state => state.theme.theme)
     const dispatch = useDispatch()
     const initialstate = {
-        message: "",
-        name: "",
-        sender: "",
-        subject: ""
+        message: " ",
+        name: " ",
+        email: " ",
+        subject: " ",
     }
     const [mail, setMail] = useState(initialstate)
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = event => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
         setValidated(true);
@@ -64,9 +64,9 @@ function Contactform() {
                             <Form.Control
                                 type="email"
                                 placeholder="name@example.com"
-                                name="sender"
+                                name="email"
                                 onChange={handleChange}
-                                value={mail.sender}
+                                value={mail.email}
                                 required
                             />
                             <Form.Control.Feedback type="invalid">

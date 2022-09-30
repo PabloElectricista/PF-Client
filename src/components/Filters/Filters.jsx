@@ -1,15 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Form from 'react-bootstrap/Form';
-import Card from "react-bootstrap/Card";
+import { Form, Card, Row, Col, Button } from 'react-bootstrap';
 import './Filters.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setfilter } from '../../redux/slices/filterSlice';
-import { Row, Col } from "react-bootstrap";
-import Button from 'react-bootstrap/Button';
+import { getProds } from "../../redux/actions/products";
+
+export let closeinitial = {
+    brand: false,
+    colors: false,
+    status: false,
+    category: false,
+    price: false
+}
 
 function Filters() {
-
     const dispatch = useDispatch()
     let brand = useSelector(state => state.products.brand)
     let colors = useSelector(state => state.products.colors)
@@ -17,46 +21,37 @@ function Filters() {
     let status = useSelector(state => state.products.status)
     let category = useSelector(state => state.products.categories)
     let [query, setQuery] = useState({});
-    let [close, setClose] = useState({});
+    let [close, setClose] = useState(closeinitial);
     const [minmax, setMinmax] = useState('');
-    let [firstload, setFirstload] = useState(true);
-    
 
     useEffect(() => {
         let closefilterstate = JSON.parse(localStorage.getItem("closefilterstate"))
-        let setting = (closefilterstate === null || closefilterstate === undefined) ? {
-            brand: false,
-            colors: false,
-            status: false,
-            price: false,
-            category: false
-        } : closefilterstate
-        setClose(setting)
-     
-        let queryfilterstate = JSON.parse(localStorage.getItem("queryfilterstate"))
-        let querysettings = (queryfilterstate === null || queryfilterstate === undefined) ? {} : queryfilterstate
-        setQuery(querysettings)
-    }, [])
+        setClose(closefilterstate === null ? closeinitial : closefilterstate)
+        let queryfilterstate = (JSON.parse(localStorage.getItem("queryfilterstate")))
+        console.log(queryfilterstate);
+        setQuery(queryfilterstate === null ? {} : queryfilterstate)
+    }, []);
 
     useEffect(() => {
-        dispatch(setfilter(query))
         const keys = Object.keys(query)
-            let text = ""
-            for (const key of keys) {
-                text += `&${key}=${query[key]}`
-            }
+        let text = ""
+        for (const key of keys) {
+            text += `&${key}=${query[key]}`
+        }
+        console.log("useEffect text", text);
         localStorage.setItem("filter", text)
+        localStorage.setItem("pagestate", 1)
+        localStorage.setItem("page", 0)
+        console.log("filter dispatch");
+        dispatch(getProds())
     }, [query]);
 
     useEffect(() => {
-        if (price && price.length > 0 && firstload) {
-            setMinmax(`${price[0]}/${price[1]}`)
-            setFirstload(false)
+        if (price && price.length > 0) {
+            let setminmax = localStorage.getItem("minmax") ? localStorage.getItem("minmax") : `${price[0]}/${price[1]}`
+            setMinmax(setminmax)
+            localStorage.setItem("minmax", setminmax)
         }
-        if (price[1] === 0) setQuery({
-            ...query,
-            price: minmax
-        })
     }, [price])
 
     const handleSelect = e => {
@@ -67,6 +62,7 @@ function Filters() {
             [e.target.name]: e.target.value
         }
         setQuery(querysettings);
+        console.log("handleSelect querysettings", querysettings);
         localStorage.setItem("queryfilterstate", JSON.stringify(querysettings))
         let closesettings = {
             ...close,
@@ -142,7 +138,7 @@ function Filters() {
                     <Col xs={8}>
                         <Form.Select
                             size="sm"
-                            name="categories"
+                            name="category"
                             onChange={handleSelect}
                         >
                             <option>Categories</option>
@@ -187,7 +183,7 @@ function Filters() {
                 </Row>
             </Form.Group>
             : null
-        } 
+        }
         {status ?
             <Form.Group>
                 <Row>

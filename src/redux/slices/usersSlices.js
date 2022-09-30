@@ -4,14 +4,15 @@ export const usersSlices = createSlice({
     name: 'users',
     initialState: {
         allusers: [],
-        user: {}
+        user: {},
+        userselected: {}
     },
     reducers: {
         getAllUsers(state, action){
             state.allusers = action.payload
         },
         getUserByEmail(state, actions){
-            state.user = actions.payload
+            state.userselected = actions.payload
         },
         addNewUser(state, actions){
             state.user = actions.payload

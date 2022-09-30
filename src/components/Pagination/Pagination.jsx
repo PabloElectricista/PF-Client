@@ -7,36 +7,25 @@ import { getProds } from "../../redux/actions/products";
 
 function Pagination() {
 
+    let initialstate = localStorage.getItem("pagestate") ? localStorage.getItem("pagestate") : 1
     const dispatch = useDispatch()
     const { count } = useSelector(state => state.products)
-    const { filter } = useSelector(state => state.filter)
     const [pages, setPages] = useState([])
-    const [current, setCurrent] = useState(1)
+    const [current, setCurrent] = useState(initialstate)
     const [max, setMax] = useState(1)
-    const [query, setQuery] = useState("");
 
-
-    useState(() => {
-        let pagestate = localStorage.getItem("pagestate");
-        let setting = pagestate === undefined || pagestate === null ? 1 : parseInt(pagestate)
-        setCurrent(setting)
+    useEffect(() => {
+        console.log(initialstate);
+        setPage(initialstate)
     }, [])
 
-    useEffect(() => {
-        dispatch(getProds(`${current - 1}` + query))
-        localStorage.setItem("pagestate", current)
-    }, [current, query])
-
-    useEffect(() => {
-        var currentsettings = ""
-        if (filter !== undefined || filter !== null) {
-            currentsettings += localStorage.getItem("order")
-            currentsettings += localStorage.getItem("search")
-            currentsettings += localStorage.getItem("filter")
-            setCurrent(1)
-            setQuery(currentsettings);
-        }
-    }, [filter])
+    const setPage = (page) => {
+            setCurrent(parseInt(page))
+            localStorage.setItem("pagestate", page)
+            localStorage.setItem("page", page - 1)
+            console.log("pagination dispatch");
+            dispatch(getProds())
+    }
 
     useEffect(() => {
         if (count) {
@@ -54,18 +43,18 @@ function Pagination() {
         <nav aria-label="...">
             <ul className="pagination">
                 <li className={current === 1 ? "page-item disabled" : "page-item"}>
-                    <a className="page-link" href="#" onClick={() => setCurrent(current - 1)}>Previous</a>
+                    <a className="page-link" href="#" onClick={() => setPage(current - 1)}>Previous</a>
                 </li>
                 {pages && pages.length > 0 ? pages.map((page, idx) => {
                     return <li key={idx} className={current === page ? "page-item active" : "page-item"}
                         aria-current={current === page ? "page" : ""}
                     >
-                        <a className="page-link" href="#" onClick={() => setCurrent(page)}>{page}
+                        <a className="page-link" href="#" onClick={() => setPage(page)}>{page}
                         </a>
                     </li>
                 }) : null}
                 <li className={current === max ? "page-item disabled" : "page-item"}>
-                    <a className="page-link" href="#" onClick={() => setCurrent(current + 1)}>Next</a>
+                    <a className="page-link" href="#" onClick={() => setPage(current + 1)}>Next</a>
                 </li>
             </ul>
         </nav>

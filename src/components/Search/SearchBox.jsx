@@ -1,73 +1,73 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useRef } from "react";
+import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import { useDispatch } from 'react-redux';
-import { setfilter } from '../../redux/slices/filterSlice'
-import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { getProds } from '../../redux/actions/products';
+import { closeinitial } from '../Filters/Filters'
 
 export default function SearchBox() {
 
+    let current = useRef(null)
     const dispatch = useDispatch()
-    const [query, setQuery] = useState("");
     let [close, setClose] = useState(false)
+    const { products } = useSelector(state => state.products)
 
     useEffect(() => {
-        let searchstate = localStorage.getItem("searchState")
-        if (searchstate !== null && searchstate !== undefined) setQuery(searchstate)
         let searchcloseState = localStorage.getItem("searchcloseState")
         if (searchcloseState !== null && searchcloseState !== undefined) setClose((searchcloseState === "false") ? false : true)
+        
     }, [])
-
-    useEffect(() => {
-        console.log(query);
-        if (query === undefined || query === "") {
-            localStorage.setItem("search", "")
-            localStorage.setItem("searchState", "")
-        } else {
-            localStorage.setItem("search", `&name=${query}`)
-            localStorage.setItem("searchState", query)
-        }
-    }, [query])
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if (query === "") return
-        dispatch(setfilter({ search: true }))
-        setClose(true)
+        let query = localStorage.getItem("search")
+        if (query === "" || query === null) return
+        localStorage.setItem("pagestate", 1)
+        localStorage.setItem("page", 0)
         localStorage.setItem("searchcloseState", true)
+        localStorage.setItem("queryfilterstate", JSON.stringify({}))
+        localStorage.setItem("closefilterstate", JSON.stringify(closeinitial))
+        dispatch(getProds())
     };
 
     const handleClear = e => {
         e.preventDefault();
-        setQuery("")
+        current.current.value = ""
         setClose(false)
         localStorage.setItem("searchcloseState", false)
-        dispatch(setfilter({ search: false }))
+        localStorage.setItem("search", "")
+        dispatch(getProds())
     }
 
     return (
-        <Form className="d-flex me-auto" onSubmit={submitHandler}>
+        <Form className="d-flex me-auto w-50" onSubmit={submitHandler}>
+            <Button
+                size="sm"
+                className={close ? "visible" : "invisible"}
+                variant="danger"
+                onClick={handleClear}
+            >x</Button>
             <InputGroup>
-                <Button
-                    size="sm"
-                    className={close ? "visible" : "invisible"}
-                    variant="danger"
-                    onClick={handleClear}
-                >x</Button>
                 <FormControl
+                    size="sm"
                     type="text"
-                    name="q"
-                    id="q"
-                    onChange={(e) => setQuery(e.target.value)}
+                    name="name"
+                    id="name"
+                    ref={current}
+                    onChange={(e) => {
+                        setClose(true)
+                        localStorage.setItem("search", `&name=${e.target.value}`)
+                    }}
                     placeholder="search products..."
                     aria-label="Search Products"
                     aria-describedby="button-search"
-                    value={query}
                 ></FormControl>
 
-                <Button variant="outline-primary" type="submit" id="button-search">
+                <Button
+                    variant="outline-primary" type="submit" id="button-search">
                     <i className="fas fa-search"></i>
                 </Button>
             </InputGroup>
