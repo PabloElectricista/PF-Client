@@ -2,8 +2,8 @@ import React from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
 import ProductListScreen from '../../views/ProductListScreen/ProductListScreen'
 import AdminSearch from './AdminSearch'
-import AllUsers from './AllUsers'
-import AllOrders from './AllOrders'
+import AllUsers from './users/AllUsers'
+import AllOrders from './orders/AllOrders'
 
 function Dashboard() {
     return (

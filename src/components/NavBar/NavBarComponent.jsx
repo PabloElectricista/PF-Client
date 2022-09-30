@@ -107,7 +107,7 @@ function NavBarComponent() {
                                     Messages
                                 </NavDropdown.Item>
                             </LinkContainer>
-                            {client && !client.isBlocked && <>
+                            {client && !client.isBlocked && !client.isAdmin && <>
                                 <LinkContainer to="/admin/orders" style={itemstyle}>
                                     <NavDropdown.Item>
                                         <i className="material-icons">app_registration</i>
@@ -115,20 +115,14 @@ function NavBarComponent() {
                                     </NavDropdown.Item>
                                 </LinkContainer>
                             </>}
-                            <LinkContainer to="/admin/profile" style={itemstyle}>
+                            {!client.isAdmin && <LinkContainer to="/admin/profile" style={itemstyle}>
                                 <NavDropdown.Item>
                                     <i className="material-icons">person</i>
                                     Profile</NavDropdown.Item>
-                            </LinkContainer>
+                            </LinkContainer>}
                             {client && client.isAdmin && (
                                 <>
                                     <NavDropdown.Divider />
-                                    <LinkContainer to="/admin/products" style={itemstyle}>
-                                        <NavDropdown.Item>
-                                            <i className="material-icons">dataset</i>
-                                            Products
-                                        </NavDropdown.Item>
-                                    </LinkContainer>
                                     <LinkContainer to="/admin/dashboard" style={itemstyle}>
                                         <NavDropdown.Item>
                                             <i className="material-icons">settings</i>
