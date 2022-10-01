@@ -3,13 +3,12 @@ import { Table } from "react-bootstrap";
 function OrdersList({ orders, setId, id }) {
 
     return <>
-        <Table bordered size="sm" hover>
-            <thead>
+        <Table bordered size="sm" hover className="text-primary ">
+            <thead  className="text-center">
                 <th></th>
                 <th>Id</th>
                 <th>Products sold</th>
                 <th>Total amount</th>
-                <th>Status order</th>
                 <th>Date</th>
             </thead>
             <tbody>
@@ -19,13 +18,11 @@ function OrdersList({ orders, setId, id }) {
                     onClick={() => setId(order._id)}
                     className={order._id === id ? "table-active" : ""}
                     >
-                        <td>{idx + 1}</td>
+                        <td className="text-center">{idx + 1}</td>
                         <td>{order.user ? order.user.username : null}</td>
-                        <td>{order.orderItems.length}</td>
-                        <td>{order.totalPrice}</td>
-                        <td>{order.status}</td>
-                        <td><div>{order.createdAt.slice(0,10)}</div>
-                        <div>{order.createdAt.slice(11,19)}</div></td>
+                        <td className="text-center">{order.orderItems.length}</td>
+                        <td className="text-center">{order.totalPrice}</td>
+                        <td className="text-center">{order.createdAt.slice(0,10)} {order.createdAt.slice(11,19)}</td>
                     </tr>) :
                     <div>Not Orders Found </div>
                 }

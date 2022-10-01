@@ -7,6 +7,7 @@ function UserList({users, setId}) {
         <ListGroup className="list-group px-2">
             {users && users.length > 0 ?
                 users.map((user, idx) => <ListGroup.Item
+                key={idx}
                 >
                     <a
                         key={idx}

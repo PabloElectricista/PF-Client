@@ -12,7 +12,7 @@ function Graphic() {
 
     return <>
         <Card className="mt-3">
-            <Card.Title>
+            <Card.Title  className="text-danger">
                 Grafic Component
             </Card.Title>
             <Card.Text>sales balance</Card.Text>
