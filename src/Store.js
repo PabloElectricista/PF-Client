@@ -4,35 +4,70 @@ export const Store = createContext();
 
 const initialState = {
   cart: {
-    cartItems: localStorage.getItem('cartItems')
-      ? JSON.parse(localStorage.getItem('cartItems'))
+    shippingAddress: localStorage.getItem("shippingAddress")
+      ? JSON.parse(localStorage.getItem("shippingAddress"))
+      : { location: {} },
+    paymentMethod: localStorage.getItem("paymentMethod")
+      ? localStorage.getItem("paymentMethod")
+      : "",
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
   },
 };
 function reducer(state, action) {
   switch (action.type) {
-    case 'CART_ADD_ITEM':
+    case "CART_ADD_ITEM":
       // add to cart - newItem ya viene con el atributo quantity actualizado
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
         (item) => item._id === newItem._id
-      )
+      );
       const cartItems = existItem
         ? state.cart.cartItems.map((item) =>
-          item._id === existItem._id ? newItem : item
-        )
-        // si existItem is null -> significa que newItem es un nuevo producto en el cart
-        : [...state.cart.cartItems, newItem];
-        localStorage.setItem('cartItems', JSON.stringify(cartItems))
-      return {...state, cart: {...state.cart, cartItems},};
+            item._id === existItem._id ? newItem : item
+          )
+        : // si existItem is null -> significa que newItem es un nuevo producto en el cart
+          [...state.cart.cartItems, newItem];
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      return { ...state, cart: { ...state.cart, cartItems } };
     // usamos block {} para no mezclar cartItems entre los distintos casos de reducer
-    case 'CART_REMOVE_ITEM': {
+    case "CART_REMOVE_ITEM": {
       const cartItems = state.cart.cartItems.filter(
         (item) => item._id !== action.payload._id
       );
-      localStorage.setItem('cartItems', JSON.stringify(cartItems))
-      return {...state, cart: {...state.cart, cartItems}}
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case "CART_CLEAR":
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
+    // compatibilizar con autenticacion por google - nes 26/9/22
+    case "USER_SIGNIN":
+      return { ...state, userInfo: action.payload };
+    case "USER_SIGNOUT":
+      return {
+        ...state,
+        userInfo: null,
+        cart: {
+          cartItems: [],
+          shippingAddress: {},
+          paymentMethod: "",
+        },
+      };
+
+    case "SAVE_SHIPPING_ADDRESS":
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: action.payload,
+        },
+      };
+    case "SAVE_PAYMENT_METHOD":
+      return {
+        ...state,
+        cart: { ...state.cart, paymentMethod: action.payload },
+      };
     default:
       return state;
   }
