@@ -16,21 +16,31 @@ function AllOrders() {
     const [current, setCurrent] = useState(1)
 
     useEffect(() => {
-        if (orders && orders.length === 0) {
-            getOrders()
-        }
+        if (orders && orders.length === 0) getOrders()
     }, [])
 
-    const getOrders = () => {
-        axios("/orders", {
+    const getOrders = (page) => {
+        axios("/orders?start="+page, {
             headers: {
                 credential: localStorage.getItem('tkn')
             }
         })
         .then(({data}) => {
-            console.log(data.orders)
             setOrders(data.orders)
             setCount(data.count)
+        })
+        .catch(error => console.log(error))
+    }
+
+    const changestatus = (id, status) => {
+        axios.put(`/orders/${id}`, {status}, {
+            headers: {
+                credential: localStorage.getItem('tkn')
+            }
+        })
+        .then(({data}) => {
+            console.log(data.order.status)
+            getOrders(current-1)
         })
         .catch(error => console.log(error))
     }
@@ -48,7 +58,6 @@ function AllOrders() {
 
     useEffect(() => {
         let selected = orders.find(user => user._id === id)
-        console.log(selected);
         setOrder(selected)
     }, [id])
 
@@ -77,7 +86,7 @@ function AllOrders() {
                     <OrdersList orders={orders} setId={setId} id={id} />
                 </Col>
                 <Col md={3}>
-                    <OrderSelected order={order} />
+                    <OrderSelected order={order} changestatus={changestatus}/>
                 </Col>
             </Row>
         </Container>

@@ -23,7 +23,7 @@ function AllUsers() {
     }, [users])
 
     const getUsers = () => {
-        axios('/users?start=6', {
+        axios(`/users?start=1`, {
             headers: {
                 credential: localStorage.getItem('tkn')
             }

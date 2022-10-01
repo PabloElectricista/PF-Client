@@ -103,7 +103,7 @@ function Filters() {
         localStorage.setItem("closefilterstate", JSON.stringify(closesettings))
     }
 
-    return <Card className="filtersContainer my-3" border="primary" style={{ width: '17rem' }}>
+    return <Card className="filtersContainer my-3" border="primary" style={{ width: '15rem' }}>
         <Card.Title bg="Info">Filter products</Card.Title>
         {brand ?
             <Form.Group>

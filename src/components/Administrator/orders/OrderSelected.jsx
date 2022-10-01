@@ -25,6 +25,7 @@ function OrderSelected({ order, changestatus }) {
                             size="sm"
                             className="mx-3"
                             variant="outline-primary"
+                            onClick={() => changestatus(order._id, "completed")}
                         >
                             completed
                         </Button>
@@ -32,6 +33,7 @@ function OrderSelected({ order, changestatus }) {
                             size="sm"
                             className="mx-3"
                             variant="outline-primary"
+                            onClick={() => changestatus(order._id, "canceled")}
                         >
                             canceled
                         </Button>
