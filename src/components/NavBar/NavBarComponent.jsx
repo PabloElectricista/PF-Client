@@ -32,7 +32,8 @@ function NavBarComponent() {
 
     useEffect(() => {
         const logstate = localStorage.getItem('islogged')
-        setIslogged(logstate === "true" ? true : false)
+      setIslogged(logstate === "true" ? true : false)
+      console.log(islogged);
         const themestate = localStorage.getItem('theme')
         dispatch(settheme(themestate === "true" ? true : false))
         const clientstate = JSON.parse(localStorage.getItem('user'))
