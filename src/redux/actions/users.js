@@ -2,10 +2,10 @@ import axios from "axios";
 import { getAllUsers, getUserByEmail, addNewUser, updateUserData } from "../slices/usersSlices"
 
 
-export const getUsers = (tkn) => {
+export const getUsers = (page, tkn) => {
     console.log("allusers");
     return function (dispatch) {
-        axios("/users", {
+        axios(`/users?start=${page}&limit=6`, {
             headers: {
                 'credential': tkn
             }
