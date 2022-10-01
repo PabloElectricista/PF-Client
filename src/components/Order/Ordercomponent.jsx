@@ -7,7 +7,7 @@ import { getProds } from '../../redux/actions/products';
 function Ordercomponent() {
 
     const styles = {
-        width: '17rem',
+        width: '15rem',
         border: "3px solid #0a58ca",
         padding: "1.5em"
     }

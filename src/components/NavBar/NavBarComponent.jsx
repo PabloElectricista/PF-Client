@@ -41,7 +41,6 @@ function NavBarComponent() {
 
     useEffect(() => {
         if(user && user.username){
-            console.log("entro");
             localStorage.setItem("user", JSON.stringify(user))
             setClient(user)
         }
@@ -61,7 +60,7 @@ function NavBarComponent() {
     }
 
     return <div>
-        <Navbar bg="dark" variant="dark" fixed="top">
+        <Navbar bg="dark" variant="dark" fixed="top" className="d-flex flex-row align-items-baseline">
             <Container>
                 <LinkContainer to="/">
                     <Image
@@ -85,18 +84,18 @@ function NavBarComponent() {
                 <SearchBox />
 
 
-                <Nav className="me-auto  w-100  justify-content-end">
+                <Nav className="my-0  w-100">
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
-                        <NavDropdown /* style={dropstyle}  */ title={client && client.roles === "admin" ? "Admin" :
+                        <NavDropdown className="align-self-center" title={client && client.roles === "admin" ? "Admin" :
                             <Button variant="outline-secondary" className="mx-1 ">
                                 <>
                                     {client.picture ? <img
                                         className="thumbnail-image rounded "
                                         src={client.picture}
                                         alt="avatar"
-                                        width="25"
-                                        height="25"
+                                        width="60"
+                                        height="60"
                                     /> :
                                         <p>{localStorage.getItem("name")}</p>}
                                 </>
@@ -108,7 +107,7 @@ function NavBarComponent() {
                                     Messages
                                 </NavDropdown.Item>
                             </LinkContainer>
-                            {client && !client.isBlocked && <>
+                            {client && !client.isBlocked && !client.isAdmin && <>
                                 <LinkContainer to="/admin/orders" style={itemstyle}>
                                     <NavDropdown.Item>
                                         <i className="material-icons">app_registration</i>
@@ -116,20 +115,14 @@ function NavBarComponent() {
                                     </NavDropdown.Item>
                                 </LinkContainer>
                             </>}
-                            <LinkContainer to="/admin/profile" style={itemstyle}>
+                            {!client.isAdmin && <LinkContainer to="/admin/profile" style={itemstyle}>
                                 <NavDropdown.Item>
                                     <i className="material-icons">person</i>
                                     Profile</NavDropdown.Item>
-                            </LinkContainer>
+                            </LinkContainer>}
                             {client && client.isAdmin && (
                                 <>
                                     <NavDropdown.Divider />
-                                    <LinkContainer to="/admin/products" style={itemstyle}>
-                                        <NavDropdown.Item>
-                                            <i className="material-icons">dataset</i>
-                                            Products
-                                        </NavDropdown.Item>
-                                    </LinkContainer>
                                     <LinkContainer to="/admin/dashboard" style={itemstyle}>
                                         <NavDropdown.Item>
                                             <i className="material-icons">settings</i>

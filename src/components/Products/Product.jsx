@@ -25,7 +25,7 @@ function Product({ _id, name, images, rating, numReviews, price, stock }) {
     });
   };
 
-  return <div className="m-3" style={{width:250}}>
+  return <div className="m-2" style={{width:"13rem"}}>
     <Card>
       <Link to={`product/${_id}`}>
         <img src={images[0]} alt={name} className="card-img-top" style={{ height: 200 }} />

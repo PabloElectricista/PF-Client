@@ -1,9 +1,10 @@
 import React from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
-import ProductListScreen from '../../views/ProductListScreen/ProductListScreen'
-import AdminSearch from './AdminSearch'
-import AllUsers from './AllUsers'
-import AllOrders from './AllOrders'
+// import AdminSearch from './AdminSearch'
+import AllUsers from './users/AllUsers'
+import AllOrders from './orders/AllOrders'
+import AllProducts from './products/AllProducts'
+import Balance from './balance/Balance'
 
 function Dashboard() {
     return (
@@ -13,16 +14,20 @@ function Dashboard() {
                     defaultActiveKey="products"
                 >
                     <Tab eventKey="products" title="products">
-                        <AdminSearch select={"Products"} />
-                        <ProductListScreen />
+                        {/* <AdminSearch select={"Products"} /> */}
+                        <AllProducts />
+                        {/* <ProductListScreen /> */}
                     </Tab>
                     <Tab eventKey="users" title="users">
-                        <AdminSearch select={"Users"} />
+                        {/* <AdminSearch select={"Users"} /> */}
                         <AllUsers />
                     </Tab>
                     <Tab eventKey="orders" title="orders">
-                        <AdminSearch select={"Orders"} />
+                        {/* <AdminSearch select={"Orders"} /> */}
                         <AllOrders />
+                    </Tab>
+                    <Tab eventKey="balance" title="balance">                        
+                        <Balance />
                     </Tab>
                 </Tabs>
             </div>
