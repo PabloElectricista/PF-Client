@@ -32,7 +32,7 @@ export default function PlaceOrderScreen() {
   });
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart, userInfo } = state;
+  const { cart } = state;
 
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
   cart.itemsPrice = round2(
@@ -43,6 +43,12 @@ export default function PlaceOrderScreen() {
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
   const placeOrderHandler = async () => {
+    var login = localStorage.getItem("islogged");
+    if (!login) {
+      toast("Please Login", { type: "error" });
+      return;
+    }
+    
     try {
       dispatch({ type: "CREATE_REQUEST" });
 
@@ -59,7 +65,7 @@ export default function PlaceOrderScreen() {
         },
         {
           headers: { credential: localStorage.getItem("tkn") },
-        },
+        }
       );
       // console.log(cart.cartItems);
       ctxDispatch({ type: "CART_CLEAR" });

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Store } from "../Store";
 
 export default function ShippingAddressScreen() {
@@ -18,12 +19,15 @@ export default function ShippingAddressScreen() {
   const [postalCode, setPostalCode] = useState(
     shippingAddress.postalCode || ""
   );
+
   // useEffect(() => {
   //   if (!userInfo) {
   //     navigate("/signin?redirect=/shipping");
   //   }
   // }, [userInfo, navigate]);
+
   const [country, setCountry] = useState(shippingAddress.country || "");
+
   const submitHandler = (e) => {
     e.preventDefault();
     ctxDispatch({
@@ -48,7 +52,13 @@ export default function ShippingAddressScreen() {
         location: shippingAddress.location,
       })
     );
-    navigate("/payment");
+    var login = localStorage.getItem("islogged");
+    if (!login) {
+      toast("Please Login", { type: "error" });
+      return;
+    } else {
+      navigate("/payment");
+    }
   };
 
   useEffect(() => {

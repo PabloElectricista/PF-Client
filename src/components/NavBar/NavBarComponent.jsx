@@ -42,7 +42,6 @@ function NavBarComponent() {
 
     useEffect(() => {
         if(user && user.username){
-            console.log("entro");
             localStorage.setItem("user", JSON.stringify(user))
             setClient(user)
         }

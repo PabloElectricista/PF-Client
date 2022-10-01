@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { toast } from "react-toastify";
 import { Store } from "../Store";
 
 export default function PaymentMethodScreen() {
@@ -24,7 +25,13 @@ export default function PaymentMethodScreen() {
     e.preventDefault();
     ctxDispatch({ type: "SAVE_PAYMENT_METHOD", payload: paymentMethodName });
     localStorage.setItem("paymentMethod", paymentMethodName);
-    navigate("/placeorder");
+    var login = localStorage.getItem("islogged");
+    if (!login) {
+      toast("Please Login", { type: "error" });
+      return;
+    } else {
+      navigate("/placeorder");
+    }
   };
   return (
     <div>
