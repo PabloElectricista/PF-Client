@@ -13,9 +13,9 @@ export const getOrders = (page, tkn) => {
     }
 }
 
-export const getOrdersByUser = (id, tkn) => {
+export const getOrdersUser = (userid, tkn) => {
     return function (dispatch) {
-        axios("/orders/" + id, {
+        axios("/orders/user/" + userid, {
             headers: {
                 'credential': tkn
             }
@@ -25,9 +25,13 @@ export const getOrdersByUser = (id, tkn) => {
     }
 }
 
-export const updateorderUser = (order) => async (dispatch) => {
+export const updateoneorder = (id, order, tkn) => async (dispatch) => {
     try {
-        const res = await axios.put("/orders", order)
+        const res = await axios.put("/orders"+id, order, {
+            headers: {
+                'credential': tkn
+            }
+        })
         dispatch(updateorder(res.data))
     } catch (error) {
         console.log(error);
