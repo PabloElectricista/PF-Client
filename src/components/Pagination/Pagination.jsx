@@ -15,6 +15,7 @@ function Pagination() {
     const [max, setMax] = useState(1)
 
     useEffect(() => {
+        // console.log(initialstate);
         setPage(initialstate)
     }, [])
 
@@ -22,6 +23,7 @@ function Pagination() {
             setCurrent(parseInt(page))
             localStorage.setItem("pagestate", page)
             localStorage.setItem("page", page - 1)
+            // console.log("pagination dispatch");
             dispatch(getProds())
     }
 
