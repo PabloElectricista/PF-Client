@@ -10,127 +10,118 @@ import Dashboard from "./components/Administrator/Dashboard";
 import NavBarComponent from "./components/NavBar/NavBarComponent";
 import ProductListScreen from "./components/Administrator/products/ProductListScreen";
 import ProductEditScreen from "./views/ProductEdit/ProductEditScreen";
-import CreateProduct from '../src/components/CreateProduct/CreateProduct';
-import UserProfile from "./components/UserProfile/UserProfile"
+import CreateProduct from "../src/components/CreateProduct/CreateProduct";
+import UserProfile from "./components/UserProfile/UserProfile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StoreProvider } from './Store'
+import { StoreProvider } from "./Store";
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
-import OrdersProducts from './components/OrdersProducts/OrdersProducts'
-import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails"
-import MessagesContainer from './components/Messages/MessagesContainer'
-import MessageDetails from './components/Messages/MessageDetails'
-import Contactform from './views/ContactUs/Contactform'
+import OrdersProducts from "./components/OrdersProducts/OrdersProducts";
+import OrderProductsDetails from "./components/OrderProductsDetails/OrderProductsDetails";
+import MessagesContainer from "./components/Messages/MessagesContainer";
+import MessageDetails from "./components/Messages/MessageDetails";
+import Contactform from "./views/ContactUs/Contactform";
 
+import ShippingAddressScreen from "./views/ShippingAddressScreen";
+import PaymentMethodScreen from "./views/PaymentMethodScreen";
+import PlaceOrderScreen from "./views/PlaceOrderScreen";
+import OrderScreen from "./views/OrderScreen";
 
 function App() {
-
   return (
-  <>
-  <StoreProvider>
-    <Router>
-        <div className="d-flex flex-column site-container">
+    <>
+      <StoreProvider>
+        <Router>
+          <div className="d-flex flex-column site-container">
             <header>
-                <NavBarComponent />  
+              <NavBarComponent />
             </header>
-            <main>     
-                <ToastContainer />
-                <Container>
-                
-                    <Routes>
-                        <Route path="/product/:_id" element={<ProductDetail />} />
-                        <Route path="/cart" element={<CartScreen />} />
-                        <Route path="/" element={<Home />} />
-                        {/* <Route path="/search" element={<SearchScreen />} /> */}
+            <main>
+              <ToastContainer />
+              <Container>
+                <Routes>
+                  <Route path="/product/:_id" element={<ProductDetail />} />
+                  <Route path="/cart" element={<CartScreen />} />
+                  <Route path="/" element={<Home />} />
+                  <Route path="/shipping" element={<ShippingAddressScreen />} />
+                  <Route path="/payment" element={<PaymentMethodScreen />} />
+                  <Route path="/placeorder" element={<PlaceOrderScreen />} />
+                  <Route path="/order/:id" element={<OrderScreen />} />
+                  {/* <Route path="/search" element={<SearchScreen />} /> */}
 
-                        {/* Admin Routes */}
-                        <Route
-                            path="/admin/dashboard"
-                            element={
-                                <AdminRoute>
-                                    <Dashboard />
-                                </AdminRoute>
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/products"
-                            element={
-                                <AdminRoute>
-                                    <ProductListScreen />
-                                </AdminRoute>
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/product/:id"
-                            element={
-                                <AdminRoute>
-                                    <ProductEditScreen />
-                                </AdminRoute>
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/product/createProduct"
-                            element={
-                                <AdminRoute>
-                                    <CreateProduct />
-                                </AdminRoute>
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/product/updateProduct/:id"
-                            element={
-                                <AdminRoute>
-                                    <UpdateProduct />
-                                </AdminRoute>
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/orders"
-                            element={
-                                <OrdersProducts />
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/ordersdetails/:id"
-                            element={
-                                <OrderProductsDetails />
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/messages"
-                            element={
-                                <MessagesContainer />
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/messagedetails/:id"
-                            element={
-                                <MessageDetails />
-                            }
-                        ></Route>
-                        <Route
-                            path="/admin/profile"
-                            element={
-                                <UserProfile />
-                            }
-                        ></Route>
-                        <Route
-                            path="/contactus"
-                            element={
-                                <Contactform />
-                            }
-                        ></Route>
-                    </Routes>
-                </Container>
+                  {/* Admin Routes */}
+                  <Route
+                    path="/admin/dashboard"
+                    element={
+                      <AdminRoute>
+                        <Dashboard />
+                      </AdminRoute>
+                    }
+                  ></Route>
+                  <Route
+                    path="/admin/products"
+                    element={
+                      <AdminRoute>
+                        <ProductListScreen />
+                      </AdminRoute>
+                    }
+                  ></Route>
+                  <Route
+                    path="/admin/product/:id"
+                    element={
+                      <AdminRoute>
+                        <ProductEditScreen />
+                      </AdminRoute>
+                    }
+                  ></Route>
+                  <Route
+                    path="/admin/product/createProduct"
+                    element={
+                      <AdminRoute>
+                        <CreateProduct />
+                      </AdminRoute>
+                    }
+                  ></Route>
+                  <Route
+                    path="/admin/product/updateProduct/:id"
+                    element={
+                      <AdminRoute>
+                        <UpdateProduct />
+                      </AdminRoute>
+                    }
+                  ></Route>
+                  <Route
+                    path="/admin/orders"
+                    element={<OrdersProducts />}
+                  ></Route>
+                  <Route
+                    path="/admin/ordersdetails/:id"
+                    element={<OrderProductsDetails />}
+                  ></Route>
+                  <Route
+                    path="/admin/messages"
+                    element={<MessagesContainer />}
+                  ></Route>
+                  <Route
+                    path="/admin/messagedetails/:id"
+                    element={<MessageDetails />}
+                  ></Route>
+                  <Route
+                    path="/admin/profile"
+                    element={<UserProfile />}
+                  ></Route>
+                  <Route path="/contactus" element={<Contactform />}></Route>
+                </Routes>
+              </Container>
             </main>
             <footer>
-                <div className="text-center">All rights reserved</div>
+              <div className="text-center">All rights reserved</div>
             </footer>
-        </div>
-    </Router>
-    </StoreProvider>
-  </>
-    );
+          </div>
+        </Router>
+      </StoreProvider>
+    </>
+  );
 }
 
 export default App;

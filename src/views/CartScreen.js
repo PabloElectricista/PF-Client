@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { Store } from '../Store';
-import { Row, Col, ListGroup, Button, Image, Card } from 'react-bootstrap';
+import { Row, Col, ListGroup, Button, Image, Card, Toast } from 'react-bootstrap';
 import MessageBox from '../components/MessageBox';
+import { toast } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
@@ -28,7 +29,13 @@ export default function CartScreen() {
   };
 
   const checkoutHandler = () => {
-    navigate('/signin?redirect=/shipping');
+    var login = localStorage.getItem("islogged");
+    if (!login) {
+      toast("Please Login", { type: "error" });
+      return;
+    } else {
+      navigate("/shipping");
+    }
   };
 
   return (
