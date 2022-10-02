@@ -1,6 +1,5 @@
 import React from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
-// import AdminSearch from './AdminSearch'
 import AllUsers from './users/AllUsers'
 import AllOrders from './orders/AllOrders'
 import AllProducts from './products/AllProducts'
@@ -16,7 +15,6 @@ function Dashboard() {
                     <Tab eventKey="products" title="products">
                         {/* <AdminSearch select={"Products"} /> */}
                         <AllProducts />
-                        {/* <ProductListScreen /> */}
                     </Tab>
                     <Tab eventKey="users" title="users">
                         {/* <AdminSearch select={"Users"} /> */}

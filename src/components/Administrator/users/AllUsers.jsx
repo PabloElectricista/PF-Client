@@ -2,8 +2,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Col, Container, Row, Stack, Pagination } from 'react-bootstrap';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getUsers } from '../../redux/actions/users'
 import Profile from './Profile';
 import UserList from './UsersList';
 import axios from 'axios';
