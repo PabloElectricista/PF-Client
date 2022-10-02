@@ -49,8 +49,7 @@ function AllUsers() {
         setUser(selected)
     }, [id])
 
-    return <div>
-        <Container className='m-3 p-3' >
+    return <Container className='m-3 p-3' >
             <Row>
                 <Col md={1}>
                     <Pagination size="sm">
@@ -78,7 +77,6 @@ function AllUsers() {
             </Row>
 
         </Container>
-    </div>
 }
 
 export default AllUsers;

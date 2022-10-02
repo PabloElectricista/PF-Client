@@ -4,10 +4,12 @@ import { Table } from 'react-bootstrap';
 function UserList({ users, setId, id }) {
 
     return <>
-        <div className="w-100 m-5">
+        <div className="w-auto mx-3">
             <Table bordered hover className="text-primary ">
                 <thead className="text-center">
-                    <th className="text-center" colSpan={3}>Users List</th>
+                    <tr>
+                        <th className="text-center" colSpan={4}>Users List</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {users && users.length > 0 ?
@@ -25,6 +27,7 @@ function UserList({ users, setId, id }) {
                                 />
                             </td>
                             <td>{user.username}</td>
+                            <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
                         </tr>)
                         : <div>Not Users Found </div>}
                 </tbody>

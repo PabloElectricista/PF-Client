@@ -68,8 +68,7 @@ function AllOrders() {
                 <Col xs={1}>
                     <Pagination size="sm">
                         <Stack gap={1}>
-                            {pages?.map(page => <>
-                                <Pagination.Item
+                            {pages?.map(page => <Pagination.Item
                                     key={page}
                                     active={page === current}
                                     onClick={() => {
@@ -77,8 +76,7 @@ function AllOrders() {
                                         getOrders(page - 1)
                                     }}
                                 >{page}
-                                </Pagination.Item>
-                            </>)}
+                                </Pagination.Item>)}
                         </Stack>
                     </Pagination>
                 </Col>
