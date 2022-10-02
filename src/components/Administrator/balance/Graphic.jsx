@@ -12,12 +12,12 @@ function Graphic() {
 
     return <>
         <Card className="mt-3">
-            <Card.Title>
+            <Card.Title  className="text-danger">
                 Grafic Component
             </Card.Title>
             <Card.Text>sales balance</Card.Text>
             <Card.Body>
-            <LineChart width={600} height={300} data={data}>
+            <LineChart width={500} height={300} data={data}>
                     <Line type="monotone" dataKey="uv" stroke="#888400" />
                     <Line type="monotone" dataKey="pv" stroke="#0000d8" />
                     <CartesianGrid stroke="#ccc" />

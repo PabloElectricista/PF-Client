@@ -38,7 +38,7 @@ function Filters() {
         for (const key of keys) {
             text += `&${key}=${query[key]}`
         }
-        // console.log("useEffect text", text);        localStorage.setItem("filter", text)
+        localStorage.setItem("filter", text)
         localStorage.setItem("pagestate", 1)
         localStorage.setItem("page", 0)
 
