@@ -92,11 +92,15 @@ function ProductDetail() {
       return;
     }
     try {
-      const { data } = await axios.post(`/api/products/${product._id}/reviews`, {
-        rating, comment, name: userInfo.name
-      },
+      const { data } = await axios.post(
+        `/api/products/${product._id}/reviews`,
         {
-          headers: { Authorization: `Bearer ${userInfo.token}` }
+          rating,
+          comment,
+          name: userInfo.name,
+        },
+        {
+          headers: { credential: localStorage.getItem("tkn") },
         }
       );
 
