@@ -28,8 +28,7 @@ function ProductListScreen({ products, setId, id }) {
         }
     };
 
-    return <>
-        <div className="w-100 m-5">
+    return <div className="container m-3 p-2">
             <Table size="sm" hover bordered className="text-primary">
                 <thead>
                     <tr>
@@ -72,7 +71,6 @@ function ProductListScreen({ products, setId, id }) {
                 </tbody>
             </Table>
         </div>
-    </>
 }
 
 export default ProductListScreen;
