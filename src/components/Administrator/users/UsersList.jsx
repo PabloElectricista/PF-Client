@@ -4,11 +4,10 @@ import { Table } from 'react-bootstrap';
 function UserList({ users, setId, id }) {
 
     return <>
-        <div className="w-100 m-5" width="22rem">
+        <div className="w-100 m-5">
             <Table bordered hover className="text-primary ">
                 <thead className="text-center">
-                    <th></th>
-                    <th className="text-center" colSpan={2}>Users List</th>
+                    <th className="text-center" colSpan={3}>Users List</th>
                 </thead>
                 <tbody>
                     {users && users.length > 0 ?

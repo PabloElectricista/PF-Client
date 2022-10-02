@@ -33,6 +33,7 @@ export const getProdsById = (id) => {
 }
 
 export const postProds = (product, tkn) => {
+    console.log("entro");
     return function (dispatch) {
         axios.post("/products", product, {
             headers: {
