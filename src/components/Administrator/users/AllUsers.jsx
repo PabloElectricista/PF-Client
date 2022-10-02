@@ -42,14 +42,7 @@ function AllUsers() {
             for (let i = 1; i <= maxpages; i++) {
                 numbers.push(i);
             }
-            console.log(maxpages);
             setPages(numbers)
-            let items = [];
-            for (let number = 1; number <= maxpages; number++) {
-                items.push(
-
-                );
-            }
         }
     }, [count])
 
