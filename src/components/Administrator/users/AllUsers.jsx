@@ -20,10 +20,10 @@ function AllUsers() {
     useEffect(() => {
         if(users && users.length === 0) 
         getUsers()
-    }, [users])
+    }, [])
 
     const getUsers = () => {
-        axios(`/users?start=1`, {
+        axios(`/users?start=0`, {
             headers: {
                 credential: localStorage.getItem('tkn')
             }
