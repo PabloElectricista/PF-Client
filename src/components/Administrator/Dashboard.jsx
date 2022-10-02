@@ -9,7 +9,7 @@ import Balance from './balance/Balance'
 function Dashboard() {
     return (
         <>
-            <div className="container p-3" style={{ backgroundColor: "white", marginTop: "7rem" }}>
+            <div style={{ backgroundColor: "white", marginTop: "7rem" }}>
                 <Tabs
                     defaultActiveKey="products"
                 >
