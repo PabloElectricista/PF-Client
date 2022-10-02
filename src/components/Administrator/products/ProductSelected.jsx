@@ -3,7 +3,7 @@ import { Card, Image } from "react-bootstrap";
 function ProductSelected({ product }) {
 
 
-    return <>
+    return <div className="container pe-3">
         {product ? (<>
             <Card className="text-center text-danger p-2 mx-2">
                 <Card.Title className="mx-auto">Product selected</Card.Title>
@@ -43,7 +43,7 @@ function ProductSelected({ product }) {
                 </Card.Body>
             </Card>
         </>) : <div>no product selected</div>}
-    </>
+    </div>
 }
 
 export default ProductSelected;

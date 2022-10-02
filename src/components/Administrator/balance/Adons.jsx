@@ -2,13 +2,13 @@ import { Card } from "react-bootstrap";
 
 function Adons() {
 
-    return <>
-        <Card className="m-3 p-3">
-            <Card.Title>Ad Earning</Card.Title>
-            <Card.Text>last month</Card.Text>
-            <Card.Text>this month</Card.Text>
+    return <div className="container mx-2 p-2 w-30">
+        <Card>
+            <Card.Title  className="text-danger">Ad Earning</Card.Title>
+            <Card.Text className="text-primary">last month</Card.Text>
+            <Card.Text className="text-primary">this month</Card.Text>
         </Card>
-    </>
+    </div>
 }
 
 export default Adons;

@@ -7,8 +7,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import './ProductListScreen.css';
-
 
 function ProductListScreen({ products, setId, id }) {
 
@@ -30,53 +28,49 @@ function ProductListScreen({ products, setId, id }) {
         }
     };
 
-    return (
-        <div>
-            <>
-                <Table size="sm" hover bordered className="text-primary">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>NAME</th>
-                            <th>STOCK</th>
-                            <th>PRICE</th>
-                            <th>ACTIONS</th>
+    return <div className="container m-3 p-2">
+            <Table size="sm" hover bordered className="text-primary">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>NAME</th>
+                        <th>STOCK</th>
+                        <th>PRICE</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products?.length && products.map((product, idx) => (
+                        <tr key={product._id}
+                            onClick={() => setId(product._id)}
+                            className={product._id === id ? "table-active" : ""}
+                        >
+                            <td>{idx + 1}</td>
+                            <td>{product.name}</td>
+                            <td>{product.stock}</td>
+                            <td>$ {product.price}</td>
+                            <td>
+                                <Button
+                                    type="button"
+                                    variant="outline-primary"
+                                    onClick={() => { navigate(`/admin/product/updateProduct/${product._id}`) }}
+                                >
+                                    Edit
+                                </Button>
+                                &nbsp;
+                                <Button
+                                    type="button"
+                                    variant="outline-primary"
+                                    onClick={() => deleteHandler(product)}
+                                >
+                                    Delete
+                                </Button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {products?.length && products.map((product, idx) => (
-                            <tr key={product._id}
-                                onClick={() => setId(product._id)}
-                                className={product._id === id ? "table-active" : ""}
-                            >
-                                <td>{idx + 1}</td>
-                                <td>{product.name}</td>
-                                <td>{product.stock}</td>
-                                <td>$ {product.price}</td>
-                                <td>
-                                    <Button
-                                        type="button"
-                                        variant="outline-primary"
-                                        onClick={() => { navigate(`/admin/product/updateProduct/${product._id}`) }}
-                                    >
-                                        Edit
-                                    </Button>
-                                    &nbsp;
-                                    <Button
-                                        type="button"
-                                        variant="outline-primary"
-                                        onClick={() => deleteHandler(product)}
-                                    >
-                                        Delete
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </>
+                    ))}
+                </tbody>
+            </Table>
         </div>
-    );
 }
 
 export default ProductListScreen;

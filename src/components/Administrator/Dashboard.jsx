@@ -1,6 +1,5 @@
 import React from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
-// import AdminSearch from './AdminSearch'
 import AllUsers from './users/AllUsers'
 import AllOrders from './orders/AllOrders'
 import AllProducts from './products/AllProducts'
@@ -9,14 +8,13 @@ import Balance from './balance/Balance'
 function Dashboard() {
     return (
         <>
-            <div className="container p-3" style={{ backgroundColor: "white", marginTop: "7rem" }}>
+            <div style={{ backgroundColor: "white", marginTop: "7rem" }}>
                 <Tabs
                     defaultActiveKey="products"
                 >
                     <Tab eventKey="products" title="products">
                         {/* <AdminSearch select={"Products"} /> */}
                         <AllProducts />
-                        {/* <ProductListScreen /> */}
                     </Tab>
                     <Tab eventKey="users" title="users">
                         {/* <AdminSearch select={"Users"} /> */}
