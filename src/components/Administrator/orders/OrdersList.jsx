@@ -3,14 +3,16 @@ import { Table } from "react-bootstrap";
 function OrdersList({ orders, setId, id }) {
 
     return <>
-        <div className="m-5 w-100">
+        <div className="p-2 m-5 w-auto">
             <Table bordered size="sm" hover className="text-primary ">
                 <thead className="text-center">
-                    <th></th>
-                    <th>Id</th>
-                    <th>Products sold</th>
-                    <th>Total amount</th>
-                    <th>Date</th>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Products sold</th>
+                        <th>Total amount</th>
+                        <th>Date</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {

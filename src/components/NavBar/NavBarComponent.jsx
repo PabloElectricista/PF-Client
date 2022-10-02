@@ -18,7 +18,7 @@ import { useContext } from 'react'
 
 function NavBarComponent() {
 
-    
+
     // agregado por nes funcionalidad cart
     const { state } = useContext(Store);
     const { cart } = state;
@@ -28,12 +28,11 @@ function NavBarComponent() {
 
     const { user } = useSelector(state => state.users)
     const [islogged, setIslogged] = useState(false)
-    const [ client, setClient] = useState({})
+    const [client, setClient] = useState({})
 
     useEffect(() => {
         const logstate = localStorage.getItem('islogged')
-      setIslogged(logstate === "true" ? true : false)
-      console.log(islogged);
+        setIslogged(logstate === "true" ? true : false)
         const themestate = localStorage.getItem('theme')
         dispatch(settheme(themestate === "true" ? true : false))
         const clientstate = JSON.parse(localStorage.getItem('user'))
@@ -41,7 +40,7 @@ function NavBarComponent() {
     }, [])
 
     useEffect(() => {
-        if(user && user.username){
+        if (user && user.username) {
             localStorage.setItem("user", JSON.stringify(user))
             setClient(user)
         }
@@ -166,7 +165,7 @@ function NavBarComponent() {
                         onChange={(checked) => dispatch(settheme(checked))}
                         onlabel={<i className="material-icons">mode_night</i>}
                         offlabel={<i className="material-icons">light_mode</i>}
-                        
+
                     />
                 </Nav>
             </Container>
