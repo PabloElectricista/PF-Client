@@ -5,14 +5,16 @@ function UserList({ users, setId, id }) {
 
     return <>
         <div className="w-auto mx-3">
-            <Table bordered hover className="text-primary ">
+            {
+                users && users.length > 0 ?
+                (<Table bordered hover className="text-primary ">
                 <thead className="text-center">
                     <tr>
                         <th className="text-center" colSpan={4}>Users List</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {users && users.length > 0 ?
+                    {
                         users.map((user, idx) => <tr key={idx}
                             onClick={() => setId(user._id)}
                             className={user._id === id ? "table-active" : ""}
@@ -29,9 +31,11 @@ function UserList({ users, setId, id }) {
                             <td>{user.username}</td>
                             <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
                         </tr>)
-                        : <div>Not Users Found </div>}
+                    }
                 </tbody>
-            </Table>
+                </Table>)
+                : <div>Not Users Found </div>
+            }
         </div>
     </>
 }

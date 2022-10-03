@@ -2,8 +2,11 @@ import { Card, Table } from "react-bootstrap";
 
 function BestUserTables({ title, users, field }) {
 
-    return <Card className="p-3">
-        <Card.Title className="text-danger">{title}</Card.Title>
+    return <Card
+        border="primary"
+        style={{ marginBottom: "20px", paddingLefth: "10px", paddingRight: "10px" }}
+    >
+        <Card.Title className="text-danger text-center">{title}</Card.Title>
         <Table bordered className="text-primary">
             <thead>
                 <tr>
@@ -16,7 +19,7 @@ function BestUserTables({ title, users, field }) {
                 {users && users.map((user, idx) => <tr key={idx}>
                     <td>{idx + 1}</td>
                     <td>{user.user}</td>
-                    <td>{user[`total${field}`]}</td>
+                    <td className="text-success">{user[`total${field}`]}</td>
                 </tr>)}
             </tbody>
         </Table>

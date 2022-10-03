@@ -45,7 +45,6 @@ export const postProds = (product, tkn) => {
     }
 }
 export const updateProduct = (id, payload, tkn) => {
-    console.log(id, payload, tkn)
     return function () {
         (axios.put(`/products/${id}`, payload, {
             headers: {
