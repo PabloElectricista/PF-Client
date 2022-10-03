@@ -9,7 +9,6 @@ function Signin({ log, setLog }) {
   const dispatch = useDispatch();
 
   const handleCredentialResponse = ({ credential }) => {
-    console.log("handleCredentialResponse");
     const responsePayload = jwt_decode(credential);
     if (responsePayload.given_name) {
       dispatch(postUser({ credential }));
@@ -21,14 +20,12 @@ function Signin({ log, setLog }) {
   };
 
   const login = () => {
-    console.log("login nestor");
     google.accounts.id.initialize({
       client_id:
         "837241183537-u5uki0e6odl7v0p8ilkst5e2j3ml9u4p.apps.googleusercontent.com",
       callback: handleCredentialResponse,
     });
     google.accounts.id.prompt((notification) => {
-      console.log(notification);
       if (notification.isSkippedMoment()) {
         toast("Login skipped", { type: "warning" });
       }
