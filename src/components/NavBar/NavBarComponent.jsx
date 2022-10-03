@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import Signin from '../../views/Signin/Signin'
-import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+// import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { settheme } from '../../redux/slices/themeSlice'
 
 // agregado por nes -> funcionalidad cart
@@ -101,12 +101,12 @@ function NavBarComponent() {
                                 </>
                             </Button>
                         } id="admin-nav-dropdown" >
-                            <LinkContainer to="/admin/messages" style={itemstyle}>
+                            {/* <LinkContainer to="/admin/messages" style={itemstyle}>
                                 <NavDropdown.Item>
                                     <i className="material-icons">mail</i>
                                     Messages
                                 </NavDropdown.Item>
-                            </LinkContainer>
+                            </LinkContainer> */}
                             {client && !client.isBlocked && !client.isAdmin && <>
                                 <LinkContainer to="/admin/orders" style={itemstyle}>
                                     <NavDropdown.Item>
@@ -158,7 +158,7 @@ function NavBarComponent() {
                             </Badge>
                         )}
                     </Link></Button>
-                    <BootstrapSwitchButton
+                    {/* <BootstrapSwitchButton
                         checked={dark ? true : false}
                         onstyle="dark"
                         offstyle="light"
@@ -166,7 +166,7 @@ function NavBarComponent() {
                         onlabel={<i className="material-icons">mode_night</i>}
                         offlabel={<i className="material-icons">light_mode</i>}
 
-                    />
+                    /> */}
                 </Nav>
             </Container>
         </Navbar>

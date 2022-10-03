@@ -53,12 +53,12 @@ export default function UpdaProduct() {
                         ...input,
                         status: input.status === "on" ? "New" : "Used"
                     }
-                    dispatch(updateProduct(product._id, data, localStorage.getItem('tkn')))
+                    dispatch(updateProduct(product._id, data))
                         toast("Producto modificado con exito", { 
                             type: 'success',
                             autoClose: 4000 });
                             setTimeout(() => {
-                                navigate('/admin/products')
+                                navigate('/admin/dashboard')
                             }, 5000);
                         }
         }
