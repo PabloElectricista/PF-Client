@@ -11,7 +11,7 @@ import {
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
-import { useRef, useState, useEffect } from "react";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import MessageBox from "../../components/MessageBox";
 import LoadingBox from "../../components/LoadingBox";
 import { toast } from "react-toastify";
@@ -19,16 +19,14 @@ import axios from "axios";
 
 // agregado por Nes para funcionalidad cart
 import { Store } from "../../Store.js";
-import { useContext } from "react";
-import { useReducer } from "react";
 import { getError } from "../../utils";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "REFRESH_PRODUCT":
       return { ...state, product: action.payload };
-    case "CREATE_REQUEST":
-      return { ...state, loadingCreateReview: true };
+    // case "CREATE_REQUEST":
+    //   return { ...state, loadingCreateReview: true };
     case "CREATE_SUCCESS":
       return { ...state, loadingCreateReview: false };
     case "CREATE_FAIL":
@@ -47,46 +45,61 @@ const reducer = (state, action) => {
 function ProductDetail() {
   let reviewsRef = useRef();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
+  const navigate = useNavigate();
   let { _id } = useParams();
 
   // agregado para funcionalidad rating y comments
   // ideal si pudiera tener a product tambien en mi reducer... VER
-  const [{ loading, error, loadingCreateReview }, dispatch] = useReducer(
-    reducer,
-    {
+  const [{ loading, error, product, loadingCreateReview }, dispatch] =
+    useReducer(reducer, {
+      product: {},
       loading: true,
       error: "",
-    }
-  );
-
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+    });
 
   // react-redux
-  const products = useSelector((state) => state.products.products);
-  // agregado por nes - userInfo lo obtengo del state react-redux
   const userInfo = useSelector((state) => state.users.user);
-  const product = products.find((x) => x._id === _id);
-  console.log("producto encontrado: ", product)
+
+  // el problema de traer el producto del estado de redux es que
+  // con el manejo del carrito, cualquier modificacion a reviews / stock
+  // tambien habria que modificar el estado global y no estan hechas las rutas
+  // ni controladores para modificar un producto en redux
+  // const products = useSelector((state) => state.products.products);
+  // const product = products.find((x) => x._id === _id);
+
+  // para que al cargar por primera vez la pagina vaya arriba del todo
+  // y carga el estado productResult para renderizar la pagina detail
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   dispatch({ type: "FETCH_SUCCESS", payload: product });
+  // }, []);
+
+  // agregado ahora
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: "FETCH_REQUEST" });
+      try {
+        const result = await axios.get(`/products/${_id}`);
+        dispatch({ type: "FETCH_SUCCESS", payload: result.data.product });
+      } catch (err) {
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
+      }
+    };
+    fetchData();
+  }, [_id]);
 
   // funcionalidad para armado de cart
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
-
+  // agrega producto al carrito y manda a pagina de carrito
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/products/${product._id}`);
-    if (data.stock < quantity) {
-      window.alert("Sorry. Product is out of stock");
-      return;
-    }
-
     ctxDispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    navigate("/cart");
   };
 
   if (!product) return <div>Product Not Found</div>;
@@ -111,21 +124,30 @@ function ProductDetail() {
         }
       );
 
-      // dispatch({
-      //   type: "CRATE_SUCCESS",
-      // });
+      dispatch({
+        type: "CREATE_SUCCESS",
+      });
       toast.success("Comentario agregado satisfactoriamente.");
-      // data trae message, numReviews, rating, review{}
-      console.log("ultimo product review: ", data.review);
-      // estoy agregando un objeto con el ultimo review
-      product.reviews.unshift(data.review);
-      product.numReviews = data.numReviews;
-      // alternativa: product.numReviews++;
-      product.rating = data.rating;
 
-      console.log("product reviews actualizado: ", product)
-      //  despachar una accion para actualizar el producto: PENDIENTE
-      // dispatch({ type: "REFRESH_PRODUCT", payload: product });
+      console.log("data y productResult ANTES", data, product);
+
+      const copy = JSON.parse(JSON.stringify(product));
+      // console.log("copy ANTES", copy);
+
+      copy.reviews.unshift(data.review);
+
+      copy.numReviews = data.numReviews;
+
+      copy.rating = data.rating;
+
+      // const copy2 = { ...copy };
+
+      // console.log("copy DESPUES", copy);
+
+      dispatch({ type: "REFRESH_PRODUCT", payload: copy });
+
+      console.log("productResult DESPUES", product);
+
       window.scrollTo({
         behavior: "smooth",
         top: reviewsRef.current.offsetTop,
@@ -136,7 +158,9 @@ function ProductDetail() {
   };
   //
 
-  return (
+  return loading ? (
+    <LoadingBox />
+  ) : (
     <div className="order-container">
       <Row>
         <Col md={6}>
@@ -149,36 +173,18 @@ function ProductDetail() {
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              {/* <Helmet> */}
               <title>{product.name}</title>
-              {/* </Helmet> */}
               <h1>{product.name}</h1>
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
-                // cuando funcione el backend, cambiar por product.rating
                 rating={product.rating}
                 numReviews={product.numReviews}
               ></Rating>
             </ListGroup.Item>
             <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
             <ListGroup.Item>
-              <Row xs={1} md={2} className="g-2">
-                {/* {[product.image, ...product.images].map((x) => (
-                <Col key={x}>
-                  <Card>
-                    <Button
-                      className="thumbnail"
-                      type="button"
-                      variant="light"
-                      // onClick={() => setSelectedImage(x)}
-                    >
-                      <Card.Img variant="top" src={x} alt="product" />
-                    </Button>
-                  </Card>
-                </Col>
-              ))} */}
-              </Row>
+              <Row xs={1} md={2} className="g-2"></Row>
             </ListGroup.Item>
             <ListGroup.Item>
               Description:
@@ -246,7 +252,9 @@ function ProductDetail() {
       </Row>
 
       <div className="my-3">
-        <h2 ref={reviewsRef}>Reviews</h2>
+        <h2 ref={reviewsRef} className="text-light">
+          Reviews
+        </h2>
         <div className="mb-3">
           {product.reviews.length === 0 && (
             <MessageBox>No hay revisiones de producto.</MessageBox>
@@ -268,9 +276,11 @@ function ProductDetail() {
         {/* {userInfo ? ( */}
         {Object.keys(userInfo).length > 0 ? (
           <form onSubmit={submitHandler}>
-            <h2>Escriba un comentario de este producto</h2>
+            <h2 className="text-light">
+              Escriba un comentario de este producto
+            </h2>
             <Form.Group className="mb-3" controlId="rating">
-              <Form.Label>Rating</Form.Label>
+              <Form.Label className="text-light">Rating</Form.Label>
               <Form.Select
                 aria-label="Rating"
                 value={rating}
@@ -286,7 +296,7 @@ function ProductDetail() {
             </Form.Group>
             <FloatingLabel
               controlId="floatingTextarea"
-              label="Comments"
+              label="Commentarios"
               className="mb-3"
             >
               <Form.Control
