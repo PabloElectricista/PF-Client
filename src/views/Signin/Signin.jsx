@@ -11,11 +11,12 @@ function Signin({ log, setLog }) {
   const handleCredentialResponse = ({ credential }) => {
     const responsePayload = jwt_decode(credential);
     if (responsePayload.given_name) {
-      dispatch(postUser({ credential }));
+      dispatch(postUser({ credential }));     
       toast("Login Ok", { type: "success" });
       setLog(responsePayload.email_verified);
       localStorage.setItem("islogged", "true");
       localStorage.setItem("tkn", credential);
+      console.log("signin email: ",responsePayload.email_verified);
     }
   };
 
