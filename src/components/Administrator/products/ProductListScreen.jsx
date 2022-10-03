@@ -1,3 +1,4 @@
+
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line
@@ -7,8 +8,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import './ProductListScreen.css';
-
 
 function ProductListScreen({ products, setId, id }) {
 
@@ -21,62 +20,66 @@ function ProductListScreen({ products, setId, id }) {
                     headers: { credential: localStorage.getItem("tkn") },
                 });
                 if (data === "product delected ok") {
-                    // getAllproducts()
-                    toast(data, { type: "success", autoClose: 1000 });
+                    toast(data, { type: "success", autoClose: 500 });
                 } else toast(data, { type: "danger" });
             } catch (err) {
                 toast(err, { type: "danger" });
             }
+            window.location.reload();
         }
     };
 
-    return (
-        <div>
-            <>
-                <Table size="sm" hover bordered className="text-primary">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>NAME</th>
-                            <th>STOCK</th>
-                            <th>PRICE</th>
-                            <th>ACTIONS</th>
+    return <div className="container mt-3 p-2">
+            {products?.length && (<Table size="sm" hover bordered className="text-primary">
+                <thead>
+                    <tr className="text-danger">
+                        <th>#</th>
+                        <th>NAME</th>
+                        <th className="text-center">STOCK</th>
+                        <th className="text-center">PRICE</th>
+                        <th className="text-center">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map((product, idx) => (
+                        <tr key={product._id}
+                            onClick={() => setId(product._id)}
+                            className={product._id === id ? "table-active" : ""}
+                        >
+                            <td>{idx + 1}</td>
+                            <td>{product.name}</td>
+                            <td className="text-success text-center mx-2">
+                                {product.stock}
+                            </td>
+                            <td className="text-success text-center mx-2">
+                                $ {product.price}
+                            </td>
+                            <td>
+                                <Button
+                                    className="mx-2"
+                                    type="button"
+                                    variant="outline-primary"
+                                    onClick={() => { navigate(`/admin/product/updateProduct/${product._id}`) }}
+                                >
+                                    Edit
+                                </Button>
+                                <Button
+                                className="mx-2"
+                                    type="button"
+                                    variant="outline-primary"
+                                    onClick={() => deleteHandler(product)}
+                                >
+                                    Delete
+                                </Button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {products?.length && products.map((product, idx) => (
-                            <tr key={product._id}
-                                onClick={() => setId(product._id)}
-                                className={product._id === id ? "table-active" : ""}
-                            >
-                                <td>{idx + 1}</td>
-                                <td>{product.name}</td>
-                                <td>{product.stock}</td>
-                                <td>$ {product.price}</td>
-                                <td>
-                                    <Button
-                                        type="button"
-                                        variant="outline-primary"
-                                        onClick={() => { navigate(`/admin/product/updateProduct/${product._id}`) }}
-                                    >
-                                        Edit
-                                    </Button>
-                                    &nbsp;
-                                    <Button
-                                        type="button"
-                                        variant="outline-primary"
-                                        onClick={() => deleteHandler(product)}
-                                    >
-                                        Delete
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </>
+                    ))}
+                </tbody>
+            </Table>)}
         </div>
-    );
 }
 
 export default ProductListScreen;
+
+
+/* &nbsp; */

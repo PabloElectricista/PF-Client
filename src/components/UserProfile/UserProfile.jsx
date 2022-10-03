@@ -7,13 +7,14 @@ import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import profile from "../../views/assets/profile.jpg"
 import UpdateAcount from './UpdateAcount';
 import ShowProfile from './ShowProfile';
-import { getUserByEmail } from '../../redux/slices/usersSlices';
+import { getByEmail } from '../../redux/actions/users';
+import { WindowSharp } from '@mui/icons-material';
 
 function UserProfile() {
 
-    const { email } = useSelector(state => state.users.user)
+    const user = useSelector(state => state.users.userselected)
     const initialstate = {
-        email,
+        email: "",
         firstName: " ",
         lastName: " ",
         phone: 0,
@@ -31,18 +32,14 @@ function UserProfile() {
     const [validated, setValidated] = useState(false);
     const [userdata, setUserdata] = useState(initialstate);
     const dispatch = useDispatch()
-    const [tkn, setTkn] = useState("")
     const dark = useSelector(state => state.theme.theme)
     const [update, setUpdate] = useState(false)
 
     useEffect(() => {
-        setTkn(localStorage.getItem('tkn'))
-        dispatch(getUserByEmail(
-            localStorage.getItem("email"),
-            localStorage.getItem("tkn")
-        ))
+        dispatch(getByEmail(JSON.parse(localStorage.getItem("user"))))
     }, [])
 
+    useEffect(() => setUserdata(user), [user])
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -50,9 +47,10 @@ function UserProfile() {
         if (form.checkValidity() === false) {
             event.stopPropagation();
         }
-        dispatch(updateUser(userdata, tkn));
-        setTimeout(() => setUserdata(initialstate), 1000)
         setValidated(true);
+        dispatch(updateUser(userdata));
+        dispatch(getByEmail(JSON.parse(localStorage.getItem("user"))))
+        window.location.reload();
     };
 
     const handlechange = e => {

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import Signin from '../../views/Signin/Signin'
-import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+// import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { settheme } from '../../redux/slices/themeSlice'
 
 // agregado por nes -> funcionalidad cart
@@ -18,7 +18,7 @@ import { useContext } from 'react'
 
 function NavBarComponent() {
 
-    
+
     // agregado por nes funcionalidad cart
     const { state } = useContext(Store);
     const { cart } = state;
@@ -28,12 +28,11 @@ function NavBarComponent() {
 
     const { user } = useSelector(state => state.users)
     const [islogged, setIslogged] = useState(false)
-    const [ client, setClient] = useState({})
+    const [client, setClient] = useState({})
 
     useEffect(() => {
         const logstate = localStorage.getItem('islogged')
-      setIslogged(logstate === "true" ? true : false)
-      console.log(islogged);
+        setIslogged(logstate === "true" ? true : false)
         const themestate = localStorage.getItem('theme')
         dispatch(settheme(themestate === "true" ? true : false))
         const clientstate = JSON.parse(localStorage.getItem('user'))
@@ -41,7 +40,7 @@ function NavBarComponent() {
     }, [])
 
     useEffect(() => {
-        if(user && user.username){
+        if (user && user.username) {
             localStorage.setItem("user", JSON.stringify(user))
             setClient(user)
         }
@@ -102,12 +101,12 @@ function NavBarComponent() {
                                 </>
                             </Button>
                         } id="admin-nav-dropdown" >
-                            <LinkContainer to="/admin/messages" style={itemstyle}>
+                            {/* <LinkContainer to="/admin/messages" style={itemstyle}>
                                 <NavDropdown.Item>
                                     <i className="material-icons">mail</i>
                                     Messages
                                 </NavDropdown.Item>
-                            </LinkContainer>
+                            </LinkContainer> */}
                             {client && !client.isBlocked && !client.isAdmin && <>
                                 <LinkContainer to="/admin/orders" style={itemstyle}>
                                     <NavDropdown.Item>
@@ -159,15 +158,15 @@ function NavBarComponent() {
                             </Badge>
                         )}
                     </Link></Button>
-                    <BootstrapSwitchButton
+                    {/* <BootstrapSwitchButton
                         checked={dark ? true : false}
                         onstyle="dark"
                         offstyle="light"
                         onChange={(checked) => dispatch(settheme(checked))}
                         onlabel={<i className="material-icons">mode_night</i>}
                         offlabel={<i className="material-icons">light_mode</i>}
-                        
-                    />
+
+                    /> */}
                 </Nav>
             </Container>
         </Navbar>

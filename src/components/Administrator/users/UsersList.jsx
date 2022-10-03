@@ -1,32 +1,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ListGroup } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
-function UserList({users, setId}) {
+function UserList({ users, setId, id }) {
 
-    return <div>
-        <ListGroup className="list-group px-2">
-            {users && users.length > 0 ?
-                users.map((user, idx) => <ListGroup.Item
-                >
-                    <a
-                        key={idx}
-                        href='#!'
-                        className="d-flex flex-row justify-content-start"
-                        onClick={() => setId(user._id)}
-                    >
-                        <img
-                            src={user.picture}
-                            alt={user.username}
-                            className="img-fluid mr-4"
-                            width="70"
-
-                        />
-                        <p>{`${user.username}`}</p>
-                    </a>
-                </ListGroup.Item>)
-                : null}
-        </ListGroup>
-    </div>
+    return <div className="w-100 m-3 p-3">
+            {
+                users && users.length > 0 ?
+                (<Table bordered hover className="text-primary ">
+                <thead className="text-center">
+                    <tr>
+                        <th className="text-center" colSpan={4}>Users List</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        users.map((user, idx) => <tr key={idx}
+                            onClick={() => setId(user._id)}
+                            className={user._id === id ? "table-active" : ""}
+                        >
+                            <td className="text-center">{idx + 1}</td>
+                            <td>
+                                <img
+                                    src={user.picture}
+                                    alt={user.username}
+                                    className="img-fluid mr-4"
+                                    width="200"
+                                />
+                            </td>
+                            <td>{user.username}</td>
+                            <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
+                        </tr>)
+                    }
+                </tbody>
+                </Table>)
+                : <div>Not Users Found </div>
+            }
+        </div>
 }
 
 export default UserList;

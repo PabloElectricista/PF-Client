@@ -3,56 +3,53 @@ import { postProds } from '../../redux/actions/products';
 import { useDispatch, useSelector } from 'react-redux';
 import style from "./CreateProduct.module.css";
 import { toast } from "react-toastify";
-import {Button, Card, Col, Form, Row, Image} from 'react-bootstrap';
+import { Button, Card, Col, Form, Row, Image } from 'react-bootstrap';
 import prodInf from '../../views/assets/prodInformaticos.jfif'
 
 export default function CreateProduct() {
-    
+
     const dispatch = useDispatch()
     const [validated, setValidated] = useState(false);
     const dark = useSelector(state => state.theme.theme)
     const [input, setInput] = useState({
         name: "",
-        images: [], 
-        price: 0, 
-        description: "", 
-        stock: 1, 
-        category: "", 
-        brand: "", 
+        images: [],
+        price: 0,
+        description: "",
+        stock: 1,
+        category: "",
+        brand: "",
         colors: [],
         summary: "",
         status: ["used"]
     })
-    
+
     function handleSubmit(e) {
-        
+        e.preventDefault()
+
         const form = e.currentTarget;
-        
         if (form.checkValidity() === false) {
-            e.preventDefault()
             e.stopPropagation();
             setValidated(true);
-        }else{
-        
-
-        dispatch(postProds(input,localStorage.getItem('tkn')))
-        toast("Product created successfully", {
-            type: "success",
-            autoClose: 2000
+        } else {
+            dispatch(postProds(input))
+            toast("Product created successfully", {
+                type: "success",
+                autoClose: 1000
             })
-        setInput({
-            name: "",
-            images: "",
-            price: 0,
-            description: "",
-            category: "",
-            stock: 1,
-            brand: "",
-            summary: "",
-            colors: "",
-            status: 'Used'
-        })
-    }
+            setInput({
+                name: "",
+                images: "",
+                price: 0,
+                description: "",
+                category: "",
+                stock: 1,
+                brand: "",
+                summary: "",
+                colors: "",
+                status: 'Used'
+            })
+        }
     }
 
 
@@ -63,14 +60,14 @@ export default function CreateProduct() {
             [e.target.name]: e.target.value,
         });
     }
-    
+
     function handleCheck(e) {
-        
+
         setInput({
             ...input,
             category: e.target.value
         })
-        
+
     }
 
     function handleStatus(e) {
@@ -80,30 +77,30 @@ export default function CreateProduct() {
         })
     }
 
-    async function handleImageChange(e){
+    async function handleImageChange(e) {
         if (e.target.files && e.target.files[0]) {
             console.log(e.target.files[0])
             const data = new FormData()
             data.append("file", e.target.files[0])
             data.append("upload_preset", "bx6aojc3")
-            fetch (
+            fetch(
                 "https://api.cloudinary.com/v1_1/dyjgtikqw/upload", {
-                 method: "POST",
-                 body: data
-                 // mode: 'no-cors'
-                }
+                method: "POST",
+                body: data
+                // mode: 'no-cors'
+            }
             ).then(resp => resp.json())
-                    .then(file => {
-                        if(file) {
-                            setInput({
-                        ...input,
-                        images: `${file.secure_url}`
+                .then(file => {
+                    if (file) {
+                        setInput({
+                            ...input,
+                            images: `${file.secure_url}`
                         })
                     }
-                    })
+                })
         }
     }
-    
+
     return (
         <div className="container mt-5 p-3" style={{ backgroundColor: dark ? "black" : "white", width: "70vw" }}>
             <Card.Title className="fw-bold text-primary text-center">Create a product</Card.Title>
@@ -115,10 +112,10 @@ export default function CreateProduct() {
                                 Name:
                             </Form.Label>
                             <Col sm={12}>
-                                <Form.Control 
-                                    type="text" 
+                                <Form.Control
+                                    type="text"
                                     autoComplete="off"
-                                    maxLength = "80" 
+                                    maxLength="80"
                                     placeholder="Nombre del Producto"
                                     value={input.name}
                                     name="name"
@@ -131,11 +128,11 @@ export default function CreateProduct() {
                                 Image:
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control 
-                                    type="file" 
+                                <Form.Control
+                                    type="file"
                                     name="images"
-                                    required 
-                                    onChange={(e) => handleImageChange(e)} /> 
+                                    required
+                                    onChange={(e) => handleImageChange(e)} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="productPrice">
@@ -143,8 +140,8 @@ export default function CreateProduct() {
                                 Price:
                             </Form.Label>
                             <Col sm={12}>
-                                <Form.Control 
-                                    type="number"  
+                                <Form.Control
+                                    type="number"
                                     required
                                     value={input.price}
                                     name="price"
@@ -157,7 +154,7 @@ export default function CreateProduct() {
                                 Summary:
                             </Form.Label>
                             <Col sm={12}>
-                                <Form.Control 
+                                <Form.Control
                                     autoComplete="off"
                                     type="text"
                                     required
@@ -172,8 +169,8 @@ export default function CreateProduct() {
                                 Stock:
                             </Form.Label>
                             <Col sm={12}>
-                                <Form.Control 
-                                    type="number"  
+                                <Form.Control
+                                    type="number"
                                     required
                                     value={input.stock}
                                     name="stock"
@@ -185,10 +182,10 @@ export default function CreateProduct() {
                                 Brand:
                             </Form.Label>
                             <Col sm={12}>
-                                <Form.Control 
-                                    type="text" 
+                                <Form.Control
+                                    type="text"
                                     required
-                                    autoComplete="off" 
+                                    autoComplete="off"
                                     placeholder="Marca del Producto"
                                     value={input.brand}
                                     name="brand"
@@ -200,10 +197,10 @@ export default function CreateProduct() {
                                 Color:
                             </Form.Label>
                             <Col sm={12}>
-                                <Form.Control 
-                                    type="text" 
+                                <Form.Control
+                                    type="text"
                                     required
-                                    autoComplete="off" 
+                                    autoComplete="off"
                                     placeholder="Color del Producto"
                                     value={input.colors}
                                     name="colors"
@@ -213,8 +210,8 @@ export default function CreateProduct() {
                         <Form.Group className="mb-3" controlId="productDescription">
                             <Form.Label>Enter a description:</Form.Label>
                             <Col sm={12}>
-                                <Form.Control  
-                                    as="textarea" 
+                                <Form.Control
+                                    as="textarea"
                                     rows={3}
                                     required
                                     type="text"
@@ -225,9 +222,9 @@ export default function CreateProduct() {
                         </Form.Group>
                         <Col sm={12}>
                             <Form.Select aria-label="Seleccione una categoria"
-                                        onChange={e => handleCheck(e)} 
-                                        required
-                                        value={input.category}>
+                                onChange={e => handleCheck(e)}
+                                required
+                                value={input.category}>
                                 <option>Choose a category:</option>
                                 <option value="Antenna">Antenna</option>
                                 <option value="Audio">Audio</option>
@@ -252,21 +249,21 @@ export default function CreateProduct() {
                             </Form.Select>
                         </Col>
                         <br />
-                        <Form.Check 
+                        <Form.Check
                             type="switch"
                             id="state-switch"
                             label="Check this button if the product is new."
-                            onClick={(e) => handleStatus(e)} 
+                            onClick={(e) => handleStatus(e)}
                         />
                         <br />
                         <Button variant={dark ? "primary" : "outline-primary"}
-                                type="submit"
-                                style={{ fontWeight: "bolder" }}
-                                className={dark ? "fw-bold text-black" : "fw-bold text-primary"}>
+                            type="submit"
+                            style={{ fontWeight: "bolder" }}
+                            className={dark ? "fw-bold text-black" : "fw-bold text-primary"}>
                             Create product
                             <i className="material-icons ms-3">done_outlined</i>
                         </Button>
-                        
+
                     </Form>
                 </Col>
                 <Col>
