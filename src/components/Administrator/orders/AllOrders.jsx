@@ -66,7 +66,7 @@ function AllOrders() {
         <Container className="m-3 p-3">
             <Row>
                 <Col xs={1}>
-                    <Pagination size="sm">
+                    <Pagination size="sm" className="mt-4 pt-2">
                         <Stack gap={1}>
                             {pages?.map(page => <Pagination.Item
                                     key={page}

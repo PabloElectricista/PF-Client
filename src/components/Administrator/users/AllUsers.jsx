@@ -52,7 +52,7 @@ function AllUsers() {
     return <Container className='m-3 p-3' >
             <Row>
                 <Col md={1}>
-                    <Pagination size="sm">
+                    <Pagination size="sm" className='m-3 pt-3'>
                         <Stack gap={1}>
                             {pages.map((page, i) => 
                                 <Pagination.Item
@@ -72,7 +72,7 @@ function AllUsers() {
                     <UserList users={users} setId={setId} id={id} />
                 </Col>
                 <Col md={4}>
-                    <Profile user={user} />
+                    <Profile user={user} getUsers={getUsers}/>
                 </Col>
             </Row>
 

@@ -32,7 +32,7 @@ export default function CreateProduct() {
             e.stopPropagation();
             setValidated(true);
         } else {
-            dispatch(postProds(input, localStorage.getItem('tkn')))
+            dispatch(postProds(input))
             toast("Product created successfully", {
                 type: "success",
                 autoClose: 1000
