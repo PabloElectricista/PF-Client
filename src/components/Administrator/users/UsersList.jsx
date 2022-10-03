@@ -3,8 +3,7 @@ import { Table } from 'react-bootstrap';
 
 function UserList({ users, setId, id }) {
 
-    return <>
-        <div className="w-auto mx-3">
+    return <div className="w-100 m-3 p-3">
             {
                 users && users.length > 0 ?
                 (<Table bordered hover className="text-primary ">
@@ -25,7 +24,7 @@ function UserList({ users, setId, id }) {
                                     src={user.picture}
                                     alt={user.username}
                                     className="img-fluid mr-4"
-                                    width="70"
+                                    width="200"
                                 />
                             </td>
                             <td>{user.username}</td>
@@ -37,7 +36,6 @@ function UserList({ users, setId, id }) {
                 : <div>Not Users Found </div>
             }
         </div>
-    </>
 }
 
 export default UserList;

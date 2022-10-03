@@ -18,7 +18,7 @@ function AllProducts() {
 
     useEffect(() => {
         if (products && products.length === 0) {
-            getProducts(0)
+            getProducts(current - 1)
         }
     }, [])
 
@@ -55,13 +55,12 @@ function AllProducts() {
     return <div>
         <Container className="m-3 p-3">
             <Row>
-                <Col>
-                    <h1 className="ms-5 ws-bold text-primary">Products</h1>
-                </Col>
+                
                 <Col className="text-end">
                     <Link to='/admin/product/createProduct'>
                         <Button
                             variant="success m-3 p-3"
+                            size="sm"
                         >
                             Publish a Product
                         </Button>
@@ -70,7 +69,7 @@ function AllProducts() {
             </Row>
             <Row>
                 <Col xs={1}>
-                    <Pagination size="sm">
+                    <Pagination size="sm" className="mt-3 p-2">
                         <Stack gap={1}>
                             {pages?.map(page => 
                                 <Pagination.Item
@@ -86,10 +85,14 @@ function AllProducts() {
                         </Stack>
                     </Pagination>
                 </Col>
-                <Col xs={7}>
-                    <ProductListScreen products={products} setId={setId} id={id} />
+                <Col xs={8}>
+                    <ProductListScreen 
+                        products={products} 
+                        setId={setId} 
+                        id={id} 
+                    />
                 </Col>
-                <Col xs={4}>
+                <Col xs={3}>
                     <ProductSelected product={product} />
                 </Col>
             </Row>

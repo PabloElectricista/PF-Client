@@ -1,3 +1,4 @@
+
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line
@@ -19,24 +20,24 @@ function ProductListScreen({ products, setId, id }) {
                     headers: { credential: localStorage.getItem("tkn") },
                 });
                 if (data === "product delected ok") {
-                    // getAllproducts()
-                    toast(data, { type: "success", autoClose: 1000 });
+                    toast(data, { type: "success", autoClose: 500 });
                 } else toast(data, { type: "danger" });
             } catch (err) {
                 toast(err, { type: "danger" });
             }
+            window.location.reload();
         }
     };
 
-    return <div className="container m-3 p-2">
+    return <div className="container mt-3 p-2">
             {products?.length && (<Table size="sm" hover bordered className="text-primary">
                 <thead>
-                    <tr>
+                    <tr className="text-danger">
                         <th>#</th>
                         <th>NAME</th>
-                        <th>STOCK</th>
-                        <th>PRICE</th>
-                        <th>ACTIONS</th>
+                        <th className="text-center">STOCK</th>
+                        <th className="text-center">PRICE</th>
+                        <th className="text-center">ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,18 +48,23 @@ function ProductListScreen({ products, setId, id }) {
                         >
                             <td>{idx + 1}</td>
                             <td>{product.name}</td>
-                            <td>{product.stock}</td>
-                            <td>$ {product.price}</td>
+                            <td className="text-success text-center mx-2">
+                                {product.stock}
+                            </td>
+                            <td className="text-success text-center mx-2">
+                                $ {product.price}
+                            </td>
                             <td>
                                 <Button
+                                    className="mx-2"
                                     type="button"
                                     variant="outline-primary"
                                     onClick={() => { navigate(`/admin/product/updateProduct/${product._id}`) }}
                                 >
                                     Edit
                                 </Button>
-                                &nbsp;
                                 <Button
+                                className="mx-2"
                                     type="button"
                                     variant="outline-primary"
                                     onClick={() => deleteHandler(product)}
@@ -74,3 +80,6 @@ function ProductListScreen({ products, setId, id }) {
 }
 
 export default ProductListScreen;
+
+
+/* &nbsp; */
