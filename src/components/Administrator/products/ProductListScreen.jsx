@@ -29,7 +29,7 @@ function ProductListScreen({ products, setId, id }) {
     };
 
     return <div className="container m-3 p-2">
-            <Table size="sm" hover bordered className="text-primary">
+            {products?.length && (<Table size="sm" hover bordered className="text-primary">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -40,7 +40,7 @@ function ProductListScreen({ products, setId, id }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {products?.length && products.map((product, idx) => (
+                    {products.map((product, idx) => (
                         <tr key={product._id}
                             onClick={() => setId(product._id)}
                             className={product._id === id ? "table-active" : ""}
@@ -69,7 +69,7 @@ function ProductListScreen({ products, setId, id }) {
                         </tr>
                     ))}
                 </tbody>
-            </Table>
+            </Table>)}
         </div>
 }
 

@@ -13,32 +13,59 @@ function ProductSelected({ product }) {
                         alt="product"
                         width="200"
                     />
-                    <Card.Text>
-                        <p className="fw-bold">ID:</p> {product._id}
+                    <Card.Text className="fw-bold">
+                        ID:
                     </Card.Text>
                     <Card.Text>
-                        <p className="fw-bold">Name: </p> {product.name}
+                        {product._id}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">
+                        Name:
                     </Card.Text>
                     <Card.Text>
-                        <p className="fw-bold">Brand: </p> {product.brand}
+                        {product.name}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">
+                        Brand:
                     </Card.Text>
                     <Card.Text>
-                        <p className="fw-bold">Category: </p> {product.category}
+                        {product.brand}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">
+                        Category:
                     </Card.Text>
                     <Card.Text>
-                        <p className="fw-bold">Description: </p> {product.description}
+                        {product.category}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">
+                        Description:
                     </Card.Text>
                     <Card.Text>
-                        <p className="fw-bold">Status: </p> {product.status}
+                        {product.description}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">
+                        Status:
                     </Card.Text>
                     <Card.Text>
-                        <p className="fw-bold">Rating: </p> {product.rating}
+                        {product.status}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">
+                        Rating:
                     </Card.Text>
                     <Card.Text>
-                        <p className="fw-bold">Reviews: </p> {product.numReviews}
+                        {product.rating}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">
+                        Reviews:
                     </Card.Text>
                     <Card.Text>
-                        <p className="fw-bold">Published: </p> {product.createdAt.slice(0, 10)}
+                        {product.numReviews}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">
+                        Published:
+                    </Card.Text>
+                    <Card.Text>
+                        {product.createdAt.slice(0, 10)}
                     </Card.Text>
                 </Card.Body>
             </Card>

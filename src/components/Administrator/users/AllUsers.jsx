@@ -54,7 +54,7 @@ function AllUsers() {
                 <Col md={1}>
                     <Pagination size="sm">
                         <Stack gap={1}>
-                            {pages.map((page, i) => <>
+                            {pages.map((page, i) => 
                                 <Pagination.Item
                                     key={page}
                                     active={page === current}
@@ -64,7 +64,7 @@ function AllUsers() {
                                     }}
                                 >{page}
                                 </Pagination.Item>
-                            </>)}
+                            )}
                         </Stack>
                     </Pagination>
                 </Col>

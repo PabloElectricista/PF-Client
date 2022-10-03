@@ -72,7 +72,7 @@ function AllProducts() {
                 <Col xs={1}>
                     <Pagination size="sm">
                         <Stack gap={1}>
-                            {pages?.map(page => <>
+                            {pages?.map(page => 
                                 <Pagination.Item
                                     key={page}
                                     active={page === current}
@@ -82,7 +82,7 @@ function AllProducts() {
                                     }}
                                 >{page}
                                 </Pagination.Item>
-                            </>)}
+                            )}
                         </Stack>
                     </Pagination>
                 </Col>
