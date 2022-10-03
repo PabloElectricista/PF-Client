@@ -12,23 +12,23 @@ function Signin({ log, setLog }) {
     console.log("handleCredentialResponse");
     const responsePayload = jwt_decode(credential);
     if (responsePayload.given_name) {
-      dispatch(postUser({ credential }));
+      dispatch(postUser({ credential }));     
       toast("Login Ok", { type: "success" });
       setLog(responsePayload.email_verified);
       localStorage.setItem("islogged", "true");
       localStorage.setItem("tkn", credential);
+      console.log("signin email: ",responsePayload.email_verified);
     }
   };
 
   const login = () => {
-    console.log("login nestor");
     google.accounts.id.initialize({
       client_id:
         "837241183537-u5uki0e6odl7v0p8ilkst5e2j3ml9u4p.apps.googleusercontent.com",
       callback: handleCredentialResponse,
     });
     google.accounts.id.prompt((notification) => {
-      console.log(notification);
+      console.log("notification login: ", notification);
       if (notification.isSkippedMoment()) {
         toast("Login skipped", { type: "warning" });
       }
