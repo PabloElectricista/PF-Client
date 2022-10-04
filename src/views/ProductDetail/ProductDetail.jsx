@@ -91,6 +91,8 @@ function ProductDetail() {
     fetchData();
   }, [_id]);
 
+  console.log("product: ", product)
+
   // funcionalidad para armado de cart
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
@@ -129,12 +131,12 @@ function ProductDetail() {
       });
       toast.success("Comentario agregado satisfactoriamente.");
 
-      console.log("data y productResult ANTES", data, product);
+      // console.log("data y productResult ANTES", data, product);
 
       const copy = JSON.parse(JSON.stringify(product));
       // console.log("copy ANTES", copy);
 
-      copy.reviews.unshift(data.review);
+      copy.allReviews.unshift(data.review);
 
       copy.numReviews = data.numReviews;
 
@@ -146,7 +148,7 @@ function ProductDetail() {
 
       dispatch({ type: "REFRESH_PRODUCT", payload: copy });
 
-      console.log("productResult DESPUES", product);
+      // console.log("productResult DESPUES", product);
 
       window.scrollTo({
         behavior: "smooth",
@@ -256,14 +258,14 @@ function ProductDetail() {
           Reviews
         </h2>
         <div className="mb-3">
-          {product.reviews.length === 0 && (
+          {product.allReviews.length === 0 && (
             <MessageBox>No hay revisiones de producto.</MessageBox>
           )}
         </div>
       </div>
 
       <ListGroup>
-        {product.reviews.map((review) => (
+        {product.allReviews.map((review) => (
           <ListGroup.Item key={review._id}>
             <strong>{review.name}</strong>
             <Rating rating={review.rating} caption=" "></Rating>
