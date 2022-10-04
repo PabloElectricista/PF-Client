@@ -12,7 +12,7 @@ export const getProds = () => {
         currentsettings += search
         let filter = localStorage.getItem("filter") === null ? "" : localStorage.getItem("filter")
         currentsettings += filter
-        // console.log(currentsettings);
+        console.log("acction products", currentsettings);
 
         axios("/products/?start="+currentsettings)  //"
             .then(res => {
