@@ -19,13 +19,13 @@ function OrdersProducts() {
     return (
         <div>
             <br></br><br></br><br></br>
-            <div className="container" style={{ backgroundColor: "white" }}>
+            <div className="container mt-5 px-3 w-100" style={{ backgroundColor: "white", minWidth: "800px" }}>
                 <Row>
-                    <Col md={8}>
+                    <Col md={7}>
                         <OrdersList/>
                     </Col>
-                    <Col>
-                        <Image className='mt-3' src={ordenes} width="300px" />
+                    <Col md={3}>
+                        <Image className='mt-3 p-2' src={ordenes} width="300"/>
                     </Col>
                 </Row>
             </div>

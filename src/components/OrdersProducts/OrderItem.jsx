@@ -9,18 +9,16 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-function OrderItem({ product, order }) {
+function OrderItem({ product }) {
 
-    const [summary, setSummary] = useState('')
     const [stock, setStock] = useState('')
-    
-    useEffect(()=> {
+
+    useEffect(() => {
         axios(`/products/${product._id}`)
-        .then(({ data })=> {
-            setSummary(data.summary)
-            setStock(data.stock)
-        })
-        .catch(error => console.error(error))
+            .then(({ data }) => {
+                setStock(data.stock)
+            })
+            .catch(error => console.error(error))
     }, [])
 
     const navigate = useNavigate();
@@ -40,28 +38,36 @@ function OrderItem({ product, order }) {
     };
 
     return (
-        <>
-            <Row>
-                <Col md={3} >
-                    <Image src={product.images} width="150" className="m-2" />
+        <div className="container mb-3 ">
+            <Row className="px-3 ">
+                <Col md={3}  className="mx-1">
+                    <Image src={product.images[0]} width="150" className="m-2" />
                 </Col>
                 <Col md={5}>
-                    <Card.Text>
-                        Date: {order.createdAt.slice(0, 10)}
-                    </Card.Text>
-                    <Card.Text>
-                        Summary: {summary}
-                    </Card.Text>
+                    <div >
+                    <Row className='mx-3 align-itmes-baseline'>
+                        <Col>
+                            <Card.Text className="my-2  text-center text-primary">
+                                Name:
+                            </Card.Text>
+                        </Col>
+                        <Col>
+                            <Card.Text className="my-2 text-center text-success">
+                                {product.name}
+                            </Card.Text>
+                        </Col>
+                    </Row>
+                    </div>
                 </Col>
-                <Col md={3}>
+                <Col md={3} className="m-1">
                     <Button
                         type="button"
                         variant="outline-primary"
                         className="my-2"
                         style={{ fontWeight: "bolder" }}
-                        onClick={() => navigate(`/admin/ordersdetails/${order._id}`)}
+                        onClick={() => navigate(`/product/${product._id}`)}
                     >
-                        see order
+                        see product
                     </Button>
                     &nbsp;
                     <Button
@@ -69,13 +75,13 @@ function OrderItem({ product, order }) {
                         variant="outline-primary"
                         className="my-2"
                         style={{ fontWeight: "bolder" }}
-                        onClick={() => addToCartHandler({_id:product._id, name:product.name, images:product.images, price:product.price })}
+                        onClick={() => addToCartHandler({ _id: product._id, name: product.name, images: product.images, price: product.price })}
                     >
                         buy again
                     </Button>
                 </Col>
             </Row>
-        </>
+        </div>
     );
 }
 

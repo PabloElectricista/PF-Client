@@ -79,7 +79,7 @@ function Balance() {
                     <BestUserTables title={"users spent more"} users={users[0]} field={"amount"} />
                 </Col>
                 <Col md={4}>
-                    {products && products.length > 0 ? <BestSellersTable products={products} /> : <span>No products</span>}
+                    {products && products.length > 0 ? <BestSellersTable products={products} /> : <h5 className="text-center text-warning">No products purchased yet</h5>}
                 </Col>
             </Row>
         </Container>
