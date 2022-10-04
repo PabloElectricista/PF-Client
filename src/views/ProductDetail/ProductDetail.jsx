@@ -91,8 +91,6 @@ function ProductDetail() {
     fetchData();
   }, [_id]);
 
-  console.log("product: ", product)
-
   // funcionalidad para armado de cart
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;

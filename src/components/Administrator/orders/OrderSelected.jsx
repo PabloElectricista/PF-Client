@@ -21,7 +21,9 @@ function OrderSelected({ order }) {
                         <Card.Text className="fw-bold text-success text-center">{product.quantity}</Card.Text>
                     </Card.Body>)}
                 </>
-                : <Card.Text>No order selected</Card.Text>}
+                : <h5 className="m-2 p-2 text-success text-warning" style={{ width: "600px" }}>
+                    No order selected
+                </h5>}
         </Card>
     </div>
 }

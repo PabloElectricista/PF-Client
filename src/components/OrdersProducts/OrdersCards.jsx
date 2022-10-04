@@ -1,14 +1,18 @@
 import OrderItem from './OrderItem'
-import Card from 'react-bootstrap/Card';
+import { ListGroup, Card } from 'react-bootstrap'
 
-function OrdersCards({ order }) {
-
-    return <div>
-        <Card border="primary" className='m-3'>
-            <Card.Subtitle className="m-2 ">{order.createdAt.slice(0, 10)}</Card.Subtitle>
-
-            <OrderItem product={order} updatedAt={order.updatedAt} listname="completed" />
-
+function OrdersCards({ date, orders }) {
+    console.log(orders);
+    return <div className='container my-3' >
+        <Card border="primary" >
+            <Card.Subtitle className="my-3 text-center text-danger">{date}</Card.Subtitle>
+            <ListGroup>
+            {orders && orders.length > 0 ? orders.map(order =>
+                order.orderItems.map((product, idx) => <ListGroup.Item key={idx} >
+                    <OrderItem product={product} />
+                </ListGroup.Item>
+                )) : null}
+            </ListGroup>
         </Card>
     </div>
 }
