@@ -25,12 +25,8 @@ function AllProducts() {
     const getProducts = async (start) => {
         setId(null)
         try {
-            let { data } = await axios(`/products?start=${start}&limit=20`)
-            setProducts(data.products.sort((a, b) => {
-                if (a.name > b.name) return 1;
-                if (a.name < b.name) return -1;
-                return 0;
-            }));
+            let { data } = await axios(`/products?start=${start}&limit=20&order=name/asc`)
+            setProducts(data.products);
             setCount(data.count)
         } catch (error) { console.log(error) }
 

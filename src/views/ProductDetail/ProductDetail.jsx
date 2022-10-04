@@ -79,6 +79,7 @@ function ProductDetail() {
 
   // agregado ahora
   useEffect(() => {
+    console.log(_id);
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {

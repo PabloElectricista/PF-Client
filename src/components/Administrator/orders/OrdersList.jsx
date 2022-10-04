@@ -30,7 +30,7 @@ function OrdersList({ orders, setId, id }) {
                         }
                     </tbody>
                 </Table>)
-                : <div>Not Orders Found </div>
+                : <div  className="fw-bold text-warning text-center">No orders found </div>
         }
     </div>
 }
