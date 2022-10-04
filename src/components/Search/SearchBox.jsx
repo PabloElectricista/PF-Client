@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getProds } from '../../redux/actions/products';
 import { closeinitial } from '../Filters/Filters'
 
@@ -13,7 +13,6 @@ export default function SearchBox() {
     let current = useRef(null)
     const dispatch = useDispatch()
     let [close, setClose] = useState(false)
-    const { products } = useSelector(state => state.products)
 
     useEffect(() => {
         let searchcloseState = localStorage.getItem("searchcloseState")
@@ -31,6 +30,7 @@ export default function SearchBox() {
         localStorage.setItem("queryfilterstate", JSON.stringify({}))
         localStorage.setItem("closefilterstate", JSON.stringify(closeinitial))
         dispatch(getProds())
+        console.log("entro en Search submit");
     };
 
     const handleClear = e => {
