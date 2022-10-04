@@ -128,9 +128,9 @@ function Profile({ user, getUsers }) {
                     </Col>
                 </Row>
             </Card.Body>
-        </Card>) : (
-            <div>No User selected</div>
-        )}
+        </Card>) : <div>
+            <h5 className='text-center text-warning fb-bold'>No user selected</h5>
+        </div>}
     </div>
 }
 
