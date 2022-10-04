@@ -1,7 +1,7 @@
 // import axios from 'axios'
 // import { useState } from 'react';
 // import { useEffect } from 'react';
-import { Card, Col, Image } from "react-bootstrap";
+import { Card, Image } from "react-bootstrap";
 
 function OrderSelected({ order }) {
 
