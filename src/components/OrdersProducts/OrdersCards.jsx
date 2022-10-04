@@ -1,14 +1,14 @@
 import OrderItem from './OrderItem'
 import Card from 'react-bootstrap/Card';
 
-function OrdersCards({ order }) {
-
+function OrdersCards({ date, order, products }) {
+    console.log(products);
     return <div>
         <Card border="primary" className='m-3'>
-            <Card.Subtitle className="m-2 ">{order.createdAt.slice(0, 10)}</Card.Subtitle>
+            <Card.Subtitle className="m-2 ">{date}</Card.Subtitle>
 
-            <OrderItem product={order} updatedAt={order.updatedAt} listname="completed" />
-
+            <OrderItem product={products} order={order} />
+s
         </Card>
     </div>
 }
