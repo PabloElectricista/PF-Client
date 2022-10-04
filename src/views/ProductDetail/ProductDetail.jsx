@@ -1,86 +1,108 @@
 /* eslint-disable no-unused-vars */
-import { Row, Col, ListGroup, Card, Button, Form, FloatingLabel } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  ListGroup,
+  Card,
+  Button,
+  Form,
+  FloatingLabel,
+} from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
-import { useRef, useState, useEffect } from "react";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import MessageBox from "../../components/MessageBox";
 import LoadingBox from "../../components/LoadingBox";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 // agregado por Nes para funcionalidad cart
-import {Store} from '../../Store.js'
-import { useContext } from 'react';
+import { Store } from "../../Store.js";
+import { getError } from "../../utils";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "REFRESH_PRODUCT":
+      return { ...state, product: action.payload };
+    // case "CREATE_REQUEST":
+    //   return { ...state, loadingCreateReview: true };
+    case "CREATE_SUCCESS":
+      return { ...state, loadingCreateReview: false };
+    case "CREATE_FAIL":
+      return { ...state, loadingCreateReview: false };
+    case "FETCH_REQUEST":
+      return { ...state, loading: true };
+    case "FETCH_SUCCESS":
+      return { ...state, product: action.payload, loading: false };
+    case "FETCH_FAIL":
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 function ProductDetail() {
-  const navigate = useNavigate()
-  
-  // hardcoded data
-  // userInfo seria un valor que saco del store y que me indica si hay un usuario logueado
-  let userInfo = {
-    name: "Nestor",
-    token: 'ssdkkjaooijfnneraokkk334r4dmmkdk'
-  };
-  let product1 = {};
-  product1.rating = 3;
-  product1.reviews = [
-    {
-      _id: 1,
-      name: "Juan",
-      comment: "Muy bueno, lo recomiendo",
-      rating: 4,
-      createdAt: "2022-04-05T00:00:00.000Z",
-    },
-    {
-      _id: 2,
-      name: "Francisco",
-      comment: "Excelente",
-      rating: 5,
-      createdAt: "2022-05-12T00:00:00.000Z",
-    },
-    {
-      _id: 3,
-      name: "Roberto",
-      comment: "Este producto es una mierda",
-      rating: 3,
-      createdAt: "2022-09-21T00:00:00.000Z",
-    },
-  ];
-  product1.numReviews = 3;
-
-  let { _id } = useParams();
-
-  // agregado para funcionalidad rating y comments
   let reviewsRef = useRef();
+
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const products = useSelector((state) => state.products.products);
-  const product = products.find((x) => x._id === _id);
+  const navigate = useNavigate();
+  let { _id } = useParams();
+
+  // agregado para funcionalidad rating y comments
+  // ideal si pudiera tener a product tambien en mi reducer... VER
+  const [{ loading, error, product, loadingCreateReview }, dispatch] =
+    useReducer(reducer, {
+      product: {},
+      loading: true,
+      error: "",
+    });
+
+  // react-redux
+  const userInfo = useSelector((state) => state.users.user);
+
+  // el problema de traer el producto del estado de redux es que
+  // con el manejo del carrito, cualquier modificacion a reviews / stock
+  // tambien habria que modificar el estado global y no estan hechas las rutas
+  // ni controladores para modificar un producto en redux
+  // const products = useSelector((state) => state.products.products);
+  // const product = products.find((x) => x._id === _id);
+
+  // para que al cargar por primera vez la pagina vaya arriba del todo
+  // y carga el estado productResult para renderizar la pagina detail
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   dispatch({ type: "FETCH_SUCCESS", payload: product });
+  // }, []);
+
+  // agregado ahora
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: "FETCH_REQUEST" });
+      try {
+        const result = await axios.get(`/products/${_id}`);
+        dispatch({ type: "FETCH_SUCCESS", payload: result.data.product });
+      } catch (err) {
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
+      }
+    };
+    fetchData();
+  }, [_id]);
+
+  console.log("product: ", product)
 
   // funcionalidad para armado de cart
-  const {state, dispatch: ctxDispatch} = useContext(Store);
-  const {cart} = state;
-  
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { cart } = state;
+  // agrega producto al carrito y manda a pagina de carrito
   const addToCartHandler = async () => {
-    const existItem = cart.cartItems.find((x) => x._id === product._id)
+    const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/products/${product._id}`);
-    if (data.stock < quantity) {
-      window.alert('Sorry. Product is out of stock');
-      return;
-    }
-
-    ctxDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}})
+    ctxDispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    navigate("/cart");
   };
-
-  // useEffect(() => {
-  //   if (cart){
-  //    navigate("/cart")   
-  //   }
-  // },[])
-
 
   if (!product) return <div>Product Not Found</div>;
 
@@ -93,40 +115,55 @@ function ProductDetail() {
     }
     try {
       const { data } = await axios.post(
-        `/api/products/${product._id}/reviews`,
+        `/products/${product._id}/reviews`,
         {
           rating,
           comment,
-          name: userInfo.name,
+          name: userInfo.username,
         },
         {
           headers: { credential: localStorage.getItem("tkn") },
         }
       );
 
-      toast.success("Comentario agregado");
-      product1.reviews.usnshift(data);
-      // product1.numReviews = data.numReviews;
-      product1.numReviews++;
-      product.rating = data.rating;
-      //  despachar una accion para actualizar el producto: PENDIENTE
-      // dispatch({ type: 'REFRESH_PRODUCT', payload: product });
-      window.scrollTo({
-        behavior: 'smooth',
-        top: reviewsRef.current.offsetTop
-      })
+      dispatch({
+        type: "CREATE_SUCCESS",
+      });
+      toast.success("Comentario agregado satisfactoriamente.");
 
-    } catch {
-      toast.error("Error al enviar comentario");
+      // console.log("data y productResult ANTES", data, product);
+
+      const copy = JSON.parse(JSON.stringify(product));
+      // console.log("copy ANTES", copy);
+
+      copy.allReviews.unshift(data.review);
+
+      copy.numReviews = data.numReviews;
+
+      copy.rating = data.rating;
+
+      // const copy2 = { ...copy };
+
+      // console.log("copy DESPUES", copy);
+
+      dispatch({ type: "REFRESH_PRODUCT", payload: copy });
+
+      // console.log("productResult DESPUES", product);
+
+      window.scrollTo({
+        behavior: "smooth",
+        top: reviewsRef.current.offsetTop,
+      });
+    } catch (err) {
+      toast.error(getError(err));
     }
-  }
+  };
   //
 
-  return (
-    <div
-      className="mt-5
-    "
-    >
+  return loading ? (
+    <LoadingBox />
+  ) : (
+    <div className="order-container">
       <Row>
         <Col md={6}>
           <img
@@ -138,36 +175,18 @@ function ProductDetail() {
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              {/* <Helmet> */}
               <title>{product.name}</title>
-              {/* </Helmet> */}
               <h1>{product.name}</h1>
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
-                // cuando funcione el backend, cambiar por product.rating
-                rating={product1.rating}
-                numReviews={product1.numReviews}
+                rating={product.rating}
+                numReviews={product.numReviews}
               ></Rating>
             </ListGroup.Item>
             <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
             <ListGroup.Item>
-              <Row xs={1} md={2} className="g-2">
-                {/* {[product.image, ...product.images].map((x) => (
-                <Col key={x}>
-                  <Card>
-                    <Button
-                      className="thumbnail"
-                      type="button"
-                      variant="light"
-                      // onClick={() => setSelectedImage(x)}
-                    >
-                      <Card.Img variant="top" src={x} alt="product" />
-                    </Button>
-                  </Card>
-                </Col>
-              ))} */}
-              </Row>
+              <Row xs={1} md={2} className="g-2"></Row>
             </ListGroup.Item>
             <ListGroup.Item>
               Description:
@@ -228,7 +247,6 @@ function ProductDetail() {
                     </Button>
                   </div>
                 </ListGroup.Item>
-                {/* )} */}
               </ListGroup>
             </Card.Body>
           </Card>
@@ -236,13 +254,18 @@ function ProductDetail() {
       </Row>
 
       <div className="my-3">
-        <h2 ref={reviewsRef}>Reviews</h2>
-        {product1.reviews.length === 0 && (
-          <MessageBox>No hay revisiones de producto.</MessageBox>
-        )}
+        <h2 ref={reviewsRef} className="text-light">
+          Reviews
+        </h2>
+        <div className="mb-3">
+          {product.allReviews.length === 0 && (
+            <MessageBox>No hay revisiones de producto.</MessageBox>
+          )}
+        </div>
       </div>
+
       <ListGroup>
-        {product1.reviews.map((review) => (
+        {product.allReviews.map((review) => (
           <ListGroup.Item key={review._id}>
             <strong>{review.name}</strong>
             <Rating rating={review.rating} caption=" "></Rating>
@@ -252,27 +275,30 @@ function ProductDetail() {
         ))}
       </ListGroup>
       <div className="my-3">
-        {userInfo ? (
+        {/* {userInfo ? ( */}
+        {Object.keys(userInfo).length > 0 ? (
           <form onSubmit={submitHandler}>
-            <h2>Escriba un comentario de este producto</h2>
-              <Form.Group className="mb-3" controlId="rating">
-                <Form.Label>Rating</Form.Label>
-                <Form.Select
-                  aria-label="Rating"
-                  value={rating}
-                  onChange={(e) => setRating(e.target.value)}
-                >
-                  <option value="">Select...</option>
-                  <option value="1">1- Malo</option>
-                  <option value="2">2- Regular</option>
-                  <option value="3">3- Bueno</option>
-                  <option value="4">4- Muy Bueno</option>
-                  <option value="5">5- Excelent2</option>
-                </Form.Select>
-              </Form.Group>
+            <h2 className="text-light">
+              Escriba un comentario de este producto
+            </h2>
+            <Form.Group className="mb-3" controlId="rating">
+              <Form.Label className="text-light">Rating</Form.Label>
+              <Form.Select
+                aria-label="Rating"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              >
+                <option value="">Select...</option>
+                <option value="1">1- Malo</option>
+                <option value="2">2- Regular</option>
+                <option value="3">3- Bueno</option>
+                <option value="4">4- Muy Bueno</option>
+                <option value="5">5- Excelente</option>
+              </Form.Select>
+            </Form.Group>
             <FloatingLabel
               controlId="floatingTextarea"
-              label="Comments"
+              label="Commentarios"
               className="mb-3"
             >
               <Form.Control
@@ -284,13 +310,18 @@ function ProductDetail() {
             </FloatingLabel>
 
             <div className="mb-3">
-              <Button type="submit">Submit</Button>
+              <Button disabled={loadingCreateReview} type="submit">
+                Submit
+              </Button>
+              {loadingCreateReview && <LoadingBox></LoadingBox>}
             </div>
           </form>
         ) : (
-          <MessageBox>
+          <MessageBox variant="danger">
             Please{" "}
-            <Link to={`/signin?redirect=/product/${product._id}`}>Sign In</Link>{" "}
+            <span style={{ fontSize: "20px" }} className="fw-bold">
+              Login{" "}
+            </span>
             to write a review
           </MessageBox>
         )}

@@ -1,19 +1,20 @@
 import { Form, Row, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 function ShowProfile() {
 
-    
+    const userdata = useSelector(state => state.users.userselected)
 
-    return <>
+    return <div>
         <Form>
-        <Row className="mb-3">
+            <Row className="mb-3">
                 <Form.Group as={Col} md="6">
                     <Form.Label className="fw-bold text-primary">First name</Form.Label>
                     <Form.Control
                         disabled
                         name="firstName"
                         type="text"
-                        // value={userdata.firstName}
+                        value={userdata ? userdata.firstName : ""}
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="6">
@@ -22,7 +23,7 @@ function ShowProfile() {
                         disabled
                         name="lastName"
                         type="text"
-                        // value={userdata.lastName}
+                        value={userdata ? userdata.lastName : ""}
                     />
                 </Form.Group>
             </Row>
@@ -33,7 +34,7 @@ function ShowProfile() {
                         disabled
                         name="phone"
                         type="number"
-                        // value={userdata.phone}
+                        value={userdata ? userdata.phone : ""}
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="6">
@@ -42,7 +43,7 @@ function ShowProfile() {
                         disabled
                         name="identificationnumber"
                         type="number"
-                        // value={userdata.identificationnumber}
+                        value={userdata ? userdata.identificationnumber : ""}
                     />
                 </Form.Group>
             </Row>
@@ -53,7 +54,7 @@ function ShowProfile() {
                         disabled
                         name='address'
                         type="text"
-                        // value={userdata.address}
+                        value={userdata ? userdata.address : ""}
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="2">
@@ -62,7 +63,7 @@ function ShowProfile() {
                         disabled
                         name='addressnumber'
                         type="number"
-                        // value={userdata.addressnumber}
+                        value={userdata ? userdata.addressnumber : ""}
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="2">
@@ -71,7 +72,7 @@ function ShowProfile() {
                         disabled
                         name="floor"
                         type="text"
-                        // value={userdata.floor}
+                        value={userdata ? userdata.floor : ""}
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="2">
@@ -80,7 +81,7 @@ function ShowProfile() {
                         disabled
                         name='department'
                         type="text"
-                        // value={userdata.department}
+                        value={userdata ? userdata.department : ""}
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="2">
@@ -89,7 +90,7 @@ function ShowProfile() {
                         disabled
                         name='zipcode'
                         type="number"
-                        // value={userdata.zipcode}
+                        value={userdata ? userdata.zipcode : ""}
                     />
                 </Form.Group>
             </Row>
@@ -100,7 +101,7 @@ function ShowProfile() {
                         disabled
                         name='city'
                         type="text"
-                        // value={userdata.city}
+                        value={userdata ? userdata.city : ""}
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="4">
@@ -109,7 +110,7 @@ function ShowProfile() {
                         disabled
                         name='state'
                         type="text"
-                        // value={userdata.state}
+                        value={userdata ? userdata.state : ""}
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="4">
@@ -118,12 +119,12 @@ function ShowProfile() {
                         disabled
                         name='country'
                         type="text"
-                        // value={userdata.country}
+                        value={userdata ? userdata.country : ""}
                     />
                 </Form.Group>
             </Row>
         </Form>
-    </>
+    </div>
 }
 
 export default ShowProfile;

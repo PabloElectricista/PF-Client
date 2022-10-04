@@ -71,13 +71,9 @@ export default function OrderScreen() {
     return actions.order.capture().then(async function (details) {
       try {
         dispatch({ type: "PAY_REQUEST" });
-        const { data } = await axios.put(
-          `/orders/${order._id}/pay`,
-          details
-          // {
-          //   headers: { authorization: `Bearer ${userInfo.token}` },
-          // }
-        );
+        const { data } = await axios.put(`/orders/${order._id}/pay`, details, {
+          headers: { credential: localStorage.getItem("tkn") },
+        });
         dispatch({ type: "PAY_SUCCESS", payload: data });
         toast.success("Order is paid");
       } catch (err) {
@@ -90,26 +86,31 @@ export default function OrderScreen() {
     toast.error(getError(err));
   }
 
+  const [isLogged, setIsLogged] = React.useState(
+    localStorage.getItem("islogged")
+  );
+
   useEffect(() => {
+    console.log("logueado?", localStorage.getItem("islogged"));
+
+    if (!isLogged) {
+      toast("Please Login 2", { type: "error" });
+      setIsLogged(false);
+      // return;
+    }
+
     const fetchOrder = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(
-          `/orders/${orderId}`,
-          {
-          // headers: { authorization: `Bearer ${userInfo.token}` },
+        const { data } = await axios.get(`/orders/${orderId}`, {
           headers: { credential: localStorage.getItem("tkn") },
-          }
-        );
+        });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
 
-    // if (!userInfo) {
-    //   return navigate("/login");
-    // }
     if (!order._id || successPay || (order._id && order._id !== orderId)) {
       fetchOrder();
       if (successPay) {
@@ -132,7 +133,8 @@ export default function OrderScreen() {
       loadPaypalScript();
     }
     // }, [order, userInfo, orderId, navigate, paypalDispatch, successPay]);
-  }, [order, orderId, navigate, paypalDispatch, successPay]);
+  }, [order, orderId, isLogged, navigate, paypalDispatch, successPay]);
+
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
@@ -151,13 +153,6 @@ export default function OrderScreen() {
                 {order.shippingAddress.city}, {order.shippingAddress.postalCode}
                 ,{order.shippingAddress.country}
               </Card.Text>
-              {/* {order.isDelivered ? (
-                <MessageBox variant="success">
-                  Delivered at {order.deliveredAt}
-                </MessageBox>
-              ) : (
-                <MessageBox variant="danger">Not Delivered</MessageBox>
-              )} */}
             </Card.Body>
           </Card>
           <Card className="mb-3">
@@ -246,6 +241,7 @@ export default function OrderScreen() {
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}
+                          disabled={!isLogged}
                         ></PayPalButtons>
                       </div>
                     )}

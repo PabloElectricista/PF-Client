@@ -12,7 +12,7 @@ export const getProds = () => {
         currentsettings += search
         let filter = localStorage.getItem("filter") === null ? "" : localStorage.getItem("filter")
         currentsettings += filter
-        console.log(currentsettings);
+        // console.log(currentsettings);
 
         axios("/products/?start="+currentsettings)  //"
             .then(res => {
@@ -32,23 +32,22 @@ export const getProdsById = (id) => {
     }
 }
 
-export const postProds = (product, tkn) => {
+export const postProds = (product) => {
     return function (dispatch) {
         axios.post("/products", product, {
             headers: {
-                'credential': tkn
+                'credential': localStorage.getItem('tkn')
             }
         })
             .then(res => dispatch(postProducts(res.data)))
             .catch(err => console.error(err))
     }
 }
-export const updateProduct = (id, payload, tkn) => {
-    console.log(id, payload, tkn)
+export const updateProduct = (id, payload) => {
     return function () {
         (axios.put(`/products/${id}`, payload, {
             headers: {
-                'credential': tkn
+                'credential': localStorage.getItem('tkn')
             }
         }))
             .then(res => console.log(res.statusText))

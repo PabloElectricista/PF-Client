@@ -2,12 +2,12 @@ import axios from "axios";
 import { getAllUsers, getUserByEmail, addNewUser, updateUserData } from "../slices/usersSlices"
 
 
-export const getUsers = (tkn) => {
+export const getUsers = (page) => {
     console.log("allusers");
     return function (dispatch) {
-        axios("/users", {
+        axios(`/users?start=${page}&limit=6`, {
             headers: {
-                'credential': tkn
+                'credential': localStorage.getItem('tkn')
             }
         })
             .then(res => {dispatch(getAllUsers(res.data))})
@@ -15,22 +15,22 @@ export const getUsers = (tkn) => {
     }
 }
 
-export const getByEmail = (user, tkn) => {
+export const getByEmail = (user) => {
     return function (dispatch) {
         axios("/users/byEmail/" + user.email, {
             headers: {
-                'credential': tkn
+                'credential': localStorage.getItem('tkn')
             }
         })
-            .then(res => {
-                if (res.data && res.data.length === 0) {
+            .then(({data}) => {
+                if (data && data.length === 0) {
                     axios.post("/users", user)
-                    .then((res)=>{
-                        dispatch(addNewUser(res.data))                
+                    .then(({data})=>{
+                        dispatch(addNewUser(data))                
                     })
                     .catch(err => console.error(err))
                 }
-                else dispatch(getUserByEmail(res.data[0]))
+                else dispatch(getUserByEmail(data))
             })
             .catch(err => console.error(err))
     }
@@ -45,12 +45,12 @@ export const postUser = (newuser) => async (dispatch) => {
     }
 }
 
-export const updateUser = (userdata, tkn) => async (dispatch) => {
+export const updateUser = (userdata) => async (dispatch) => {
     console.log(userdata);
     try {
-        const res = await axios.put("/users", userdata, {
+        const res = await axios.put("/users/"+userdata._id, userdata, {
             headers: {
-                'credential': tkn
+                'credential': localStorage.getItem('tkn')
             }
         })
         dispatch(updateUserData(res.data))

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import Signin from '../../views/Signin/Signin'
-import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+// import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { settheme } from '../../redux/slices/themeSlice'
 
 // agregado por nes -> funcionalidad cart
@@ -18,7 +18,7 @@ import { useContext } from 'react'
 
 function NavBarComponent() {
 
-    
+
     // agregado por nes funcionalidad cart
     const { state } = useContext(Store);
     const { cart } = state;
@@ -28,12 +28,11 @@ function NavBarComponent() {
 
     const { user } = useSelector(state => state.users)
     const [islogged, setIslogged] = useState(false)
-    const [ client, setClient] = useState({})
+    const [client, setClient] = useState({})
 
     useEffect(() => {
         const logstate = localStorage.getItem('islogged')
-      setIslogged(logstate === "true" ? true : false)
-      console.log(islogged);
+        setIslogged(logstate === "true" ? true : false)
         const themestate = localStorage.getItem('theme')
         dispatch(settheme(themestate === "true" ? true : false))
         const clientstate = JSON.parse(localStorage.getItem('user'))
@@ -41,8 +40,7 @@ function NavBarComponent() {
     }, [])
 
     useEffect(() => {
-        if(user && user.username){
-            console.log("entro");
+        if (user && user.username) {
             localStorage.setItem("user", JSON.stringify(user))
             setClient(user)
         }
@@ -62,7 +60,7 @@ function NavBarComponent() {
     }
 
     return <div>
-        <Navbar bg="dark" variant="dark" fixed="top">
+        <Navbar bg="dark" variant="dark" fixed="top" className="d-flex flex-row align-items-baseline">
             <Container>
                 <LinkContainer to="/">
                     <Image
@@ -86,30 +84,30 @@ function NavBarComponent() {
                 <SearchBox />
 
 
-                <Nav className="me-auto  w-100  justify-content-end">
+                <Nav className="my-0  w-100">
                     {/* {userInfo && userInfo.isAdmin && ( */}
                     {islogged ? (
-                        <NavDropdown /* style={dropstyle}  */ title={client && client.roles === "admin" ? "Admin" :
+                        <NavDropdown className="align-self-center" title={client && client.roles === "admin" ? "Admin" :
                             <Button variant="outline-secondary" className="mx-1 ">
                                 <>
                                     {client.picture ? <img
                                         className="thumbnail-image rounded "
                                         src={client.picture}
                                         alt="avatar"
-                                        width="25"
-                                        height="25"
+                                        width="60"
+                                        height="60"
                                     /> :
                                         <p>{localStorage.getItem("name")}</p>}
                                 </>
                             </Button>
                         } id="admin-nav-dropdown" >
-                            <LinkContainer to="/admin/messages" style={itemstyle}>
+                            {/* <LinkContainer to="/admin/messages" style={itemstyle}>
                                 <NavDropdown.Item>
                                     <i className="material-icons">mail</i>
                                     Messages
                                 </NavDropdown.Item>
-                            </LinkContainer>
-                            {client && !client.isBlocked && <>
+                            </LinkContainer> */}
+                            {client && !client.isBlocked && !client.isAdmin && <>
                                 <LinkContainer to="/admin/orders" style={itemstyle}>
                                     <NavDropdown.Item>
                                         <i className="material-icons">app_registration</i>
@@ -117,20 +115,14 @@ function NavBarComponent() {
                                     </NavDropdown.Item>
                                 </LinkContainer>
                             </>}
-                            <LinkContainer to="/admin/profile" style={itemstyle}>
+                            {!client.isAdmin && <LinkContainer to="/admin/profile" style={itemstyle}>
                                 <NavDropdown.Item>
                                     <i className="material-icons">person</i>
                                     Profile</NavDropdown.Item>
-                            </LinkContainer>
+                            </LinkContainer>}
                             {client && client.isAdmin && (
                                 <>
                                     <NavDropdown.Divider />
-                                    <LinkContainer to="/admin/products" style={itemstyle}>
-                                        <NavDropdown.Item>
-                                            <i className="material-icons">dataset</i>
-                                            Products
-                                        </NavDropdown.Item>
-                                    </LinkContainer>
                                     <LinkContainer to="/admin/dashboard" style={itemstyle}>
                                         <NavDropdown.Item>
                                             <i className="material-icons">settings</i>
@@ -166,15 +158,15 @@ function NavBarComponent() {
                             </Badge>
                         )}
                     </Link></Button>
-                    <BootstrapSwitchButton
+                    {/* <BootstrapSwitchButton
                         checked={dark ? true : false}
                         onstyle="dark"
                         offstyle="light"
                         onChange={(checked) => dispatch(settheme(checked))}
                         onlabel={<i className="material-icons">mode_night</i>}
                         offlabel={<i className="material-icons">light_mode</i>}
-                        
-                    />
+
+                    /> */}
                 </Nav>
             </Container>
         </Navbar>
