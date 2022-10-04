@@ -79,7 +79,6 @@ function ProductDetail() {
 
   // agregado ahora
   useEffect(() => {
-    console.log(_id);
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {
@@ -91,8 +90,6 @@ function ProductDetail() {
     };
     fetchData();
   }, [_id]);
-
-  console.log("product: ", product)
 
   // funcionalidad para armado de cart
   const { state, dispatch: ctxDispatch } = useContext(Store);
