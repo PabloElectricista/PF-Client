@@ -61,7 +61,8 @@ function ProductDetail() {
     });
 
   // react-redux
-  const userInfo = useSelector((state) => state.users.user);
+  
+  //const userInfo = useSelector((state) => state.users.user);
 
   // el problema de traer el producto del estado de redux es que
   // con el manejo del carrito, cualquier modificacion a reviews / stock
@@ -90,15 +91,12 @@ function ProductDetail() {
     };
     fetchData();
   }, [_id]);
-
-/********************************************************************************** */
   
   useEffect(()=>{
     const clientstate = JSON.parse(localStorage.getItem('user'))
     setClient(clientstate === null ? {} : clientstate)
   },[])
 
-///////////////////////////////////////////////////////////////////////////////////////
 
   // funcionalidad para armado de cart
   const { state, dispatch: ctxDispatch } = useContext(Store);
