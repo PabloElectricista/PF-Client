@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 function Products() {
+
     const { products } = useSelector(state => state.products)
     const [ search, setSearch] = useState(false)
 
