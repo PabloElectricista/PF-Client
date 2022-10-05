@@ -3,7 +3,8 @@ import Product from "./Product";
 import { useSelector } from "react-redux";
 
 function Products() {
-    const { products } = useSelector(state => state.products)
+  const { products } = useSelector(state => state.products)
+  console.log("products: ", products)
 
     return (
         <div className="container">
