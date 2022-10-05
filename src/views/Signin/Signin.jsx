@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
 import { postUser } from "../../redux/actions/users";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Signin({ log, setLog }) {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function Signin({ log, setLog }) {
   const handleCredentialResponse = ({ credential }) => {
     const responsePayload = jwt_decode(credential);
     if (responsePayload.given_name) {
-      dispatch(postUser({ credential }));     
+      dispatch(postUser({ credential }));
       toast("Login Ok", { type: "success" });
       setLog(responsePayload.email_verified);
       localStorage.setItem("islogged", "true");
@@ -46,8 +47,8 @@ function Signin({ log, setLog }) {
       {!log ? (
         <Button
           size="sm"
-          variant="outline-success"
-          className="mx-2 py-0"
+          variant="link"
+          className="mx-2 py-0 text-light"
           onClick={login}
         >
           <i className="material-icons">login</i>
