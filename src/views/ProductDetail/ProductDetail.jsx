@@ -136,10 +136,7 @@ function ProductDetail() {
       });
       toast.success("Comentario agregado satisfactoriamente.");
 
-      // console.log("data y productResult ANTES", data, product);
-
       const copy = JSON.parse(JSON.stringify(product));
-      // console.log("copy ANTES", copy);
 
       copy.allReviews.unshift(data.review);
 
@@ -147,13 +144,7 @@ function ProductDetail() {
 
       copy.rating = data.rating;
 
-      // const copy2 = { ...copy };
-
-      // console.log("copy DESPUES", copy);
-
       dispatch({ type: "REFRESH_PRODUCT", payload: copy });
-
-      // console.log("productResult DESPUES", product);
 
       window.scrollTo({
         behavior: "smooth",
@@ -163,7 +154,6 @@ function ProductDetail() {
       toast.error(getError(err));
     }
   };
-  //
 
   return loading ? (
     <LoadingBox />
@@ -242,6 +232,13 @@ function ProductDetail() {
                   <Row>
                     <Col>Colors:</Col>
                     <Col>{product.colors.join(', ')}</Col>
+                  </Row>
+                </ListGroup.Item>
+                
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Status:</Col>
+                    <Col>{product.status}</Col>
                   </Row>
                 </ListGroup.Item>
 

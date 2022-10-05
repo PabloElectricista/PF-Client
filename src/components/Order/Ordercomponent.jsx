@@ -19,7 +19,6 @@ function Ordercomponent() {
         if (name === (value).toLowerCase()) return
         localStorage.setItem("order", `&order=${value}`)
         localStorage.setItem("page", 0)
-        console.log("order dispatch");
         dispatch(getProds())
     }
 

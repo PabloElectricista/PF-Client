@@ -105,7 +105,6 @@ function Filters() {
         localStorage.setItem("filter", text)
         localStorage.setItem("pagestate", 1)
         localStorage.setItem("page", 0)
-        console.log("filter dispatch");
         dispatch(getProds())
     }
 

@@ -5,6 +5,7 @@ import { Col, Container, Row, Stack, Pagination } from 'react-bootstrap';
 import Profile from './Profile';
 import UserList from './UsersList';
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 function AllUsers() {
 
@@ -30,7 +31,7 @@ function AllUsers() {
                 setUsers(data.users)
                 setCount(data.count)
             })
-            .catch(error => console.error(error))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 
     useEffect(() => {

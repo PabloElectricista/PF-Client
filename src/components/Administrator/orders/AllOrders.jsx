@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import OrderSelected from './OrderSelected'
 import OrdersList from './OrdersList'
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function AllOrders() {
 
@@ -29,7 +30,7 @@ function AllOrders() {
             setOrders(data.orders)
             setCount(data.count)
         })
-        .catch(error => console.log(error))
+        .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 
     const changestatus = (id, status) => {
@@ -38,11 +39,8 @@ function AllOrders() {
                 credential: localStorage.getItem('tkn')
             }
         })
-        .then(({data}) => {
-            console.log(data.order.status)
-            getOrders(current-1)
-        })
-        .catch(error => console.log(error))
+        .then(() => getOrders(current-1))
+        .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 
     useEffect(() => {

@@ -8,6 +8,7 @@ import { Store } from '../../Store'
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { toast } from "react-toastify";
 
 function OrderItem({ product }) {
 
@@ -18,7 +19,7 @@ function OrderItem({ product }) {
             .then(({ data }) => {
                 setStock(data.stock)
             })
-            .catch(error => console.error(error))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }, [])
 
     const navigate = useNavigate();

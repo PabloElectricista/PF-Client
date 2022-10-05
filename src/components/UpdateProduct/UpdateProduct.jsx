@@ -91,7 +91,6 @@ export default function UpdaProduct() {
 
     async function handleImageChange(e){
         if (e.target.files && e.target.files[0]) {
-            console.log(e.target.files[0])
             const data = new FormData()
             data.append("file", e.target.files[0])
             data.append("upload_preset", "bx6aojc3")
