@@ -67,7 +67,6 @@ export default function PlaceOrderScreen() {
           headers: { credential: localStorage.getItem("tkn") },
         }
       );
-      // console.log(cart.cartItems);
       ctxDispatch({ type: "CART_CLEAR" });
       dispatch({ type: "CREATE_SUCCESS" });
       localStorage.removeItem("cartItems");

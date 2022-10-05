@@ -47,7 +47,7 @@ function ProductDetail() {
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-
+  const [client, setClient] = useState({})
   const navigate = useNavigate();
   let { _id } = useParams();
 
@@ -61,7 +61,8 @@ function ProductDetail() {
     });
 
   // react-redux
-  const userInfo = useSelector((state) => state.users.user);
+  
+  //const userInfo = useSelector((state) => state.users.user);
 
   // el problema de traer el producto del estado de redux es que
   // con el manejo del carrito, cualquier modificacion a reviews / stock
@@ -90,8 +91,12 @@ function ProductDetail() {
     };
     fetchData();
   }, [_id]);
+  
+  useEffect(()=>{
+    const clientstate = JSON.parse(localStorage.getItem('user'))
+    setClient(clientstate === null ? {} : clientstate)
+  },[])
 
-  console.log("product: ", product)
 
   // funcionalidad para armado de cart
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -119,7 +124,7 @@ function ProductDetail() {
         {
           rating,
           comment,
-          name: userInfo.username,
+          name: client.username,
         },
         {
           headers: { credential: localStorage.getItem("tkn") },
@@ -131,10 +136,7 @@ function ProductDetail() {
       });
       toast.success("Comentario agregado satisfactoriamente.");
 
-      // console.log("data y productResult ANTES", data, product);
-
       const copy = JSON.parse(JSON.stringify(product));
-      // console.log("copy ANTES", copy);
 
       copy.allReviews.unshift(data.review);
 
@@ -142,13 +144,7 @@ function ProductDetail() {
 
       copy.rating = data.rating;
 
-      // const copy2 = { ...copy };
-
-      // console.log("copy DESPUES", copy);
-
       dispatch({ type: "REFRESH_PRODUCT", payload: copy });
-
-      // console.log("productResult DESPUES", product);
 
       window.scrollTo({
         behavior: "smooth",
@@ -158,7 +154,6 @@ function ProductDetail() {
       toast.error(getError(err));
     }
   };
-  //
 
   return loading ? (
     <LoadingBox />
@@ -236,7 +231,14 @@ function ProductDetail() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Colors:</Col>
-                    <Col>{product.colors}</Col>
+                    <Col>{product.colors.join(', ')}</Col>
+                  </Row>
+                </ListGroup.Item>
+                
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Status:</Col>
+                    <Col>{product.status}</Col>
                   </Row>
                 </ListGroup.Item>
 
@@ -276,7 +278,7 @@ function ProductDetail() {
       </ListGroup>
       <div className="my-3">
         {/* {userInfo ? ( */}
-        {Object.keys(userInfo).length > 0 ? (
+        {Object.keys(client).length > 0 ? (
           <form onSubmit={submitHandler}>
             <h2 className="text-light">
               Escriba un comentario de este producto

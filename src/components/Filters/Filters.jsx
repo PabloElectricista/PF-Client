@@ -28,24 +28,8 @@ function Filters() {
         let closefilterstate = JSON.parse(localStorage.getItem("closefilterstate"))
         setClose(closefilterstate === null ? closeinitial : closefilterstate)
         let queryfilterstate = (JSON.parse(localStorage.getItem("queryfilterstate")))
-        // console.log(queryfilterstate);
         setQuery(queryfilterstate === null ? {} : queryfilterstate)
     }, []);
-
-    useEffect(() => {
-        const keys = Object.keys(query)
-        let text = ""
-        for (const key of keys) {
-            text += `&${key}=${query[key]}`
-        }
-        localStorage.setItem("filter", text)
-        localStorage.setItem("pagestate", 1)
-        localStorage.setItem("page", 0)
-
-        // console.log("filter dispatch");
-        localStorage.setItem("closefilterstate", JSON.stringify(closeinitial))
-        dispatch(getProds())
-    }, [query]);
 
     useEffect(() => {
         if (price && price.length > 0) {
@@ -70,6 +54,16 @@ function Filters() {
         }
         setClose(closesettings)
         localStorage.setItem("closefilterstate", JSON.stringify(closesettings))
+
+        const keys = Object.keys(querysettings)
+        let text = ""
+        for (const key of keys) {
+            text += `&${key}=${querysettings[key]}`
+        }
+        localStorage.setItem("filter", text)
+        localStorage.setItem("pagestate", 1)
+        localStorage.setItem("page", 0)
+        dispatch(getProds())
     }
 
     const handleClear = e => {
@@ -101,6 +95,17 @@ function Filters() {
         localStorage.setItem("queryfilterstate", JSON.stringify(querysettings))
         setClose(closesettings)
         localStorage.setItem("closefilterstate", JSON.stringify(closesettings))
+
+        
+        const keys2 = Object.keys(querysettings)
+        let text = ""
+        for (const key2 of keys2) {
+            text += `&${key2}=${querysettings[key2]}`
+        }
+        localStorage.setItem("filter", text)
+        localStorage.setItem("pagestate", 1)
+        localStorage.setItem("page", 0)
+        dispatch(getProds())
     }
 
     return <Card className="filtersContainer my-3" border="primary" style={{ width: '15rem' }}>

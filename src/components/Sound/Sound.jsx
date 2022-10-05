@@ -1,12 +1,13 @@
-import sound from '../../views/assets/commercial-sport-rock.m4a'
+import sound from '../../views/assets/fondo.mp3'
 
 function Sound() {
 
-    return <>
+    return <div className='mt-5 float-start'>
+        <br></br><br></br>
         <audio controls autoPlay loop>
-            <source src={sound} type="audio/m4a"/>
+            <source preload src={sound} type="audio/mp3"/>
         </audio>
-    </>
+    </div>
 }
 
 export default Sound;

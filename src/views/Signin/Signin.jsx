@@ -16,7 +16,6 @@ function Signin({ log, setLog }) {
       setLog(responsePayload.email_verified);
       localStorage.setItem("islogged", "true");
       localStorage.setItem("tkn", credential);
-      console.log("signin email: ",responsePayload.email_verified);
     }
   };
 
@@ -38,7 +37,7 @@ function Signin({ log, setLog }) {
     toast("Logout done", { type: "info" });
     setLog(false);
     localStorage.setItem("islogged", "false");
-    localStorage.clear();
+    // localStorage.clear();
     document.location.href = "/";
   };
 

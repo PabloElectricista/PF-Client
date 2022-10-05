@@ -1,34 +1,56 @@
 import React from "react";
 import { Container, Carousel, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './Carousel.css'
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-
 
 function Slider() {
 
   const products = useSelector((state) => state.products.products);
-  const prodArr = [];
+  const [selectedProducts, setSelectedProducts] = useState([])
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let carousel = JSON.parse(localStorage.getItem('carousel'))
+    if (carousel !== null ) {
+      setSelectedProducts(carousel)
+    }
+  }, 
+  [])
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      let arrProd = products.filter((data, idx) =>
+        idx === 2 ||
+        idx === 4 ||
+        idx === 6
+      )
+      localStorage.setItem('carousel', JSON.stringify(arrProd))
+      setSelectedProducts(arrProd); 
+    }
+  }, 
+  [products])
+
+  function onClick(e) {
+    navigate(`/product/${e.target.id}`)
+  }
+
   
-  products.map((data) => {
-    if(data._id === '63363c6449b05c2512c0858e' || data._id === '63363c6449b05c2512c0858f' || data._id === '63363c6449b05c2512c08590')
-    prodArr.push(data);
-    return prodArr
-  })  
   
   return (
     <Container className="products-container">
       <h2 className="products-container-heading">Productos destacados</h2>
       <Carousel className="products-carousel-container">
-        {prodArr.map((data, i) => (
-          <Carousel.Item key={i}  className="products-carousel-item">
-            <Link to={`product/${data._id}`}>
-              <Image
+        {selectedProducts?.map((data, i) => (
+          <Carousel.Item key={i} className="products-carousel-item">
+            <div >
+              <Image id={data._id} onClick={(e) => onClick(e)}
                 className="products-carousel-img"
-                src= {data.images}
+                src={data.images}
                 alt={data.name}
               />
-            </Link>
+            </div>
             <Carousel.Caption className="products-carousel-caption">
               <h5 className="products-caption-title">{data.name}</h5>
               <p>

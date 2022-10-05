@@ -3,15 +3,13 @@ import { Container, Navbar, Nav, NavDropdown, Badge, Button, Image } from "react
 /* eslint-disable react-hooks/exhaustive-deps */
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
-import logo from "../../views/assets/micro50.jpg"
+import logo from "../../views/assets/micro50.png"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import Signin from '../../views/Signin/Signin'
 // import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { settheme } from '../../redux/slices/themeSlice'
-
-// agregado por nes -> funcionalidad cart
 import { Link } from 'react-router-dom';
 import { Store } from '../../Store';
 import { useContext } from 'react'
@@ -65,8 +63,8 @@ function NavBarComponent() {
                 <LinkContainer to="/">
                     <Image
                         src={logo}
-                        width="40"
-                        height="40"
+                        width="50"
+                        height="50"
                         className="d-inline-block align-top mx-3 outlie-light"
                         alt="our logo"
                         roundedCircle
