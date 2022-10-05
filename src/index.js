@@ -5,6 +5,7 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
+// import Cookies from "./components/Cookies/Cookies.jsx"
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import axios from "axios";
