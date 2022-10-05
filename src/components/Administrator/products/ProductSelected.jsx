@@ -68,7 +68,7 @@ function ProductSelected({ product }) {
                     </Card.Text>
                 </Card.Body>
             </Card>
-        ) : <div>no product selected</div>}
+        ) : <h5 className="text-center text-warning fb-bold">no product selected</h5>}
     </div>
 }
 

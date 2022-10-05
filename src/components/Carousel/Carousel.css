@@ -41,7 +41,10 @@
     margin-left: 23em;
     border-radius: 50%;
     position: relative;
+    cursor: pointer;
   }
+
+
   .products-carousel-caption {
     position: relative;
     left: 0;
