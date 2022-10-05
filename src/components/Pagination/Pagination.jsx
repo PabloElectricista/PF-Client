@@ -14,16 +14,12 @@ function Pagination() {
     const [current, setCurrent] = useState(initialstate)
     const [max, setMax] = useState(1)
 
-    useEffect(() => {
-        // console.log(initialstate);
-        setPage(initialstate)
-    }, [])
+    useEffect(() => setPage(initialstate), [])
 
     const setPage = (page) => {
             setCurrent(parseInt(page))
             localStorage.setItem("pagestate", page)
             localStorage.setItem("page", page - 1)
-            console.log("pagination dispatch");
             dispatch(getProds())
     }
 

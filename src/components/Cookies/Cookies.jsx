@@ -9,7 +9,6 @@ function Cookies() {
     function handleButton() {
         // dependece = true
         // e.preventDefault()
-        console.log("aaaa")
         localStorage.setItem("cookies-aceptadas", true)
         setValidates(validate)
     }

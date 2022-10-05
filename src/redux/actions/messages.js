@@ -1,14 +1,12 @@
 import axios from "axios";
 import { setmessages } from '../slices/messagesSlices'
+import { toast } from "react-toastify";
 
-export const sendcontact = (menssage) => {
+export const sendcontact = (message) => {
 
     return function (dispatch) {
-        axios.post("/mail/send-claim", menssage)
-            .then(res => {
-                console.log(res);
-                dispatch(setmessages(res.data))
-            })
-            .catch(err => console.error(err))
+        axios.post("/mail/send-claim", message)
+            .then(({data}) => dispatch(setmessages(data)))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }

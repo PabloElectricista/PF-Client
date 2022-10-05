@@ -10,8 +10,6 @@ import { useState } from "react";
 import Signin from '../../views/Signin/Signin'
 // import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { settheme } from '../../redux/slices/themeSlice'
-
-// agregado por nes -> funcionalidad cart
 import { Link } from 'react-router-dom';
 import { Store } from '../../Store';
 import { useContext } from 'react'
@@ -65,8 +63,8 @@ function NavBarComponent() {
                 <LinkContainer to="/">
                     <Image
                         src={logo}
-                        width="40"
-                        height="40"
+                        width="50"
+                        height="50"
                         className="d-inline-block align-top mx-3 outlie-light"
                         alt="our logo"
                         roundedCircle

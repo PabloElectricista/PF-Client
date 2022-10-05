@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setallorders, setordersuser, updateorder } from '../slices/ordersSlice'
+import { toast } from "react-toastify";
 
 export const getOrders = (page) => {
     return function (dispatch) {
@@ -9,7 +10,7 @@ export const getOrders = (page) => {
             }
         })
             .then(res => {dispatch(setallorders(res.data))})
-            .catch(err => console.error(err))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }
 
@@ -21,7 +22,7 @@ export const getOrdersUser = (userid) => {
             }
         })
             .then(res => dispatch(setordersuser(res.data)))
-            .catch(err => console.error(err))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }
 
@@ -34,6 +35,6 @@ export const updateoneorder = (id, order, tkn) => async (dispatch) => {
         })
         dispatch(updateorder(res.data))
     } catch (error) {
-        console.log(error);
+        toast(`${error.message}`, { type: "error" })
     }
 }

@@ -91,8 +91,6 @@ export default function OrderScreen() {
   );
 
   useEffect(() => {
-    console.log("logueado?", localStorage.getItem("islogged"));
-
     if (!isLogged) {
       toast("Please Login 2", { type: "error" });
       setIsLogged(false);

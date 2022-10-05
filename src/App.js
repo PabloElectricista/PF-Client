@@ -26,6 +26,7 @@ import ShippingAddressScreen from "./views/ShippingAddressScreen";
 import PaymentMethodScreen from "./views/PaymentMethodScreen";
 import PlaceOrderScreen from "./views/PlaceOrderScreen";
 import OrderScreen from "./views/OrderScreen";
+import Sound from './components/Sound/Sound'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <div className="d-flex flex-column site-container">
             <header>
               <NavBarComponent />
+              <Sound />
             </header>
             <main>
               <ToastContainer />
