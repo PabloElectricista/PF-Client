@@ -38,7 +38,7 @@ function Signin({ log, setLog }) {
     toast("Logout done", { type: "info" });
     setLog(false);
     localStorage.setItem("islogged", "false");
-    localStorage.clear();
+    // localStorage.clear();
     document.location.href = "/";
   };
 
