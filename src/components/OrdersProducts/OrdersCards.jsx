@@ -2,7 +2,6 @@ import OrderItem from './OrderItem'
 import { ListGroup, Card } from 'react-bootstrap'
 
 function OrdersCards({ date, orders }) {
-    console.log(orders);
     return <div className='container my-3' >
         <Card border="primary" >
             <Card.Subtitle className="my-3 text-center text-danger">{date}</Card.Subtitle>

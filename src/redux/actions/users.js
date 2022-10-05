@@ -1,9 +1,8 @@
 import axios from "axios";
 import { getAllUsers, getUserByEmail, addNewUser, updateUserData } from "../slices/usersSlices"
-
+import { toast } from "react-toastify";
 
 export const getUsers = (page) => {
-    console.log("allusers");
     return function (dispatch) {
         axios(`/users?start=${page}&limit=6`, {
             headers: {
@@ -11,7 +10,7 @@ export const getUsers = (page) => {
             }
         })
             .then(res => {dispatch(getAllUsers(res.data))})
-            .catch(err => console.error(err))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }
 
@@ -28,11 +27,11 @@ export const getByEmail = (user) => {
                     .then(({data})=>{
                         dispatch(addNewUser(data))                
                     })
-                    .catch(err => console.error(err))
+                    .catch(error => toast(`${error.message}`, { type: "error" }))
                 }
                 else dispatch(getUserByEmail(data))
             })
-            .catch(err => console.error(err))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }
 
@@ -41,12 +40,11 @@ export const postUser = (newuser) => async (dispatch) => {
         const res = await axios.post("/users", newuser)
         dispatch(addNewUser(res.data))
     } catch (error) {
-        console.log(error);
+        toast(`${error.message}`, { type: "error" });
     }
 }
 
 export const updateUser = (userdata) => async (dispatch) => {
-    console.log(userdata);
     try {
         const res = await axios.put("/users/"+userdata._id, userdata, {
             headers: {
@@ -55,6 +53,6 @@ export const updateUser = (userdata) => async (dispatch) => {
         })
         dispatch(updateUserData(res.data))
     } catch (error) {
-        console.log(error);
+        toast(`${error.message}`, { type: "error" });
     }
 }

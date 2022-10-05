@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAllProducts, getProductById, postProducts } from "../slices/productsSlices"
+import { toast } from "react-toastify";
 
 export const getProds = () => {
     return function (dispatch) {
@@ -17,7 +18,7 @@ export const getProds = () => {
             .then(res => {
                 dispatch(getAllProducts(res.data))
             })
-            .catch(err => console.error(err))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }
 
@@ -27,7 +28,7 @@ export const getProdsById = (id) => {
             .then(res => {
                 dispatch(getProductById(res.data))
             })
-            .catch(err => console.error(err))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }
 
@@ -39,7 +40,7 @@ export const postProds = (product) => {
             }
         })
             .then(res => dispatch(postProducts(res.data)))
-            .catch(err => console.error(err))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }
 export const updateProduct = (id, payload) => {
@@ -49,7 +50,7 @@ export const updateProduct = (id, payload) => {
                 'credential': localStorage.getItem('tkn')
             }
         }))
-            .then(res => console.log(res.statusText))
-            .catch(err => console.error(err))
+            .then(res => toast(`${res.statusText}`, { type: "info" }))
+            .catch(error => toast(`${error.message}`, { type: "error" }))
     }
 }
