@@ -17,7 +17,6 @@ export default function SearchBox() {
     useEffect(() => {
         let searchcloseState = localStorage.getItem("searchcloseState")
         if (searchcloseState !== null && searchcloseState !== undefined) setClose((searchcloseState === "false") ? false : true)
-        
     }, [])
 
     const submitHandler = (e) => {
@@ -30,7 +29,6 @@ export default function SearchBox() {
         localStorage.setItem("queryfilterstate", JSON.stringify({}))
         localStorage.setItem("closefilterstate", JSON.stringify(closeinitial))
         dispatch(getProds())
-        console.log("entro en Search submit");
     };
 
     const handleClear = e => {
