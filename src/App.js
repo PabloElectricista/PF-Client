@@ -21,7 +21,7 @@ import OrderProductsDetails from "./components/OrderProductsDetails/OrderProduct
 import MessagesContainer from "./components/Messages/MessagesContainer";
 import MessageDetails from "./components/Messages/MessageDetails";
 import Contactform from "./views/ContactUs/Contactform";
-
+import Cookies from "./components/Cookies/Cookies"
 import ShippingAddressScreen from "./views/ShippingAddressScreen";
 import PaymentMethodScreen from "./views/PaymentMethodScreen";
 import PlaceOrderScreen from "./views/PlaceOrderScreen";
@@ -89,11 +89,11 @@ function App() {
                         <UpdateProduct />
                       </AdminRoute>
                     }
-                  ></Route>
+                    ></Route>
                   <Route
                     path="/admin/orders"
                     element={<OrdersProducts />}
-                  ></Route>
+                    ></Route>
                   <Route
                     path="/admin/ordersdetails/:id"
                     element={<OrderProductsDetails />}
@@ -101,15 +101,15 @@ function App() {
                   <Route
                     path="/admin/messages"
                     element={<MessagesContainer />}
-                  ></Route>
+                    ></Route>
                   <Route
                     path="/admin/messagedetails/:id"
                     element={<MessageDetails />}
-                  ></Route>
+                    ></Route>
                   <Route
                     path="/admin/profile"
                     element={<UserProfile />}
-                  ></Route>
+                    ></Route>
                   <Route path="/contactus" element={<Contactform />}></Route>
                 </Routes>
               </Container>
@@ -120,6 +120,7 @@ function App() {
           </div>
         </Router>
       </StoreProvider>
+      <Cookies></Cookies>
     </>
   );
 }

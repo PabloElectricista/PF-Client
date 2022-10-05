@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, NavDropdown, Badge, Button, Image } from "react
 /* eslint-disable react-hooks/exhaustive-deps */
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "../Search/SearchBox";
-import logo from "../../views/assets/micro50.jpg"
+import logo from "../../views/assets/micro50.png"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
