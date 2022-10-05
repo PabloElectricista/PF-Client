@@ -1,10 +1,10 @@
-import sound from '../../views/assets/commercial-sport-rock.m4a'
+import sound from '../../views/assets/fondo.mp3'
 
 function Sound() {
 
     return <>
         <audio controls autoPlay loop>
-            <source src={sound} type="audio/m4a"/>
+            <source preload src={sound} type="audio/mp3"/>
         </audio>
     </>
 }
