@@ -19,7 +19,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="First name"
                         onChange={handlechange}
                         value={userdata.firstName}
-                        defaultValue="firstName"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide first name
@@ -34,7 +33,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="Last name"
                         onChange={handlechange}
                         value={userdata.lastName}
-                        defaultValue="lastName"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide last name
@@ -51,7 +49,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="54 11 12345678"
                         onChange={handlechange}
                         value={userdata.phone}
-                        defaultValue="132131"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide a valid number.
@@ -66,7 +63,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="23 11123456 8"
                         onChange={handlechange}
                         value={userdata.identificationnumber}
-                        defaultValue="identificationnumber"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide a valid identification number.
@@ -83,7 +79,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="Your street"
                         onChange={handlechange}
                         value={userdata.address}
-                        defaultValue="address"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide the name of your street.
@@ -98,7 +93,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="1234"
                         onChange={handlechange}
                         value={userdata.addressnumber}
-                        defaultValue="addressnumber"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide a number.
@@ -112,7 +106,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="10º"
                         onChange={handlechange}
                         value={userdata.floor}
-                        defaultValue="floor"
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="2">
@@ -123,7 +116,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="A"
                         onChange={handlechange}
                         value={userdata.department}
-                        defaultValue="department"
                     />
                 </Form.Group>
                 <Form.Group as={Col} md="2" controlId="validationCustom06">
@@ -135,7 +127,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="2000"
                         onChange={handlechange}
                         value={userdata.zipcode}
-                        defaultValue="zipcode"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide a valid zip.
@@ -152,7 +143,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="City"
                         onChange={handlechange}
                         value={userdata.city}
-                        defaultValue="city"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide a valid city.
@@ -167,7 +157,6 @@ function UpdateAcount({ handlechange, handleSubmit, userdata, validated }) {
                         placeholder="State"
                         onChange={handlechange}
                         value={userdata.state}
-                        defaultValue="state"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please provide a valid state.
