@@ -67,7 +67,7 @@ function NavBarComponent() {
       <Navbar
         bg="dark"
         variant="dark"
-        // fixed="top"
+        fixed="top"
         // className="d-flex flex-row align-items-baseline"
       >
         <Container>
