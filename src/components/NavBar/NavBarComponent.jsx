@@ -62,14 +62,11 @@ function NavBarComponent() {
     // width: "95%",
   };
 
-  return (
-    <div>
-      
-      <Navbar
+  return <Navbar
         bg="dark"
         variant="dark"
         fixed="top"
-      // className="d-flex flex-row align-items-baseline"
+        className="pe-3"
       >
         <Link to="/">
         <Image
@@ -81,10 +78,10 @@ function NavBarComponent() {
           roundedCircle
         />
       </Link>
-        <Container className="ms-5 ps-5">
+        <Container className="me-5 pe-5">
 
           <LinkContainer to="/">
-            <Navbar.Brand className="ms-0">Hardware Hot Sales</Navbar.Brand>
+            <Navbar.Brand className="mx-1">Hardware Hot Sales</Navbar.Brand>
           </LinkContainer>
 
           {/* <div className="search"> */}
@@ -203,8 +200,6 @@ function NavBarComponent() {
           </Nav>
         </Container>
       </Navbar>
-    </div>
-  );
 }
 
 export default NavBarComponent;
