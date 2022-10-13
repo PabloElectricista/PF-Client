@@ -82,7 +82,7 @@ function NavBarComponent() {
             />
           </LinkContainer>
           <LinkContainer to="/">
-            <Navbar.Brand className="fs-3">Hardware Hot Sales</Navbar.Brand>
+            <Navbar.Brand className="fs-3 fw-bold">Hardware Hot Sales</Navbar.Brand>
           </LinkContainer>
 
           {/* <div className="search"> */}
@@ -142,7 +142,6 @@ function NavBarComponent() {
                 )}
                 {client && client.isAdmin && (
                   <>
-                    <NavDropdown.Divider />
                     <LinkContainer to="/admin/dashboard" style={itemstyle}>
                       <NavDropdown.Item>
                         <i className="material-icons">settings</i>
@@ -155,19 +154,19 @@ function NavBarComponent() {
             ) : null}
             <Signin log={islogged} setLog={setIslogged} />
             {/* <Button size="sm"   className="m-2"> */}
-            <Link to="/" className="nav-link text-light button">
+            <Link to="/" className="nav-link text-light fw-bold button">
               <i className="material-icons">home</i>
               Home
             </Link>
             {/* <div className="button"> */}
-            <Link to="/contactus" className="nav-link text-light px-3 button">
+            <Link to="/contactus" className="nav-link text-light fw-bold px-3 button">
               <i className="material-icons">create</i>
               Contact Us
             </Link>
             {/* </div> */}
 
             {/* Cart */}
-            <Link to="/cart" className="nav-link text-light px-3 button">
+            <Link to="/cart" className="nav-link text-light fw-bold px-3 button">
               <i className="material-icons">shopping_cart_checkout</i>
               Cart{" "}
               {cart.cartItems.length > 0 && (

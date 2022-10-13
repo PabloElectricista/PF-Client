@@ -8,18 +8,22 @@ import {
   Form,
   FloatingLabel,
 } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
 import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import MessageBox from "../../components/MessageBox";
 import LoadingBox from "../../components/LoadingBox";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCoverflow, Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 // agregado por Nes para funcionalidad cart
 import { Store } from "../../Store.js";
 import { getError } from "../../utils";
+
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -61,7 +65,7 @@ function ProductDetail() {
     });
 
   // react-redux
-  
+
   //const userInfo = useSelector((state) => state.users.user);
 
   // el problema de traer el producto del estado de redux es que
@@ -91,11 +95,11 @@ function ProductDetail() {
     };
     fetchData();
   }, [_id]);
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     const clientstate = JSON.parse(localStorage.getItem('user'))
     setClient(clientstate === null ? {} : clientstate)
-  },[])
+  }, [])
 
 
   // funcionalidad para armado de cart
@@ -160,39 +164,47 @@ function ProductDetail() {
   ) : (
     <div className="order-container">
       <Row>
-        <Col md={6}>
-          <img
-            className="img-large"
-            src={product.images}
-            alt={product.name}
-          ></img>
+        <Col md={8}>
+          <div className="container details">
+          <Swiper
+                effect={"coverflow"}
+                grabCursor={true}
+                centeredSlides={true}
+                slidesPerView={1}
+                coverflowEffect={{
+                  rotate: 50,
+                  stretch: 0,
+                  depth: 100,
+                  modifier: 1,
+                  slideShadows: true,
+                }}
+                pagination={true}
+                modules={[EffectCoverflow, Pagination]}
+                className="mySwiper bg-white"
+            >
+                {
+                    product.images.map((image, i)=> <SwiperSlide key={i} className="m-5 p-5"
+                >
+                    <img src={image} alt="product" />
+                </SwiperSlide>
+                    )
+                }
+            </Swiper>
+          </div>
         </Col>
-        <Col md={3}>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <title>{product.name}</title>
-              <h1>{product.name}</h1>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Rating
-                rating={product.rating}
-                numReviews={product.numReviews}
-              ></Rating>
-            </ListGroup.Item>
-            <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
-            <ListGroup.Item>
-              <Row xs={1} md={2} className="g-2"></Row>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Description:
-              <p>{product.description}</p>
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
+        
         <Col md={3}>
           <Card>
             <Card.Body>
               <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <title>{product.name}</title>
+                  <h1>{product.name}</h1>
+                  <Rating
+                    rating={product.rating}
+                    numReviews={product.numReviews}
+                  ></Rating>
+                </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Price:</Col>
@@ -223,8 +235,8 @@ function ProductDetail() {
 
                 <ListGroup.Item>
                   <Row>
-                    <Col>Summary:</Col>
-                    <Col>{product.summary}</Col>
+                    <Col>Description:</Col>
+                    <Col>{product.description}</Col>
                   </Row>
                 </ListGroup.Item>
 
@@ -234,7 +246,7 @@ function ProductDetail() {
                     <Col>{product.colors.join(', ')}</Col>
                   </Row>
                 </ListGroup.Item>
-                
+
                 <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
