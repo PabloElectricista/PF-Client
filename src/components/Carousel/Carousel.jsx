@@ -47,7 +47,7 @@ function Slider() {
             <div >
               <Image id={data._id} onClick={(e) => onClick(e)}
                 className="products-carousel-img"
-                src={data.images}
+                src={data.images[0]}
                 alt={data.name}
               />
             </div>
