@@ -47,7 +47,8 @@ function Signin({ log, setLog }) {
         <Button
           size="sm"
           variant="link"
-          className="ms-1 text-light d-flex justify-content-center align-items-center"
+          className="mx-2 py-0 text-light fw-bold"
+          // className="ms-1 text-light d-flex justify-content-center align-items-center"
           onClick={login}
         >
           <i className="material-icons me-1">login</i>
@@ -57,7 +58,8 @@ function Signin({ log, setLog }) {
         <Button
           size="sm"
           variant="link"
-          className="ms-1 text-light d-flex justify-content-center align-items-center"
+          className="g_id_signout mx-2 py-0 text-light fw-bold"
+          // className="ms-1 text-light d-flex justify-content-center align-items-center"
           onClick={logout}
         >
           <i className="material-icons me-1">logout</i>
