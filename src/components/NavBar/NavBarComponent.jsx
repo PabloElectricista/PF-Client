@@ -1,201 +1,129 @@
-import {
-  Container,
-  Navbar,
-  Nav,
-  NavDropdown,
-  Badge,
-  Button,
-  Image,
-} from "react-bootstrap";
-/* eslint-disable react-hooks/exhaustive-deps */
-import { LinkContainer } from "react-router-bootstrap";
-import SearchBox from "../Search/SearchBox";
-import logo from "../../views/assets/micro50.png";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useState } from "react";
-import Signin from "../../views/Signin/Signin";
-// import BootstrapSwitchButton from 'bootstrap-switch-button-react'
-import { settheme } from "../../redux/slices/themeSlice";
-import { Link } from "react-router-dom";
-import { Store } from "../../Store";
-import { useContext } from "react";
+import { useContext } from 'react';
+import { Store } from '../Store';
+import { Row, Col, ListGroup, Button, Card } from 'react-bootstrap';
+import MessageBox from '../components/MessageBox';
+import { toast } from "react-toastify";
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
-function NavBarComponent() {
-  // agregado por nes funcionalidad cart
-  const { state } = useContext(Store);
-  const { cart } = state;
 
-  const dark = useSelector((state) => state.theme.theme);
-  const dispatch = useDispatch();
+export default function CartScreen() {
+  const navigate = useNavigate();
+  const { state, dispatch: ctxDispatch } = useContext(Store)
+  const { cart: { cartItems }} = state;
 
-  const { user } = useSelector((state) => state.users);
-  const [islogged, setIslogged] = useState(false);
-  const [client, setClient] = useState({});
-
-  useEffect(() => {
-    const logstate = localStorage.getItem("islogged");
-    setIslogged(logstate === "true" ? true : false);
-    const themestate = localStorage.getItem("theme");
-    dispatch(settheme(themestate === "true" ? true : false));
-    const clientstate = JSON.parse(localStorage.getItem("user"));
-    setClient(clientstate === null ? {} : clientstate);
-  }, []);
-
-  useEffect(() => {
-    if (user && user.username) {
-      localStorage.setItem("user", JSON.stringify(user));
-      setClient(user);
+  const updateCartHandler = async (item, quantity) => {
+    const { data } = await axios.get(`/products/${item._id}`);
+    if (data.stock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
     }
-  }, [user]);
+    ctxDispatch({
+      type: 'CART_ADD_ITEM',
+      payload: { ...item, quantity },
+    });
+  };
 
-  useEffect(() => {
-    localStorage.setItem("theme", dark ? true : false);
-  }, [dark]);
+  const removeItemHandler = (item) => {
+    ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
 
-  const itemstyle = {
-    backgroundColor: "black",
-    color: "white",
-    // padding: "5px",
-    // fontWeight: "bolder",
-    margin: "1px",
-    // width: "95%",
+  const checkoutHandler = () => {
+    var login = localStorage.getItem("islogged");
+    if (!login) {
+      toast("Please Login", { type: "error" });
+      return;
+    } else {
+      navigate("/shipping");
+    }
   };
 
   return (
     <div>
-      <Navbar
-        bg="dark"
-        variant="dark"
-        fixed="top"
-      // className="d-flex flex-row align-items-baseline"
-      >
-        <Container>
-          <LinkContainer to="/">
-            <Image
-              src={logo}
-              width="75"
-              height="75"
-              className="d-inline-block align-top mx-3 outlie-light"
-              alt="our logo"
-              roundedCircle
-            />
-          </LinkContainer>
-          <LinkContainer to="/">
-            <Navbar.Brand className="fs-3 fw-bold">Hardware Hot Sales</Navbar.Brand>
-          </LinkContainer>
-
-          {/* <div className="search"> */}
-          <SearchBox />
-          {/* </div> */}
-          <Nav className="my-0 px-4  w-100">
-            {/* {userInfo && userInfo.isAdmin && ( */}
-            {islogged ? (
-              <NavDropdown
-                className="align-self-center"
-                title={
-                  client && client.roles === "admin" ? (
-                    "Admin"
-                  ) : (
-                    <Button variant="outline-secondary" className="mx-1 ">
-                      <>
-                        {client.picture ? (
-                          <img
-                            className="thumbnail-image rounded "
-                            src={client.picture}
-                            alt="avatar"
-                            width="60"
-                            height="60"
-                          />
-                        ) : (
-                          <p>{localStorage.getItem("name")}</p>
-                        )}
-                      </>
+      <h1 className="my-5 pt-5 text-light">Shopping Cart</h1>
+      <Row>
+        <Col md={8}>
+          {cartItems.length === 0 ? (
+            <MessageBox>
+              Cart is empty. <Link to="/">Go Shopping</Link>
+            </MessageBox>
+          ):
+          (
+            <ListGroup>
+              {cartItems.map((item) => (
+                <ListGroup.Item key={item._id}>
+                  <Row className="align-items-center">
+                    <Col md={4}>
+                      <img
+                        src={item.images[0]}
+                        alt={item.name}
+                        className="img-fluid rounded img-thumbnail"
+                        style={{ height: 80, width: 80 }}
+                      ></img>{' '}
+                      <Link to={`/product/${item._id}`}>{item.name}</Link>
+                    </Col>
+                    <Col md={3}>
+                      <Button 
+                        variant="light" 
+                        disabled={item.quantity === 1}
+                        onClick={() => updateCartHandler(item, item.quantity - 1)}
+                        >
+                        <i className="fas fa-minus-circle"></i>
+                      </Button>{' '}
+                      <span>{item.quantity}</span>{' '}
+                      <Button 
+                        variant="light" 
+                        disabled={item.quantity === item.stock}
+                        onClick={() => updateCartHandler(item, item.quantity + 1)}
+                        >
+                        <i className="fas fa-plus-circle"></i>
+                      </Button>
+                    </Col>
+                    <Col md={3}>$ {item.price}</Col>
+                    <Col md={2}>
+                      <Button 
+                        onClick={() => removeItemHandler(item)}
+                        variant="light"
+                      >
+                        <i className="fas fa-trash"></i>
+                      </Button>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )
+        }
+        </Col>
+                <Col md={4}>
+          <Card>
+            <Card.Body>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <h3>
+                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
+                    items) : $
+                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
+                  </h3>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <div className="d-grid">
+                    <Button
+                      type="button"
+                      variant="primary"
+                      onClick={checkoutHandler}
+                      disabled={cartItems.length === 0}
+                    >
+                      Proceed to Checkout
                     </Button>
-                  )
-                }
-                id="admin-nav-dropdown"
-              >
-                {/* <LinkContainer to="/admin/messages" style={itemstyle}>
-                                <NavDropdown.Item>
-                                    <i className="material-icons">mail</i>
-                                    Messages
-                                </NavDropdown.Item>
-                            </LinkContainer> */}
-                {client && !client.isBlocked && !client.isAdmin && (
-                  <>
-                    <LinkContainer to="/admin/orders" style={itemstyle}>
-                      <NavDropdown.Item className="d-flex justify-content-center align-items-center">
-                        <i className="material-icons me-1">app_registration</i>
-                        <span className="fs-6">Orders</span>
-                      </NavDropdown.Item>
-                    </LinkContainer>
-                  </>
-                )}
-                {!client.isAdmin && (
-                  <LinkContainer to="/admin/profile" style={itemstyle}>
-                    <NavDropdown.Item className="d-flex justify-content-center align-items-center">
-                      <i className="material-icons me-1">person</i>
-                      <span className="fs-6">Profile</span>
-                    </NavDropdown.Item>
-                  </LinkContainer>
-                )}
-                {client && client.isAdmin && (
-                  <>
+                  </div>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </Col>
 
-                    <LinkContainer to="/admin/dashboard" style={itemstyle}>
-                      <NavDropdown.Item className="d-flex justify-content-center align-items-center">
-                        <i className="material-icons me-1">settings</i>
-                        <span className="fs-6">Admin</span>
-                      </NavDropdown.Item>
-                    </LinkContainer>
-                  </>
-                )}
-              </NavDropdown>
-            ) : null}
-            <Signin log={islogged} setLog={setIslogged} />
-            <Link
-              to="/"
-              className="nav-link text-light button d-flex justify-content-center align-items-center"
-            >
-              <i className="material-icons me-1">home</i>
-              <span className="fs-5">Home</span>
-            </Link>
-            {/* <div className="button"> */}
-            <Link
-              to="/contactus"
-              className="nav-link text-light button d-flex justify-content-center align-items-center"
-            >
-              <i className="material-icons me-1">create</i>
-              <span className="fs-5">Contact Us</span>
-            </Link>
-            {/* </div> */}
-
-            {/* Cart */}
-            <Link to="/cart" className="nav-link text-light fw-bold button d-flex flex-row">
-              <div className="d-flex flex-column">
-              {cart.cartItems.length > 0 && (
-                <Badge pill bg="danger ">
-                  {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                </Badge>
-              )}
-              <i className="material-icons me-1">shopping_cart_checkout</i>
-              </div>
-              <span className="fs-5 ms-1">Cart</span>
-            </Link>
-            {/* <BootstrapSwitchButton
-                        checked={dark ? true : false}
-                        onstyle="dark"
-                        offstyle="light"
-                        onChange={(checked) => dispatch(settheme(checked))}
-                        onlabel={<i className="material-icons">mode_night</i>}
-                        offlabel={<i className="material-icons">light_mode</i>}
-                    /> */}
-          </Nav>
-        </Container>
-      </Navbar>
+      </Row>
     </div>
-  );
+  )
 }
-
-export default NavBarComponent;
