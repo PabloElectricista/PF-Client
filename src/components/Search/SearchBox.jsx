@@ -41,8 +41,8 @@ export default function SearchBox() {
   };
 
   return (
-    <div style={{ width: "400px" }}>
-      <Form className="d-flex me-auto" onSubmit={submitHandler}>
+    <div style={{ minWidth: "300px" }}>
+      <Form className="d-flex mx-3" onSubmit={submitHandler}>
         <Button
           size="sm"
           className={close ? "visible" : "invisible"}
