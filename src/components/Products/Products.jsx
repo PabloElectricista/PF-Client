@@ -13,7 +13,7 @@ function Products() {
     }, [products])
 
     return (
-        <div className="container mx-5 pt-2 px-3" style={{minWidth:"600px"}}>
+        <div className="container mx-3 pt-2 px-3" style={{minWidth:"600px"}}>
             <div className="d-flex flex-row flex-wrap px-2">
                 {
                     products && products.length > 0 ?
