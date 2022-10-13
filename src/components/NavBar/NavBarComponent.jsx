@@ -79,7 +79,6 @@ function NavBarComponent() {
         />
       </Link>
         <Container className="me-5 pe-5">
-
           <LinkContainer to="/">
             <Navbar.Brand className="mx-1">Hardware Hot Sales</Navbar.Brand>
           </LinkContainer>
