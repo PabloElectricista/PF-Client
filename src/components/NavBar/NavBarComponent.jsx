@@ -64,25 +64,27 @@ function NavBarComponent() {
 
   return (
     <div>
+      
       <Navbar
         bg="dark"
         variant="dark"
         fixed="top"
       // className="d-flex flex-row align-items-baseline"
       >
-        <Container>
+        <Link to="/">
+        <Image
+          src={logo}
+          width="75"
+          height="75"
+          className="d-inline-block align-top ms-5 me-0"
+          alt="our logo"
+          roundedCircle
+        />
+      </Link>
+        <Container className="ms-5 ps-5">
+
           <LinkContainer to="/">
-            <Image
-              src={logo}
-              width="75"
-              height="75"
-              className="d-inline-block align-top mx-3 outlie-light"
-              alt="our logo"
-              roundedCircle
-            />
-          </LinkContainer>
-          <LinkContainer to="/">
-            <Navbar.Brand className="fs-3 fw-bold">Hardware Hot Sales</Navbar.Brand>
+            <Navbar.Brand className="ms-0">Hardware Hot Sales</Navbar.Brand>
           </LinkContainer>
 
           {/* <div className="search"> */}
@@ -181,12 +183,12 @@ function NavBarComponent() {
             {/* Cart */}
             <Link to="/cart" className="nav-link text-light fw-bold button d-flex flex-row">
               <div className="d-flex flex-column">
-              {cart.cartItems.length > 0 && (
-                <Badge pill bg="danger ">
-                  {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                </Badge>
-              )}
-              <i className="material-icons me-1">shopping_cart_checkout</i>
+                {cart.cartItems.length > 0 && (
+                  <Badge pill bg="danger ">
+                    {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                  </Badge>
+                )}
+                <i className="material-icons me-1">shopping_cart_checkout</i>
               </div>
               <span className="fs-5 ms-1">Cart</span>
             </Link>
