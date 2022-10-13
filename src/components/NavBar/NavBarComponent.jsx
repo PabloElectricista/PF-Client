@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { Store } from '../Store';
+import { Store } from '../../Store';
 import { Row, Col, ListGroup, Button, Card } from 'react-bootstrap';
-import MessageBox from '../components/MessageBox';
+import MessageBox from '../MessageBox';
 import { toast } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
