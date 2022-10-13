@@ -185,7 +185,7 @@ function ProductDetail() {
                 {
                     product.images.map((image, i)=> <SwiperSlide key={i} className="m-5 p-5"
                 >
-                    <img src={image} alt="product" />
+                    <img src={image} alt="product" width="300" height="300" />
                 </SwiperSlide>
                     )
                 }

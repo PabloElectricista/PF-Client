@@ -32,7 +32,7 @@ function Product({ _id, name, images, rating, numReviews, price, stock }) {
       </Link>
       <Card.Body>
         <Link to={`product/${_id}`}>
-          <Card.Title>{name}</Card.Title>
+          <Card.Title style={{height:"5rem"}}>{name}</Card.Title>
         </Link>
       </Card.Body>
       <Rating
