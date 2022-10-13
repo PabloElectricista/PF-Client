@@ -4,7 +4,6 @@ import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
 import { postUser } from "../../redux/actions/users";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 function Signin({ log, setLog }) {
   const dispatch = useDispatch();
@@ -49,20 +48,22 @@ function Signin({ log, setLog }) {
           size="sm"
           variant="link"
           className="mx-2 py-0 text-light fw-bold"
+          className="ms-1 text-light d-flex justify-content-center align-items-center"
           onClick={login}
         >
-          <i className="material-icons">login</i>
-          Login
+          <i className="material-icons me-1">login</i>
+          <span className="fs-5">Login</span>
         </Button>
       ) : (
         <Button
           size="sm"
           variant="link"
           className="g_id_signout mx-2 py-0 text-light fw-bold"
+          className="ms-1 text-light d-flex justify-content-center align-items-center"
           onClick={logout}
         >
-          <i className="material-icons">logout</i>
-          Logout
+          <i className="material-icons me-1">logout</i>
+          <span className="fs-5">Logout</span>
         </Button>
       )}
     </>

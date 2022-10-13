@@ -56,10 +56,10 @@ function NavBarComponent() {
   const itemstyle = {
     backgroundColor: "black",
     color: "white",
-    padding: "5px",
-    fontWeight: "bolder",
-    margin: "5px",
-    width: "95%",
+    // padding: "5px",
+    // fontWeight: "bolder",
+    margin: "1px",
+    // width: "95%",
   };
 
   return (
@@ -125,27 +125,27 @@ function NavBarComponent() {
                 {client && !client.isBlocked && !client.isAdmin && (
                   <>
                     <LinkContainer to="/admin/orders" style={itemstyle}>
-                      <NavDropdown.Item>
-                        <i className="material-icons">app_registration</i>
-                        Orders
+                      <NavDropdown.Item className="d-flex justify-content-center align-items-center">
+                        <i className="material-icons me-1">app_registration</i>
+                        <span className="fs-6">Orders</span>
                       </NavDropdown.Item>
                     </LinkContainer>
                   </>
                 )}
                 {!client.isAdmin && (
                   <LinkContainer to="/admin/profile" style={itemstyle}>
-                    <NavDropdown.Item>
-                      <i className="material-icons">person</i>
-                      Profile
+                    <NavDropdown.Item className="d-flex justify-content-center align-items-center">
+                      <i className="material-icons me-1">person</i>
+                      <span className="fs-6">Profile</span>
                     </NavDropdown.Item>
                   </LinkContainer>
                 )}
                 {client && client.isAdmin && (
                   <>
                     <LinkContainer to="/admin/dashboard" style={itemstyle}>
-                      <NavDropdown.Item>
-                        <i className="material-icons">settings</i>
-                        Admin
+                      <NavDropdown.Item className="d-flex justify-content-center align-items-center">
+                        <i className="material-icons me-1">settings</i>
+                        <span className="fs-6">Admin</span>
                       </NavDropdown.Item>
                     </LinkContainer>
                   </>
@@ -162,6 +162,20 @@ function NavBarComponent() {
             <Link to="/contactus" className="nav-link text-light fw-bold px-3 button">
               <i className="material-icons">create</i>
               Contact Us
+            <Link
+              to="/"
+              className="nav-link text-light button d-flex justify-content-center align-items-center"
+            >
+              <i className="material-icons me-1">home</i>
+              <span className="fs-5">Home</span>
+            </Link>
+            {/* <div className="button"> */}
+            <Link
+              to="/contactus"
+              className="nav-link text-light button d-flex justify-content-center align-items-center"
+            >
+              <i className="material-icons me-1">create</i>
+              <span className="fs-5">Contact Us</span>
             </Link>
             {/* </div> */}
 
@@ -169,6 +183,12 @@ function NavBarComponent() {
             <Link to="/cart" className="nav-link text-light fw-bold px-3 button">
               <i className="material-icons">shopping_cart_checkout</i>
               Cart{" "}
+            <Link
+              to="/cart"
+              className="nav-link text-light button d-flex justify-content-center align-items-center"
+            >
+              <i className="material-icons me-1">shopping_cart_checkout</i>
+              <span className="fs-5">Cart</span>{" "}
               {cart.cartItems.length > 0 && (
                 <Badge pill bg="danger ">
                   {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
