@@ -81,7 +81,7 @@ function NavBarComponent() {
           roundedCircle
         />
       </Link>
-        <Container className="ms-5 ps-5">
+        <Container className="ms-3 ps-3">
 
           <LinkContainer to="/">
             <Navbar.Brand className="ms-0">Hardware Hot Sales</Navbar.Brand>
