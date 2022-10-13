@@ -41,7 +41,7 @@ export default function SearchBox() {
   };
 
   return (
-    <div style={{ minWidth: "300px" }}>
+    <div style={{ minWidth: "250px" }}>
       <Form className="d-flex mx-3" onSubmit={submitHandler}>
         <Button
           size="sm"
