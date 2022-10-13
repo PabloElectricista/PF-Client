@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Store } from '../Store';
-import { Row, Col, ListGroup, Button, Image, Card, Toast } from 'react-bootstrap';
+import { Row, Col, ListGroup, Button, Card } from 'react-bootstrap';
 import MessageBox from '../components/MessageBox';
 import { toast } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom'
@@ -55,10 +55,10 @@ export default function CartScreen() {
                   <Row className="align-items-center">
                     <Col md={4}>
                       <img
-                        src={item.images}
+                        src={item.images[0]}
                         alt={item.name}
                         className="img-fluid rounded img-thumbnail"
-                        style={{ height: 80 }}
+                        style={{ height: 80, width: 80 }}
                       ></img>{' '}
                       <Link to={`/product/${item._id}`}>{item.name}</Link>
                     </Col>
