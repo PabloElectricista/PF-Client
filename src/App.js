@@ -27,6 +27,7 @@ import PaymentMethodScreen from "./views/PaymentMethodScreen";
 import PlaceOrderScreen from "./views/PlaceOrderScreen";
 import OrderScreen from "./views/OrderScreen";
 import Sound from './components/Sound/Sound'
+import AboutUs from "./components/AboutUs/AboutUs";
 
 function App() {
   return (
@@ -49,7 +50,7 @@ function App() {
                   <Route path="/payment" element={<PaymentMethodScreen />} />
                   <Route path="/placeorder" element={<PlaceOrderScreen />} />
                   <Route path="/order/:id" element={<OrderScreen />} />
-                  {/* <Route path="/search" element={<SearchScreen />} /> */}
+                  <Route path="/aboutus" element={<AboutUs />} />
 
                   {/* Admin Routes */}
                   <Route

@@ -169,6 +169,13 @@ function NavBarComponent() {
               <i className="material-icons me-1">create</i>
               <span className="fs-5">Contact Us</span>
             </Link>
+            <Link
+              to="/aboutus"
+              className="nav-link text-light button d-flex justify-content-center align-items-center"
+            >
+              <i className="material-icons me-1">groups</i>
+              <span className="fs-5">About Us</span>
+            </Link>
             {/* </div> */}
 
             {/* Cart */}
