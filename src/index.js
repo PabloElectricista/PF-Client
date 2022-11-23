@@ -15,7 +15,7 @@ axios.defaults.baseURL =
 
   // "http://localhost:4000/api"
 
-  process.env.REACT_APP_API || "https://pf-serve.herokuapp.com/api";
+  process.env.REACT_APP_API || "https://pf-serve-api.onrender.com/api";
 
 ReactDOM.render(
   <React.StrictMode>
